@@ -1,0 +1,22 @@
+@import "../../../../shared/constants/mixins"
+@import "../../../../shared/constants/vars"
+
+.container
+  display: flex
+  flex-direction: column
+  max-width: 400px
+  margin: auto
+
+  .input_container
+    position: relative
+    padding-bottom: 1.6rem
+
+    .error
+      position: absolute
+      color: $red
+
+  button.btn
+    @include link-btn
+    margin: 1.5rem 0 0
+    &:hover
+      @include link-btn-hover

@@ -1,0 +1,34 @@
+version: "3"
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: always
+    container_name: client
+    ports:
+      - 3000:3000
+    networks:
+      - myNetwork
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    restart: always
+    container_name: auth
+    ports:
+      - 5000:5000
+    environment:
+      PORT: 5000
+      CLIENT_PATH: http://localhost:3000/
+      SERVER_PATH: http://localhost:5000/
+      MONGO_CONNECTION_STRING: "mongodb+srv://kostyazhirnov:jlL5dBy0tFqYvboE@cluster0.duijhnt.mongodb.net/helper-users?retryWrites=true&w=majority"
+      MAIL_HOST: "smtp.gmail.com"
+      MAIL_USER: "kostya.zhirnov@gmail.com"
+      MAIL_PASSWORD: "tcjblpofktrommea"
+    networks:
+      - myNetwork
+
+networks:
+  myNetwork:
+    driver: bridge
