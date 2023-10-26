@@ -33,7 +33,6 @@ const ConfirmationPage: React.FC = () => {
   return (
     <Wrapper>
       <Heading as="h1" className={classes.title}>Email Confirmation</Heading>
-
       {
         isActivated && <Text fontSize='2xl' className={classes.text}>Your account has been successfully activated!</Text>
       }

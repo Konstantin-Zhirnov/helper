@@ -1,14 +1,13 @@
 import React from 'react'
 
-import { Description, Cards } from '../../widgets'
+import { Cards } from '../../widgets'
+import { Wrapper } from '../../shared'
 
 const PostsPage: React.FC = () => {
   return (
-    <>
-      <Description />
-
+    <Wrapper>
       <Cards />
-    </>
+    </Wrapper>
   )
 }
 

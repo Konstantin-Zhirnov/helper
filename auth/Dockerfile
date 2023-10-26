@@ -1,6 +1,6 @@
 FROM node:16-alpine
 WORKDIR /app/auth
-ADD ./auth/*.json ./
+ADD *.json ./
 RUN npm i -g @nestjs/cli
 RUN npm install
 ADD . .

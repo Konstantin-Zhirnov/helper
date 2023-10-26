@@ -15,7 +15,6 @@ const Posts: React.FC = () => {
           index={index}
           title={card.title}
           content={card.content}
-          actions={card.actions}
         />
       ))}
     </motion.ul>

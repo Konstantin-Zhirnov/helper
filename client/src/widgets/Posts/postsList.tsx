@@ -1,8 +1,5 @@
 import React from 'react'
 
-import { LinkButton } from '../../shared'
-
-
 export const posts = [
   {
     title: 'Apollo page',
@@ -17,7 +14,6 @@ export const posts = [
         </p>
       </>
     ),
-    actions: <LinkButton link="/apollo" title="Go to page" />,
   },
   {
     title: 'Users page',
@@ -38,7 +34,6 @@ export const posts = [
         </p>
       </>
     ),
-    actions: <LinkButton link="/users" title="Go to page" />,
   },
   {
     title: 'Posts page',
@@ -59,6 +54,5 @@ export const posts = [
         </p>
       </>
     ),
-    actions: <LinkButton link="/posts" title="Go to page" />,
   }
 ]
