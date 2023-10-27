@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = 'http://localhost:5000/api'
+const baseURL = `${process.env.SERVER_PATH}/api`
 
 export const URL = {
   login: '/login',
