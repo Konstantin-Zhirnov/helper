@@ -12,7 +12,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api')
 
   const config = new DocumentBuilder()
-    .setTitle("Authentication")
+    .setTitle("Posts")
     .setDescription("REST API documentation")
     .setVersion("1.0.0")
     .build()
@@ -20,12 +20,8 @@ async function bootstrap() {
   SwaggerModule.setup('/docs', app, document)
 
   app.use(cookieParser())
-  app.enableCors({
-      credentials: true,
-      origin: true,
-      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"]
-  })
-    await app.listen(PORT || 5000)
-  }
+  app.enableCors({credentials: true, origin: process.env.CLIENT_PATH});
 
-bootstrap()
+  await app.listen(PORT || 8000);
+}
+bootstrap();
