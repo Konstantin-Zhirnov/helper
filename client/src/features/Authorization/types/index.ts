@@ -10,6 +10,7 @@ export type AuthorizationStateType = {
   sendEmailMessage: string
   sendEmailReason: SendEmailReasonType
   changePasswordMessage: string
+  isNewAvatar: boolean
   user: UserType
 }
 
@@ -38,6 +39,10 @@ export type MessageResponseType = {
   message: string
 }
 
+export type AvatarResponseType = {
+  photo: string
+}
+
 export type EmailType = {
   email: string
 }
@@ -56,6 +61,6 @@ export type ChangePasswordType = Record<'password' | 'link', string>
 
 export type NewPasswordType = Record<'password' | '_id', string>
 
-export type UpdateUserType = {_id: string, field: {[key: string]: any}}
+export type UpdateUserType = { _id: string, field: { [key: string]: any } }
 
 export type LinkType = { link: string }

@@ -1,22 +1,43 @@
-.card
-  margin-top: 1.5rem
-  .cardHeader
-    padding-bottom: 0
-  &:last-child
-    margin-bottom: 3rem
-  .heading
-    display: flex
-    align-items: center
-    svg
-      font-size: 32px
-      margin-right: 0.7rem
-    .telegram
-      fill: #328fec
-    .whatsapp
-      fill: #25d366
-    .viber
-      font-size: 30px
-      background: #593ebc
-      fill: white
-      padding: 4px
-      border-radius: 4px
+.container
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-evenly
+  gap: 1rem
+  margin-bottom: 3rem
+
+  .card
+    width: 47%
+
+    .cardHeader
+      padding: 0.8rem 1.25rem 0
+
+    .heading
+      display: flex
+      align-items: center
+
+      svg
+        font-size: 32px
+        margin-right: 0.7rem
+
+      .telegram
+        fill: #328fec
+
+      .whatsapp
+        fill: #25d366
+
+      .viber
+        font-size: 30px
+        background: #593ebc
+        fill: white
+        padding: 4px
+        border-radius: 4px
+
+    .cardBody
+      padding: 0.6rem 1.25rem
+
+    .cardBody_email
+      padding: 0.6rem 1.25rem
+
+@media only screen and (max-width: 640px)
+  .container .card
+    width: 100%

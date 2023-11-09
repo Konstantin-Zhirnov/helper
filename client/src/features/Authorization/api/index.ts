@@ -1,11 +1,14 @@
 import { $api, URL } from './config'
 import {
-  MessageResponseType,
-  LoginType,
-  UserType,
+  AvatarResponseType,
+  ChangePasswordType,
   LinkType,
+  LoginType,
+  MessageResponseType,
+  NewPasswordType,
   SendEmailType,
-  ChangePasswordType, UpdateUserType, NewPasswordType,
+  UpdateUserType,
+  UserType,
 } from '../types'
 
 export const AuthAPI = {
@@ -30,14 +33,14 @@ export const AuthAPI = {
   },
 
   sendEmail(body: SendEmailType): Promise<MessageResponseType> {
-    return $api.post(body.reason === 'password' ? URL.sendEmailForPassword :  URL.sendEmailForActivation, { email: body.email }).then(({ data }) => data)
+    return $api.post(body.reason === 'password' ? URL.sendEmailForPassword : URL.sendEmailForActivation, { email: body.email }).then(({ data }) => data)
   },
 
   changePassword(body: ChangePasswordType): Promise<MessageResponseType> {
     return $api.put(URL.changePassword, body).then(({ data }) => data)
   },
 
-  changeAvatar(data: FormData): Promise<UserType> {
+  changeAvatar(data: FormData): Promise<AvatarResponseType> {
     return $api.post(URL.changeAvatar, data).then(({ data }) => data)
   },
 

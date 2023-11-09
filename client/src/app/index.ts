@@ -1,6 +1,7 @@
-import { AppDispatch, RootState, store } from './config/redux/store'
-export type { AppDispatch, RootState }
-export { store }
+import { AppDispatch, RootState, store, useAppDispatch, useAppSelector } from './config/redux/store'
+import App from './components/App'
 
-import { useAppDispatch, useAppSelector } from './config/redux/hooks'
-export { useAppDispatch, useAppSelector }
+
+export { store, useAppDispatch, useAppSelector, App }
+export type { AppDispatch, RootState }
+

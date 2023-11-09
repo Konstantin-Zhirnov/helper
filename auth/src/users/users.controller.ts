@@ -15,20 +15,20 @@ import {
   UploadedFile,
   UseInterceptors,
   UsePipes,
-} from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
-import { Request, Response } from 'express';
+} from '@nestjs/common'
+import * as bcrypt from 'bcrypt'
+import { JwtService } from '@nestjs/jwt'
+import { Request, Response } from 'express'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import * as uuid from 'uuid';
+import { FileInterceptor } from '@nestjs/platform-express'
+import { diskStorage } from 'multer'
+import { existsSync, mkdirSync } from 'fs'
 
-import { ValidationPipe } from '../pipes/validation.pipe';
-import { UsersService } from './users.service';
-import { User } from './schemas/user.schema';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginDto } from './dto/login.dto';
+import { ValidationPipe } from '../pipes/validation.pipe'
+import { UsersService } from './users.service'
+import { User } from './schemas/user.schema'
+import { CreateUserDto } from './dto/create-user.dto'
+import { LoginDto } from './dto/login.dto'
 import { SendEmailDto } from './dto/send-email.dto'
 import { ConfirmDto } from './dto/confirm.dto'
 import { ChangePasswordDto } from './dto/change-password.dto'
@@ -49,7 +49,7 @@ const getUserWithoutPassword = (user: User) => {
     linkForActivated: user.linkForActivated,
     changePasswordLink: '',
     paid: user.paid,
-    paidTime: user.paidTime
+    paidTime: user.paidTime,
   }
 }
 
@@ -59,14 +59,15 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) {
+  }
 
 
   @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({ status: 200, type: [User] })
   @Get('users')
   getAll(): Promise<User[]> {
-    return this.usersService.getAll();
+    return this.usersService.getAll()
   }
 
 
@@ -74,7 +75,7 @@ export class UsersController {
   @ApiResponse({ status: 200, type: User })
   @Get('users/:id')
   getOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.getById(id);
+    return this.usersService.getById(id)
   }
 
 
@@ -83,13 +84,13 @@ export class UsersController {
   @Post('users')
   @UsePipes(ValidationPipe)
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createUserDto: CreateUserDto): Promise<{message: string}> {
-    const pretendToUser = await this.usersService.findOne({email: createUserDto.email} as LoginDto);
+  async create(@Body() createUserDto: CreateUserDto): Promise<{ message: string }> {
+    const pretendToUser = await this.usersService.findOne({ email: createUserDto.email } as LoginDto)
     if (pretendToUser) {
-      throw new BadRequestException('A user with this email already exists!');
+      throw new BadRequestException('A user with this email already exists!')
     }
 
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 12);
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 12)
     await this.usersService.create({
       name: createUserDto.name,
       email: createUserDto.email,
@@ -103,12 +104,12 @@ export class UsersController {
       linkForActivated: createUserDto.linkForActivated,
       changePasswordLink: '',
       paid: createUserDto.paid,
-      paidTime: createUserDto.paidTime
-    });
+      paidTime: createUserDto.paidTime,
+    })
 
     return {
       message: 'success',
-    };
+    }
   }
 
 
@@ -116,7 +117,7 @@ export class UsersController {
   @ApiResponse({ status: 200, type: User })
   @Delete('users/:id')
   remove(@Param('id') id: string): Promise<User> {
-    return this.usersService.remove(id);
+    return this.usersService.remove(id)
   }
 
 
@@ -124,10 +125,10 @@ export class UsersController {
   @ApiResponse({ status: 201, type: User })
   @Put('users/:id')
   async update(
-    @Body() updateFieldObject: {[key: string]: string | boolean},
+    @Body() updateFieldObject: { [key: string]: string | boolean },
     @Param('id') id: string,
   ): Promise<User> {
-    const user = await this.usersService.update(id, updateFieldObject);
+    const user = await this.usersService.update(id, updateFieldObject)
 
     return getUserWithoutPassword(user)
   }
@@ -139,25 +140,25 @@ export class UsersController {
     @Body() loginDto: LoginDto,
     @Res({ passthrough: true }) response: Response,
   ): Promise<User> {
-    const user = await this.usersService.findOne(loginDto);
+    const user = await this.usersService.findOne(loginDto)
 
     if (!user) {
-      throw new BadRequestException('Invalid credentials');
+      throw new BadRequestException('Invalid credentials')
     }
 
     if (!(await bcrypt.compare(loginDto.password, user.password))) {
-      throw new BadRequestException('Invalid credentials');
+      throw new BadRequestException('Invalid credentials')
     }
 
     if (!user.isActivated) {
-      throw new BadRequestException('You need to confirm your email');
+      throw new BadRequestException('You need to confirm your email')
     }
 
-    const jwt = await this.jwtService.signAsync({ id: user._id });
+    const jwt = await this.jwtService.signAsync({ id: user._id })
 
-    response.cookie('jwt', jwt, { httpOnly: true });
+    response.cookie('jwt', jwt, { httpOnly: true })
 
-    return user;
+    return user
   }
 
 
@@ -166,18 +167,18 @@ export class UsersController {
   @Get('user')
   async user(@Req() request: Request): Promise<User> {
     try {
-      const cookie = request.cookies['jwt'];
+      const cookie = request.cookies['jwt']
 
-      const data = await this.jwtService.verifyAsync(cookie);
+      const data = await this.jwtService.verifyAsync(cookie)
       if (!data) {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException()
       }
 
-      const user = await this.usersService.getById(data['id']);
+      const user = await this.usersService.getById(data['id'])
       return getUserWithoutPassword(user)
 
     } catch (e) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException()
     }
   }
 
@@ -185,12 +186,12 @@ export class UsersController {
   @ApiOperation({ summary: 'Logout' })
   @ApiResponse({ status: 201, type: User })
   @Post('logout')
-  async logout(@Res({ passthrough: true }) response: Response): Promise<{message: string}> {
-    response.clearCookie('jwt');
+  async logout(@Res({ passthrough: true }) response: Response): Promise<{ message: string }> {
+    response.clearCookie('jwt')
 
     return {
       message: 'success',
-    };
+    }
   }
 
 
@@ -200,16 +201,17 @@ export class UsersController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './public',
+        destination: (req: any, file: any, cb: any) => {
+          const fileName = file.originalname
+          const folder = fileName.substring(0, fileName.lastIndexOf('.'))
+          const uploadPath = `./public/${folder}`
+          if (!existsSync(uploadPath)) {
+            mkdirSync(uploadPath)
+          }
+          cb(null, uploadPath)
+        },
         filename: (req, file, callback) => {
-          const uniqueSuffix = uuid.v4();
-          const extname = (str) => {
-            const result = str.split('.');
-            return result[result.length - 1];
-          };
-          const ext = extname(file.originalname);
-          const filename = `${uniqueSuffix}.${ext}`;
-          callback(null, filename);
+          callback(null, file.originalname)
         },
       }),
     }) as any,
@@ -217,30 +219,32 @@ export class UsersController {
   async uploadFile(
     @Body() id: string,
     @UploadedFile() file: Express.Multer.File,
-  ): Promise<User> {
+  ): Promise<{ photo: string }> {
+    const fileName = file.filename
+    const folder = fileName.substring(0, fileName.lastIndexOf('.'))
     const fieldForUpdate = {
-      photo: `${process.env.SERVER_PATH}${file.filename}`
-    };
+      photo: `${process.env.AUTH_PATH}${folder}/${file.filename}`,
+    }
 
-    const user = await this.usersService.update(id, fieldForUpdate);
-    return getUserWithoutPassword(user)
+    const user = await this.usersService.update(id, fieldForUpdate)
+    return { photo: user.photo }
   }
 
   @ApiOperation({ summary: 'Confirmation' })
   @ApiResponse({ status: 201, type: User })
   @Post('confirmation')
   async confirm(@Body() body: ConfirmDto, @Res({ passthrough: true }) response: Response) {
-    const user = await this.usersService.confirm(body);
+    const user = await this.usersService.confirm(body)
 
     if (!user) {
-      throw new BadRequestException('Invalid credentials');
+      throw new BadRequestException('Invalid credentials')
     }
 
-    const jwt = await this.jwtService.signAsync({ id: user._id });
+    const jwt = await this.jwtService.signAsync({ id: user._id })
 
-    response.cookie('jwt', jwt, { httpOnly: true });
+    response.cookie('jwt', jwt, { httpOnly: true })
 
-    return { message: 'success' };
+    return { message: 'success' }
   }
 
 
@@ -249,13 +253,13 @@ export class UsersController {
   @Post('activation')
   async sendEmailForActivation(
     @Body() body: SendEmailDto,
-  ): Promise<{message: string}> {
-    const user = await this.usersService.sendEmailForActivation(body);
+  ): Promise<{ message: string }> {
+    const user = await this.usersService.sendEmailForActivation(body)
     if (!user) {
-      throw new BadRequestException('There is no user with such an email');
+      throw new BadRequestException('There is no user with such an email')
     }
 
-    return { message: 'Activation link successfully sent' };
+    return { message: 'Activation link successfully sent' }
   }
 
 
@@ -264,13 +268,13 @@ export class UsersController {
   @Post('password')
   async sendEmailForPassword(
     @Body() body: SendEmailDto,
-  ): Promise<{message: string}> {
-    const user = await this.usersService.sendEmailForPassword(body);
+  ): Promise<{ message: string }> {
+    const user = await this.usersService.sendEmailForPassword(body)
     if (!user) {
-      throw new BadRequestException('There is no user with such an email');
+      throw new BadRequestException('There is no user with such an email')
     }
 
-    return { message: 'A link to change the password has been sent to your email' };
+    return { message: 'A link to change the password has been sent to your email' }
   }
 
 
@@ -279,18 +283,18 @@ export class UsersController {
   @Put('change-password')
   async changePassword(
     @Body() body: ChangePasswordDto,
-  ): Promise<{message: string}> {
-    const hashedPassword = await bcrypt.hash(body.password, 12);
+  ): Promise<{ message: string }> {
+    const hashedPassword = await bcrypt.hash(body.password, 12)
     const user = await this.usersService.changePassword({
       password: hashedPassword,
-      link: body.link
-    });
+      link: body.link,
+    })
 
     if (!user) {
-      throw new BadRequestException('The link to change the password is not valid');
+      throw new BadRequestException('The link to change the password is not valid')
     }
 
-    return { message: 'Your password has been successfully changed' };
+    return { message: 'Your password has been successfully changed' }
   }
 
 
@@ -299,17 +303,17 @@ export class UsersController {
   @Put('new-password')
   async newPassword(
     @Body() body: NewPasswordDto,
-  ): Promise<{message: string}> {
-    const hashedPassword = await bcrypt.hash(body.password, 12);
+  ): Promise<{ message: string }> {
+    const hashedPassword = await bcrypt.hash(body.password, 12)
     const user = await this.usersService.newPassword({
       password: hashedPassword,
-      _id: body._id
-    });
+      _id: body._id,
+    })
 
     if (!user) {
-      throw new BadRequestException('The link to change the password is not valid');
+      throw new BadRequestException('The link to change the password is not valid')
     }
 
-    return { message: 'Your password has been successfully changed' };
+    return { message: 'Your password has been successfully changed' }
   }
 }

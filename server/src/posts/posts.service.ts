@@ -1,105 +1,98 @@
-import { Model } from "mongoose";
+import { Model } from 'mongoose'
 import { Injectable } from '@nestjs/common'
-import { InjectModel } from "@nestjs/mongoose";
-import * as uuid from 'uuid';
-
-import { MailService } from '../mail/mail.service';
-import { User } from "./schemas/user.schema";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { NewPasswordDto } from "./dto/new-password.dto";
-import { LoginDto } from "./dto/login.dto";
-import { SendEmailDto } from './dto/send-email.dto'
-import { ConfirmDto } from './dto/confirm.dto'
-import { ChangePasswordDto } from './dto/change-password.dto'
+import { InjectModel } from '@nestjs/mongoose'
 
 
+import { User, UserDocument } from './schemas/user.schema'
+import { Post, PostDocument } from './schemas/post.schema'
+import { CreatePostDto } from './dto/create-post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
+import { AddImagesDto } from './dto/add-images.dto'
+import { RemoveImageDto } from './dto/remove-image.dto'
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
 
 @Injectable()
 export class PostsService {
 
-  constructor(@InjectModel(User.name) private userModel: Model<User>, private mailService: MailService) {}
-
-  async getAll(): Promise<User[]> {
-    return this.userModel.find().exec()
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Post.name) private postModel: Model<PostDocument>,
+  ) {
   }
 
-  async getById(id: string): Promise<User> {
-    return this.userModel.findById(id)
-  }
-
-  async create(userDto: CreateUserDto): Promise<User> {
-    const userWithActivationLink = {...userDto, linkForActivated: uuid.v4()}
-    const newUser = new this.userModel(userWithActivationLink)
-    await this.mailService.sendUserConfirmation(
-      userWithActivationLink.name,
-      userWithActivationLink.email,
-      userWithActivationLink.linkForActivated
-      );
-    return newUser.save()
-  }
-
-  async remove(id: string): Promise<User> {
-    return this.userModel.findByIdAndRemove(id)
-  }
-
-  async update(id: string, updateFieldObject: {[key: string]: string | boolean}): Promise<User> {
-    return this.userModel.findByIdAndUpdate(id, updateFieldObject, { new: true })
-  }
-
-  async findOne(loginDto: LoginDto): Promise<User>  {
-    return this.userModel.findOne({email: loginDto.email})
-  }
-
-  async confirm(linkDto: ConfirmDto): Promise<User> {
-    const user = await this.userModel.findOneAndUpdate({linkForActivated: linkDto.link}, { isActivated: true }, { new: true })
-    return this.userModel.findOneAndUpdate({email: user.email}, { linkForActivated: '' }, { new: true }) 
-  }
-
-  async sendEmailForActivation(emailDto: SendEmailDto): Promise<User>  {
-    const user = await this.userModel.findOne({email: emailDto.email})
-    if (!user) {
-      return null
+  async create(createPostDto: CreatePostDto & { images: string[] }, fieldName: string, chosenFields: Record<string, number>): Promise<Post> {
+    const postWithTime = {
+      ...createPostDto,
+      time: new Date().getTime(),
+      location: capitalizeFirstLetter(createPostDto.location),
     }
-
-    await this.mailService.sendUserConfirmation(
-      user.name,
-      user.email,
-      user.linkForActivated
-      );
-      return user
+    const post = new this.postModel(postWithTime)
+    return (await post.save()).populate({
+      path: fieldName,
+      select: chosenFields,
+    })
   }
 
-  async sendEmailForPassword(emailDto: SendEmailDto): Promise<User>  {
-    const link = uuid.v4()
-    const user = await this.userModel.findOneAndUpdate({email: emailDto.email}, { changePasswordLink: link }, { new: true })
-
-    if (!user) {
-      return null
-    }
-
-    await this.mailService.sendUserPassword(
-      user.name,
-      user.email,
-      link
-    );
-    return user
+  async findOneAndPopulate(id: string, fieldName: string, chosenFields: Record<string, number>) {
+    return await this.postModel
+      .findById(id)
+      .populate({ path: fieldName, select: chosenFields })
+      .exec()
   }
 
-  async changePassword(changePasswordDto: ChangePasswordDto): Promise<User>  {
-    const user = await this.userModel.findOneAndUpdate(
-      {changePasswordLink: changePasswordDto.link},
-      { password: changePasswordDto.password },
-      { new: true }
-    )
-    return user
+  async getAll(location: string = 'Nanaimo', skip: number = 0, limit: number = 10, fieldName: string, chosenFields: Record<string, number>) {
+    const posts = await this.postModel
+      .find({ location: capitalizeFirstLetter(location) })
+      .sort({ 'time': 'desc' })
+      .limit(limit)
+      .skip(skip)
+      .populate({
+        path: fieldName,
+        select: chosenFields,
+      })
+
+    const count = await this.postModel.countDocuments({ location: capitalizeFirstLetter(location) }).exec()
+    const pages = Math.floor((count - 1) / limit) + 1
+
+    return { posts, count, pages }
   }
 
-  async newPassword(newPasswordDto: NewPasswordDto): Promise<User>  {
-    const user = await this.userModel.findOneAndUpdate(
-      {_id: newPasswordDto._id},
-      { password: newPasswordDto.password },
-      { new: true }
-    )
-    return user
+  async remove(id: string): Promise<Post> {
+    return this.postModel.findByIdAndRemove(id)
+  }
+
+  async update(updatePostDto: UpdatePostDto): Promise<Post> {
+    return this.postModel.findByIdAndUpdate(updatePostDto._id, updatePostDto.field, { new: true })
+  }
+
+  async getLocations(): Promise<unknown[]> {
+    const locations = await this.postModel.find().select({ 'location': 1, '_id': 0 }).exec()
+    const locationsSet = new Set()
+    locations.forEach(location => {
+      if (!locationsSet.has(location.location)) {
+        locationsSet.add(location.location)
+      }
+    })
+    return [...locationsSet]
+  }
+
+  async getAllPostsByAuthorId(authorId: string, fieldName: string, chosenFields: Record<string, number>): Promise<Post[]> {
+    return await this.postModel.find({ 'authorId': authorId }).populate({
+      path: fieldName,
+      select: chosenFields,
+    }).sort({ 'time': 'desc' }).exec()
+  }
+
+  async addImages(addImagesDto: AddImagesDto, images: string[]): Promise<Post> {
+    const post = await this.postModel.findById(addImagesDto._id)
+    return this.postModel.findByIdAndUpdate(addImagesDto._id, { images: [...post.images, ...images] }, { new: true })
+  }
+
+  async removeImage(removeImageDto: RemoveImageDto): Promise<Post> {
+    const post = await this.postModel.findById(removeImageDto._id)
+    return this.postModel.findByIdAndUpdate(removeImageDto._id, { images: post.images.filter(image => image !== removeImageDto.image) }, { new: true })
   }
 }

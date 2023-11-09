@@ -1,23 +1,21 @@
 import axios from 'axios'
 
-const baseURL = 'https://helper.plus:5000/api'
+// const BaseURL = 'https://helper.plus:5000/api'
+const BaseURL = 'http://localhost:5000/api'
 
 export const URL = {
-  login: '/login',
-  logout: '/logout',
-  users: '/users',
-  confirmation: '/confirmation',
-  user: '/user',
-  sendEmailForPassword :  '/password',
-  sendEmailForActivation: '/activation',
-  changePassword: '/change-password',
-  changeAvatar: '/file',
-  newPassword: '/new-password'
+  login: BaseURL + '/login',
+  logout: BaseURL + '/logout',
+  users: BaseURL + '/users',
+  confirmation: BaseURL + '/confirmation',
+  user: BaseURL + '/user',
+  sendEmailForPassword: BaseURL + '/password',
+  sendEmailForActivation: BaseURL + '/activation',
+  changePassword: BaseURL + '/change-password',
+  changeAvatar: BaseURL + '/file',
+  newPassword: BaseURL + '/new-password',
 }
 
-const $api = axios.create({
-  withCredentials: true,
-  baseURL
-})
+const $api = axios.create({ withCredentials: true })
 
 export { $api }

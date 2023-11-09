@@ -1,12 +1,12 @@
 import React from 'react'
-import { MdCreate, MdClear, MdDone } from 'react-icons/md'
-import { PhoneInput } from 'react-international-phone';
-import 'react-international-phone/style.css';
-import { ButtonGroup, IconButton, Input, InputGroup, InputLeftAddon, Text } from '@chakra-ui/react'
+import { ButtonGroup, IconButton, Input, Text } from '@chakra-ui/react'
+import { MdClear, MdCreate, MdDone } from 'react-icons/md'
+import { PhoneInput } from 'react-international-phone'
 
 import { useAppDispatch } from '../../../../app'
 import { fetchUpdateUser } from '../../../Authorization/model/asyncActions'
 
+import 'react-international-phone/style.css'
 import classes from './EditableInput.module.sass'
 
 interface IProps {
@@ -15,7 +15,7 @@ interface IProps {
   field: string
 }
 
-const EditableInput: React.FC<IProps> = ({_id, defaultValue, field}) => {
+const EditableInput: React.FC<IProps> = ({ _id, defaultValue, field }) => {
 
   const dispatch = useAppDispatch()
   const [value, setValue] = React.useState(defaultValue)
@@ -37,7 +37,7 @@ const EditableInput: React.FC<IProps> = ({_id, defaultValue, field}) => {
   const handleDoneClick = () => {
     const body = {
       _id,
-      field: {[`${field}`]: value}
+      field: { [`${field}`]: value },
     }
     dispatch(fetchUpdateUser(body))
     setIsEdit(false)
@@ -48,19 +48,20 @@ const EditableInput: React.FC<IProps> = ({_id, defaultValue, field}) => {
       <div className={classes.inputContainer}>
         {
           field === 'phone'
-          ? <PhoneInput
-              defaultCountry="ca"
+            ? <PhoneInput
+              defaultCountry='ca'
               value={value}
               onChange={(phone) => setValue(phone)}
               autoFocus
             />
-          : <Input onChange={handleChange} size='sm' value={value} autoComplete="off" autoFocus/>
+            : <Input onChange={handleChange} size='sm' value={value} autoComplete='off' autoFocus />
         }
 
 
         <ButtonGroup justifyContent='center' size='sm'>
-          <IconButton size='sm' icon={<MdDone />} onClick={handleDoneClick} aria-label="button done" className={classes.blue}/>
-          <IconButton size='sm' icon={<MdClear />} onClick={close} aria-label="button close" className={classes.red}/>
+          <IconButton size='sm' icon={<MdDone />} onClick={handleDoneClick} aria-label='button done'
+                      className={classes.blue} />
+          <IconButton size='sm' icon={<MdClear />} onClick={close} aria-label='button close' className={classes.red} />
         </ButtonGroup>
       </div>
     )
@@ -70,7 +71,7 @@ const EditableInput: React.FC<IProps> = ({_id, defaultValue, field}) => {
     return (
       <div className={classes.textContainer}>
         <Text fontSize='lg'>{value || 'No information available'}</Text>
-        <IconButton size='sm' icon={<MdCreate />} onClick={open} aria-label="button create" className={classes.blue}/>
+        <IconButton size='sm' icon={<MdCreate />} onClick={open} aria-label='button create' className={classes.blue} />
       </div>
     )
   }

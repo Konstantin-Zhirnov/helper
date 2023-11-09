@@ -1,23 +1,20 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from "@nestjs/mongoose";
-import { JwtModule } from "@nestjs/jwt";
+import { Module } from '@nestjs/common'
+import { MongooseModule } from '@nestjs/mongoose'
 
-import { Post, PostSchema } from "./schemas/post.schema";
-import { PostsController } from "./posts.controller";
-import { PostsService } from "./posts.service";
+import { User, UserSchema } from './schemas/user.schema'
+import { Post, PostSchema } from './schemas/post.schema'
+import { PostsController } from './posts.controller'
+import { PostsService } from './posts.service'
 
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Post.name, schema: PostSchema }
+      { name: Post.name, schema: PostSchema }, { name: User.name, schema: UserSchema },
     ]),
-    JwtModule.register({
-      secret: 'secret',
-      signOptions: {expiresIn: '1d'}
-    })
   ],
   controllers: [PostsController],
-  providers: [PostsService]
+  providers: [PostsService],
 })
-export class PostsModule {}
+export class PostsModule {
+}

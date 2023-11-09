@@ -1,22 +1,38 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-
-import { Post } from '../../entities'
-import { posts } from './postsList'
+import { Post, PostType, ReasonType } from '../../features'
 
 import classes from './Posts.module.sass'
 
-const Posts: React.FC = () => {
+
+interface IProps {
+  posts: PostType[]
+  reason: ReasonType
+}
+
+const Posts: React.FC<IProps> = ({ posts, reason }) => {
   return (
     <motion.ul className={classes.cards}>
-      {posts.map((card, index) => (
-        <Post
-          key={index}
-          index={index}
-          title={card.title}
-          content={card.content}
-        />
-      ))}
+      {posts.map((post, index) => (
+          <Post
+            key={post._id}
+            _id={post._id}
+            index={index}
+            title={post.title}
+            description={post.description}
+            location={post.location}
+            time={post.time}
+            name={post.authorId.name}
+            photo={post.authorId.photo}
+            email={post.authorId.email}
+            phone={post.authorId.phone}
+            whatsapp={post.authorId.whatsapp}
+            telegram={post.authorId.telegram}
+            images={post.images}
+            reason={reason}
+          />
+        ),
+      )}
     </motion.ul>
   )
 }

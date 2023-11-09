@@ -1,0 +1,67 @@
+@import "../../../../shared/constants/vars"
+
+.container
+  position: relative
+  padding: 1rem 1rem 0.4rem
+  display: flex
+  flex-wrap: wrap
+  gap: 1rem
+
+  .remove
+    position: absolute
+    top: 5px
+    right: 5px
+    background-color: transparent
+
+    &:hover
+      background-color: cornsilk
+
+    svg
+      fill: $red
+
+  .user
+    text-align: center
+    width: 200px
+    overflow: hidden
+
+    .name
+      margin-top: 0.3rem
+
+    .stars
+      height: 20px
+      color: darkgoldenrod
+
+  .info
+    flex: 1
+    display: flex
+    flex-direction: column
+
+    .title
+      font-weight: 500
+
+    .divider
+      margin: 0.7rem 0
+
+    .footer
+      margin-top: auto
+      display: flex
+      justify-content: space-between
+      align-items: center
+
+      .location
+        color: $primary-color
+        display: flex
+        align-items: baseline
+        gap: 6px
+
+      .time
+        color: $primary-color
+
+
+@media only screen and (max-width: 640px)
+  .container
+    .user
+      width: 100%
+
+    .info .footer
+      margin-top: 1rem

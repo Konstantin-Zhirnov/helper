@@ -4,9 +4,7 @@ import { createRoot } from 'react-dom/client'
 import { ToastContainer } from 'react-toastify'
 import { ChakraProvider } from '@chakra-ui/react'
 
-import { store } from './app'
-
-import App from './app/components/App'
+import { App, store } from './app'
 
 import './index.sass'
 

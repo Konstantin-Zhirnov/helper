@@ -19,7 +19,7 @@ const jwt_1 = require("@nestjs/jwt");
 const swagger_1 = require("@nestjs/swagger");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
-const uuid = require("uuid");
+const fs_1 = require("fs");
 const validation_pipe_1 = require("../pipes/validation.pipe");
 const users_service_1 = require("./users.service");
 const user_schema_1 = require("./schemas/user.schema");
@@ -44,7 +44,7 @@ const getUserWithoutPassword = (user) => {
         linkForActivated: user.linkForActivated,
         changePasswordLink: '',
         paid: user.paid,
-        paidTime: user.paidTime
+        paidTime: user.paidTime,
     };
 };
 let UsersController = class UsersController {
@@ -77,7 +77,7 @@ let UsersController = class UsersController {
             linkForActivated: createUserDto.linkForActivated,
             changePasswordLink: '',
             paid: createUserDto.paid,
-            paidTime: createUserDto.paidTime
+            paidTime: createUserDto.paidTime,
         });
         return {
             message: 'success',
@@ -126,11 +126,13 @@ let UsersController = class UsersController {
         };
     }
     async uploadFile(id, file) {
+        const fileName = file.filename;
+        const folder = fileName.substring(0, fileName.lastIndexOf('.'));
         const fieldForUpdate = {
-            photo: `${process.env.SERVER_PATH}${file.filename}`
+            photo: `${process.env.AUTH_PATH}${folder}/${file.filename}`,
         };
         const user = await this.usersService.update(id, fieldForUpdate);
-        return getUserWithoutPassword(user);
+        return { photo: user.photo };
     }
     async confirm(body, response) {
         const user = await this.usersService.confirm(body);
@@ -159,7 +161,7 @@ let UsersController = class UsersController {
         const hashedPassword = await bcrypt.hash(body.password, 12);
         const user = await this.usersService.changePassword({
             password: hashedPassword,
-            link: body.link
+            link: body.link,
         });
         if (!user) {
             throw new common_1.BadRequestException('The link to change the password is not valid');
@@ -170,7 +172,7 @@ let UsersController = class UsersController {
         const hashedPassword = await bcrypt.hash(body.password, 12);
         const user = await this.usersService.newPassword({
             password: hashedPassword,
-            _id: body._id
+            _id: body._id,
         });
         if (!user) {
             throw new common_1.BadRequestException('The link to change the password is not valid');
@@ -259,16 +261,17 @@ __decorate([
     (0, common_1.Post)('file'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
         storage: (0, multer_1.diskStorage)({
-            destination: './public',
+            destination: (req, file, cb) => {
+                const fileName = file.originalname;
+                const folder = fileName.substring(0, fileName.lastIndexOf('.'));
+                const uploadPath = `./public/${folder}`;
+                if (!(0, fs_1.existsSync)(uploadPath)) {
+                    (0, fs_1.mkdirSync)(uploadPath);
+                }
+                cb(null, uploadPath);
+            },
             filename: (req, file, callback) => {
-                const uniqueSuffix = uuid.v4();
-                const extname = (str) => {
-                    const result = str.split('.');
-                    return result[result.length - 1];
-                };
-                const ext = extname(file.originalname);
-                const filename = `${uniqueSuffix}.${ext}`;
-                callback(null, filename);
+                callback(null, file.originalname);
             },
         }),
     })),

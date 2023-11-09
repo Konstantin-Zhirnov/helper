@@ -1,12 +1,15 @@
 import React from 'react'
-import { Avatar } from '@chakra-ui/react'
 import { MdAddAPhoto } from 'react-icons/md'
+import { Avatar } from '@chakra-ui/react'
 
-import { useAppDispatch } from '../../../../app'
+import { useAppDispatch, useAppSelector } from '../../../../app'
+import { getExtension, reduceImage } from '../../../../shared'
+
 import { fetchChangeAvatar } from '../../../Authorization/model/asyncActions'
-import { setAlertMessage } from '../../../Authorization/model/slice'
+import { getIsNewAvatar, setAlertMessage, setIsNewAvatar } from '../../../Authorization/model/slice'
 
 import classes from './ProfileAvatar.module.sass'
+
 
 interface IProps {
   name: string
@@ -14,33 +17,43 @@ interface IProps {
   id: string
 }
 
-const ProfileAvatar: React.FC<IProps> = ({name, photo, id}) => {
+const ProfileAvatar: React.FC<IProps> = ({ name, photo, id }) => {
   const dispatch = useAppDispatch()
+  const isNewAvatar = useAppSelector(getIsNewAvatar)
+
+  React.useEffect(() => {
+    if (isNewAvatar) {
+      dispatch(setIsNewAvatar(false))
+    }
+  }, [isNewAvatar])
 
   const handleChange = (event) => {
-    if (event.target.files[0].type === "image/jpeg" || event.target.files[0].type === "image/png") {
-      if (event.target.files[0].size < 200000) {
-        const formData = new FormData();
-        formData.append("file", event.target.files[0]);
-        formData.append("id", id);
+    const file = event.target.files[0]
+    const maxSize = 300
+
+    if (file.type === 'image/jpeg' || file.type === 'image/png') {
+
+      reduceImage(file, maxSize, function(reducedImage) {
+        const name = `${id}.${getExtension(file.name)}`
+        const formData = new FormData()
+        formData.append('file', reducedImage, name)
+        formData.append('id', id)
         dispatch(fetchChangeAvatar(formData))
-      } else {
-        dispatch(setAlertMessage('Select a file smaller than 200KB'))
-      }
+      })
     } else {
       dispatch(setAlertMessage('Invalid extension of the selected file'))
     }
 
-    event.target.value = null;
+    event.target.value = null
   }
 
   return (
 
-      <div className={classes.container}>
-          <Avatar size='2xl' name={name} src={photo} />
-        <label htmlFor="avatar"><MdAddAPhoto className={classes.icon}/></label>
-        <input type='file' id="avatar" className={classes.input} onChange={handleChange} accept="image/jpeg, image/png"/>
-        </div>
+    <div className={classes.container}>
+      <Avatar size='2xl' name={name} src={`${photo}?${new Date().getTime()}`} />
+      <label htmlFor='avatar'><MdAddAPhoto className={classes.icon} /></label>
+      <input type='file' id='avatar' className={classes.input} onChange={handleChange} accept='image/jpeg, image/png' />
+    </div>
   )
 }
 

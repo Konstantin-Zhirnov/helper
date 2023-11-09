@@ -1,315 +1,204 @@
 import {
-  BadRequestException,
   Body,
   Controller,
-  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
   Post,
   Put,
-  Req,
-  Res,
-  UnauthorizedException,
-  UploadedFile,
+  Query,
+  UploadedFiles,
   UseInterceptors,
-  UsePipes,
-} from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
-import { Request, Response } from 'express';
+} from '@nestjs/common'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import * as uuid from 'uuid';
+import { FilesInterceptor } from '@nestjs/platform-express'
 
-import { ValidationPipe } from '../pipes/validation.pipe';
-import { PostsService } from './users.service';
-import { User } from './schemas/user.schema';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginDto } from './dto/login.dto';
-import { SendEmailDto } from './dto/send-email.dto'
-import { ConfirmDto } from './dto/confirm.dto'
-import { ChangePasswordDto } from './dto/change-password.dto'
-import { NewPasswordDto } from './dto/new-password.dto'
+import { Post as PostModel } from './schemas/post.schema'
+import { PostsService } from './posts.service'
+import { CreatePostDto } from './dto/create-post.dto'
+import { diskStorage } from 'multer'
+import { existsSync, mkdirSync, unlinkSync } from 'fs'
+import { UpdatePostDto } from './dto/update-post.dto'
+import { AddImagesDto } from './dto/add-images.dto'
+import { RemoveImageDto } from './dto/remove-image.dto'
+import { RemovePostDto } from './dto/remove-post.dto'
 
-const getUserWithoutPassword = (user: User) => {
-  return {
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    password: '',
-    phone: user.phone,
-    whatsapp: user.whatsapp,
-    telegram: user.telegram,
-    viber: user.viber,
-    photo: user.photo,
-    isActivated: user.isActivated,
-    linkForActivated: user.linkForActivated,
-    changePasswordLink: '',
-    paid: user.paid,
-    paidTime: user.paidTime
-  }
+const uuid = require('uuid')
+
+
+const chosenFields: Record<string, number> = {
+  name: 1,
+  email: 1,
+  phone: 1,
+  photo: 1,
+  whatsapp: 1,
+  telegram: 1,
+  viber: 1,
 }
 
+const getExtension = (fileName: string): string => {
+  const i = fileName.lastIndexOf('.')
+  if (i === -1) {
+    throw new Error('file`s name is broken')
+  }
+  return fileName.slice(i + 1).toLowerCase()
+}
 
 @Controller()
 export class PostsController {
-  constructor(
-    private readonly usersService: PostsService,
-    private jwtService: JwtService,
-  ) {}
-
-
-  @ApiOperation({ summary: 'Get all users' })
-  @ApiResponse({ status: 200, type: [User] })
-  @Get('users')
-  getAll(): Promise<User[]> {
-    return this.usersService.getAll();
+  constructor(private readonly postsService: PostsService) {
   }
 
 
-  @ApiOperation({ summary: 'Get one user by id' })
-  @ApiResponse({ status: 200, type: User })
-  @Get('users/:id')
-  getOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.getById(id);
+  @ApiOperation({ summary: 'Get all posts' })
+  @ApiResponse({ status: 200, type: [PostModel] })
+  @Get('posts')
+  async getAll(@Query() { location, skip, limit }): Promise<{ posts: PostModel[], count: number, pages: number }> {
+    return await this.postsService.getAll(location, skip, limit, 'authorId', chosenFields)
   }
 
 
-  @ApiOperation({ summary: 'Create user' })
-  @ApiResponse({ status: 201, type: User })
-  @Post('users')
-  @UsePipes(ValidationPipe)
+  @ApiOperation({ summary: 'Get post' })
+  @Get('post/:id')
+  async findOne(@Param('id') id: string): Promise<PostModel> {
+    return await this.postsService.findOneAndPopulate(id, 'authorId', chosenFields)
+  }
+
+
+  @ApiOperation({ summary: 'Create post' })
+  @ApiResponse({ status: 200, type: PostModel })
+  @Post('create-post')
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createUserDto: CreateUserDto): Promise<{message: string}> {
-    const pretendToUser = await this.usersService.findOne({email: createUserDto.email} as LoginDto);
-    if (pretendToUser) {
-      throw new BadRequestException('A user with this email already exists!');
+  @UseInterceptors(FilesInterceptor('images', 5, {
+    storage: diskStorage({
+      destination: (req: any, file: any, cb: any) => {
+        if (file) {
+          const fileName = file.originalname
+          const folder = fileName.substring(0, fileName.lastIndexOf('-'))
+          const folderPath = `./public/${folder}`
+          if (!existsSync(folderPath)) {
+            mkdirSync(folderPath)
+          }
+          const uploadPath = `./public/${folder}/posts`
+          if (!existsSync(uploadPath)) {
+            mkdirSync(uploadPath)
+          }
+          cb(null, uploadPath)
+        }
+      },
+      filename: (req, file, callback) => {
+        const name = `${uuid.v4()}.${getExtension(file.originalname)}`
+        callback(null, name)
+      },
+    }),
+  }) as any)
+  async create(
+    @Body() createPostDto: CreatePostDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ): Promise<PostModel> {
+    const images = []
+    if (files.length > 0) {
+      const folder = files[0].originalname.split('-')[0]
+      const path = `${process.env.SERVER_PATH}${folder}/posts/`
+
+      files.forEach(file => {
+        images.push(`${path}${file.filename}`)
+      })
     }
-
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 12);
-    await this.usersService.create({
-      name: createUserDto.name,
-      email: createUserDto.email,
-      password: hashedPassword,
-      phone: createUserDto.phone,
-      whatsapp: createUserDto.whatsapp,
-      telegram: createUserDto.telegram,
-      viber: createUserDto.viber,
-      photo: createUserDto.photo,
-      isActivated: false,
-      linkForActivated: createUserDto.linkForActivated,
-      changePasswordLink: '',
-      paid: createUserDto.paid,
-      paidTime: createUserDto.paidTime
-    });
-
-    return {
-      message: 'success',
-    };
+    return await this.postsService.create({ ...createPostDto, images }, 'authorId', chosenFields)
   }
 
 
-  @ApiOperation({ summary: 'Delete user' })
-  @ApiResponse({ status: 200, type: User })
-  @Delete('users/:id')
-  remove(@Param('id') id: string): Promise<User> {
-    return this.usersService.remove(id);
+  @ApiOperation({ summary: 'Delete post' })
+  @ApiResponse({ status: 200, type: PostModel })
+  @Post('remove-post')
+  async remove(@Body() removePostDto: RemovePostDto): Promise<{ _id: string }> {
+    const post = await this.postsService.remove(removePostDto._id)
+    post.images.forEach(src => {
+      const image = src.split('/').at(-1)
+      unlinkSync(`./public/${removePostDto.folder}/posts/${image}`)
+    })
+    return { _id: removePostDto._id }
   }
 
-
-  @ApiOperation({ summary: 'Update user' })
-  @ApiResponse({ status: 201, type: User })
-  @Put('users/:id')
+  @ApiOperation({ summary: 'Update post' })
+  @ApiResponse({ status: 201, type: PostModel })
+  @Put('update-post')
   async update(
-    @Body() updateFieldObject: {[key: string]: string | boolean},
-    @Param('id') id: string,
-  ): Promise<User> {
-    const user = await this.usersService.update(id, updateFieldObject);
-
-    return getUserWithoutPassword(user)
+    @Body() updatePostDto: UpdatePostDto,
+  ): Promise<UpdatePostDto> {
+    await this.postsService.update(updatePostDto)
+    return updatePostDto
   }
 
-
-  @ApiOperation({ summary: 'Login' })
-  @Post('login')
-  async login(
-    @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) response: Response,
-  ): Promise<User> {
-    const user = await this.usersService.findOne(loginDto);
-
-    if (!user) {
-      throw new BadRequestException('Invalid credentials');
-    }
-
-    if (!(await bcrypt.compare(loginDto.password, user.password))) {
-      throw new BadRequestException('Invalid credentials');
-    }
-
-    if (!user.isActivated) {
-      throw new BadRequestException('You need to confirm your email');
-    }
-
-    const jwt = await this.jwtService.signAsync({ id: user._id });
-
-    response.cookie('jwt', jwt, { httpOnly: true });
-
-    return user;
+  @ApiOperation({ summary: 'Get all cities' })
+  @ApiResponse({ status: 200, type: [String] })
+  @Get('cities')
+  async getCities(): Promise<unknown[]> {
+    return await this.postsService.getLocations()
   }
 
+  @ApiOperation({ summary: 'Get all posts by author id' })
+  @ApiResponse({ status: 200, type: [PostModel] })
+  @Get('posts/:id')
+  async getAllPostsById(@Param('id') id: string): Promise<PostModel[]> {
+    return await this.postsService.getAllPostsByAuthorId(id, 'authorId', chosenFields)
+  }
 
-  @ApiOperation({ summary: 'Get user' })
-  @ApiResponse({ status: 200, type: User })
-  @Get('user')
-  async user(@Req() request: Request): Promise<User> {
-    try {
-      const cookie = request.cookies['jwt'];
+  @ApiOperation({ summary: 'Add images' })
+  @ApiResponse({ status: 200, type: PostModel })
+  @Post('add-images')
+  @HttpCode(HttpStatus.CREATED)
+  @UseInterceptors(FilesInterceptor('images', 5, {
+    storage: diskStorage({
+      destination: (req: any, file: any, cb: any) => {
+        if (file) {
+          const fileName = file.originalname
+          const folder = fileName.substring(0, fileName.lastIndexOf('-'))
+          const folderPath = `./public/${folder}`
+          if (!existsSync(folderPath)) {
+            mkdirSync(folderPath)
+          }
+          const uploadPath = `./public/${folder}/posts`
+          if (!existsSync(uploadPath)) {
+            mkdirSync(uploadPath)
+          }
+          cb(null, uploadPath)
+        }
+      },
+      filename: (req, file, callback) => {
+        const name = `${uuid.v4()}.${getExtension(file.originalname)}`
+        callback(null, name)
+      },
+    }),
+  }) as any)
+  async addImages(
+    @Body() addImagesDto: AddImagesDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    const images = []
+    if (files.length > 0) {
+      const folder = files[0].originalname.split('-')[0]
+      const path = `${process.env.SERVER_PATH}${folder}/posts/`
 
-      const data = await this.jwtService.verifyAsync(cookie);
-      if (!data) {
-        throw new UnauthorizedException();
-      }
-
-      const user = await this.usersService.getById(data['id']);
-      return getUserWithoutPassword(user)
-
-    } catch (e) {
-      throw new UnauthorizedException();
+      files.forEach(file => {
+        images.push(`${path}${file.filename}`)
+      })
     }
+    const post = await this.postsService.addImages(addImagesDto, images)
+    return { _id: addImagesDto._id, field: { images: post.images } }
   }
 
-
-  @ApiOperation({ summary: 'Logout' })
-  @ApiResponse({ status: 201, type: User })
-  @Post('logout')
-  async logout(@Res({ passthrough: true }) response: Response): Promise<{message: string}> {
-    response.clearCookie('jwt');
-
-    return {
-      message: 'success',
-    };
-  }
-
-
-  @ApiOperation({ summary: 'Upload file' })
-  @ApiResponse({ status: 201, type: User })
-  @Post('file')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './public',
-        filename: (req, file, callback) => {
-          const uniqueSuffix = uuid.v4();
-          const extname = (str) => {
-            const result = str.split('.');
-            return result[result.length - 1];
-          };
-          const ext = extname(file.originalname);
-          const filename = `${uniqueSuffix}.${ext}`;
-          callback(null, filename);
-        },
-      }),
-    }) as any,
-  )
-  async uploadFile(
-    @Body() id: string,
-    @UploadedFile() file: Express.Multer.File,
-  ): Promise<User> {
-    const fieldForUpdate = {
-      photo: `${process.env.SERVER_PATH}${file.filename}`
-    };
-
-    const user = await this.usersService.update(id, fieldForUpdate);
-    return getUserWithoutPassword(user)
-  }
-
-  @ApiOperation({ summary: 'Confirmation' })
-  @ApiResponse({ status: 201, type: User })
-  @Post('confirmation')
-  async confirm(@Body() body: ConfirmDto, @Res({ passthrough: true }) response: Response) {
-    const user = await this.usersService.confirm(body);
-
-    if (!user) {
-      throw new BadRequestException('Invalid credentials');
-    }
-
-    const jwt = await this.jwtService.signAsync({ id: user._id });
-
-    response.cookie('jwt', jwt, { httpOnly: true });
-
-    return { message: 'success' };
-  }
-
-
-  @ApiOperation({ summary: 'Send activation link' })
-  @ApiResponse({ status: 201, type: User })
-  @Post('activation')
-  async sendEmailForActivation(
-    @Body() body: SendEmailDto,
-  ): Promise<{message: string}> {
-    const user = await this.usersService.sendEmailForActivation(body);
-    if (!user) {
-      throw new BadRequestException('There is no user with such an email');
-    }
-
-    return { message: 'Activation link successfully sent' };
-  }
-
-
-  @ApiOperation({ summary: 'Send link for changing password' })
-  @ApiResponse({ status: 201, type: User })
-  @Post('password')
-  async sendEmailForPassword(
-    @Body() body: SendEmailDto,
-  ): Promise<{message: string}> {
-    const user = await this.usersService.sendEmailForPassword(body);
-    if (!user) {
-      throw new BadRequestException('There is no user with such an email');
-    }
-
-    return { message: 'A link to change the password has been sent to your email' };
-  }
-
-
-  @ApiOperation({ summary: 'Change password if user forgot it' })
-  @ApiResponse({ status: 201, type: User })
-  @Put('change-password')
-  async changePassword(
-    @Body() body: ChangePasswordDto,
-  ): Promise<{message: string}> {
-    const hashedPassword = await bcrypt.hash(body.password, 12);
-    const user = await this.usersService.changePassword({
-      password: hashedPassword,
-      link: body.link
-    });
-
-    if (!user) {
-      throw new BadRequestException('The link to change the password is not valid');
-    }
-
-    return { message: 'Your password has been successfully changed' };
-  }
-
-
-  @ApiOperation({ summary: 'Change password' })
-  @ApiResponse({ status: 201, type: User })
-  @Put('new-password')
-  async newPassword(
-    @Body() body: NewPasswordDto,
-  ): Promise<{message: string}> {
-    const hashedPassword = await bcrypt.hash(body.password, 12);
-    const user = await this.usersService.newPassword({
-      password: hashedPassword,
-      _id: body._id
-    });
-
-    if (!user) {
-      throw new BadRequestException('The link to change the password is not valid');
-    }
-
-    return { message: 'Your password has been successfully changed' };
+  @ApiOperation({ summary: 'Remove image' })
+  @ApiResponse({ status: 201, type: PostModel })
+  @Post('remove-image')
+  async removeImage(
+    @Body() removeImageDto: RemoveImageDto,
+  ) {
+    const post = await this.postsService.removeImage(removeImageDto)
+    const image = removeImageDto.image.split('/').at(-1)
+    unlinkSync(`./public/${removeImageDto.folder}/posts/${image}`)
+    return { _id: removeImageDto._id, field: { images: post.images } }
   }
 }

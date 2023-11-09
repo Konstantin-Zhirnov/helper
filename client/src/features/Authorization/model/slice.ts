@@ -1,14 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import {
-  fetchLogin,
-  fetchRegistration,
+  fetchChangeAvatar,
+  fetchChangePassword,
   fetchConfirmation,
-  fetchUser,
+  fetchLogin,
   fetchLogout,
-  fetchSendEmail, fetchChangePassword, fetchChangeAvatar, fetchUpdateUser, fetchNewPassword,
+  fetchNewPassword,
+  fetchRegistration,
+  fetchSendEmail,
+  fetchUpdateUser,
+  fetchUser,
 } from './asyncActions'
-import { AuthorizationStateType, SendEmailReasonType, UserType } from '../types'
+import { AuthorizationStateType, MessageResponseType, SendEmailReasonType, UserType } from '../types'
 import { RootState } from '../../../app'
 
 const initialState: AuthorizationStateType = {
@@ -23,6 +27,7 @@ const initialState: AuthorizationStateType = {
   sendEmailMessage: '',
   sendEmailReason: '',
   changePasswordMessage: '',
+  isNewAvatar: false,
   user: {
     _id: '',
     name: '',
@@ -37,7 +42,7 @@ const initialState: AuthorizationStateType = {
     linkForActivated: '',
     changePasswordLink: '',
     paid: false,
-    paidTime: ""
+    paidTime: '',
   },
 }
 
@@ -49,8 +54,8 @@ export const authorization = createSlice({
       state.isLoginModal = action.payload
     },
     clearSendEmail: (state) => {
-      state.sendEmailReason = ""
-      state.sendEmailMessage = ""
+      state.sendEmailReason = ''
+      state.sendEmailMessage = ''
     },
     goToSendEmailPage: (state, action: PayloadAction<SendEmailReasonType>) => {
       state.sendEmailReason = action.payload
@@ -58,6 +63,9 @@ export const authorization = createSlice({
     },
     setAlertMessage: (state, action: PayloadAction<string>) => {
       state.alertMessage = action.payload
+    },
+    setIsNewAvatar: (state, action: PayloadAction<boolean>) => {
+      state.isNewAvatar = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -90,7 +98,7 @@ export const authorization = createSlice({
       })
 
       .addCase(fetchUser.pending, pending)
-      .addCase(fetchUser.fulfilled, (state, action) => {
+      .addCase(fetchUser.fulfilled, (state, action: PayloadAction<UserType>) => {
         state.user = action.payload
         if (action.payload.isActivated) {
           state.isAuth = true
@@ -110,7 +118,7 @@ export const authorization = createSlice({
       })
 
       .addCase(fetchSendEmail.pending, pendingSendEmail)
-      .addCase(fetchSendEmail.fulfilled, (state, action) => {
+      .addCase(fetchSendEmail.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
         state.sendEmailMessage = action.payload.message
         state.sendEmailReason = ''
       })
@@ -119,7 +127,7 @@ export const authorization = createSlice({
       })
 
       .addCase(fetchChangePassword.pending, pendingChangePassword)
-      .addCase(fetchChangePassword.fulfilled, (state, action) => {
+      .addCase(fetchChangePassword.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
         state.changePasswordMessage = action.payload.message
       })
       .addCase(fetchChangePassword.rejected, (state, action) => {
@@ -128,7 +136,8 @@ export const authorization = createSlice({
 
       .addCase(fetchChangeAvatar.pending, pending)
       .addCase(fetchChangeAvatar.fulfilled, (state, action) => {
-        state.user = action.payload
+        state.user.photo = action.payload.photo
+        state.isNewAvatar = true
       })
       .addCase(fetchChangeAvatar.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -143,7 +152,7 @@ export const authorization = createSlice({
       })
 
       .addCase(fetchNewPassword.pending, pendingNewPassword)
-      .addCase(fetchNewPassword.fulfilled, (state, action) => {
+      .addCase(fetchNewPassword.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
         state.alertMessage = action.payload.message
       })
       .addCase(fetchNewPassword.rejected, (state, action) => {
@@ -162,7 +171,7 @@ function pendingLogin(state: AuthorizationStateType) {
 
 function pendingRegistration(state: AuthorizationStateType) {
   state.isRegistered = false
-  state.registrationErrorMessage = ""
+  state.registrationErrorMessage = ''
 }
 
 function pendingSendEmail(state: AuthorizationStateType) {
@@ -178,8 +187,13 @@ function pendingNewPassword(state: AuthorizationStateType) {
 }
 
 
-
-export const { setLoginModal, clearSendEmail, goToSendEmailPage, setAlertMessage } = authorization.actions
+export const {
+  setLoginModal,
+  clearSendEmail,
+  goToSendEmailPage,
+  setAlertMessage,
+  setIsNewAvatar,
+} = authorization.actions
 
 export const getAuth = (state: RootState): boolean => state.authorization.isAuth
 export const getUser = (state: RootState): UserType => state.authorization.user
@@ -198,9 +212,9 @@ export const getRegistrationErrorMessage = (state: RootState): string =>
   state.authorization.registrationErrorMessage
 export const getPhoto = (state: RootState): string => state.authorization.user.photo
 export const getName = (state: RootState): string => state.authorization.user.name
+export const getUserId = (state: RootState): string => state.authorization.user._id
 export const getAlertMessage = (state: RootState): string => state.authorization.alertMessage
-
-
+export const getIsNewAvatar = (state: RootState): boolean => state.authorization.isNewAvatar
 
 
 export default authorization.reducer

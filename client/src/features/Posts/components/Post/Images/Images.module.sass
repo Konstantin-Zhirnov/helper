@@ -1,0 +1,42 @@
+@import "../../../../../shared/constants/vars"
+
+.accordionButton
+  flex: 1
+  font-weight: 500
+  display: flex
+  justify-content: center
+  align-items: center
+  gap: 0.5rem
+
+.container
+  display: flex
+  flex-wrap: wrap
+  gap: 2rem
+
+  .image_container
+    position: relative
+
+    .image
+      width: 100px
+      cursor: pointer
+
+    .remove
+      position: absolute
+      top: -1px
+      right: -1px
+
+      svg
+        fill: $red
+        font-size: 20px
+
+        &:hover
+          filter: drop-shadow(0 0 2px silver)
+
+.icon
+  width: 46px
+  height: 46px
+
+.snipper
+  color: $primary-color
+  margin: auto 0
+

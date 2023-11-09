@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Card, CardBody, CardHeader, Heading, Text } from '@chakra-ui/react'
-import { FaSquareWhatsapp, FaTelegram, FaViber } from 'react-icons/fa6'
+import { FaSquareWhatsapp, FaTelegram } from 'react-icons/fa6'
 
 import { useAppSelector } from '../../app'
 import { EditableInput, EditablePasswordInput, getUser } from '../../features'
@@ -12,12 +12,12 @@ const ProfileInfo: React.FC = () => {
   const user = useAppSelector(getUser)
 
   return (
-    <>
+    <div className={classes.container}>
       <Card className={classes.card}>
         <CardHeader className={classes.cardHeader}>
           <Heading size='md'>Name:</Heading>
         </CardHeader>
-        <CardBody>
+        <CardBody className={classes.cardBody}>
           <Box>
             <EditableInput _id={user._id} defaultValue={user.name} field='name' />
           </Box>
@@ -28,7 +28,7 @@ const ProfileInfo: React.FC = () => {
         <CardHeader className={classes.cardHeader}>
           <Heading size='md'>Email:</Heading>
         </CardHeader>
-        <CardBody>
+        <CardBody className={classes.cardBody_email}>
           <Box>
             <Text fontSize='lg'>{user.email}</Text>
           </Box>
@@ -39,7 +39,7 @@ const ProfileInfo: React.FC = () => {
         <CardHeader className={classes.cardHeader}>
           <Heading size='md'>Password:</Heading>
         </CardHeader>
-        <CardBody>
+        <CardBody className={classes.cardBody}>
           <Box>
             <EditablePasswordInput _id={user._id} />
           </Box>
@@ -50,7 +50,7 @@ const ProfileInfo: React.FC = () => {
         <CardHeader className={classes.cardHeader}>
           <Heading size='md'>Phone:</Heading>
         </CardHeader>
-        <CardBody>
+        <CardBody className={classes.cardBody}>
           <Box>
             <EditableInput _id={user._id} defaultValue={user.phone} field='phone' />
           </Box>
@@ -62,7 +62,7 @@ const ProfileInfo: React.FC = () => {
           <Heading size='md' className={classes.heading}><FaSquareWhatsapp
             className={classes.whatsapp} />WhatsApp:</Heading>
         </CardHeader>
-        <CardBody>
+        <CardBody className={classes.cardBody}>
           <Box>
             <EditableInput _id={user._id} defaultValue={user.whatsapp} field='whatsapp' />
           </Box>
@@ -73,25 +73,13 @@ const ProfileInfo: React.FC = () => {
         <CardHeader className={classes.cardHeader}>
           <Heading size='md' className={classes.heading}><FaTelegram className={classes.telegram} /> Telegram:</Heading>
         </CardHeader>
-        <CardBody>
+        <CardBody className={classes.cardBody}>
           <Box>
             <EditableInput _id={user._id} defaultValue={user.telegram} field='telegram' />
           </Box>
         </CardBody>
       </Card>
-
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <Heading size='md' className={classes.heading}><FaViber className={classes.viber} />Viber:</Heading>
-        </CardHeader>
-        <CardBody>
-          <Box>
-            <EditableInput _id={user._id} defaultValue={user.viber} field='viber' />
-          </Box>
-        </CardBody>
-      </Card>
-
-    </>
+    </div>
   )
 }
 

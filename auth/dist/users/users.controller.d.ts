@@ -27,7 +27,9 @@ export declare class UsersController {
     logout(response: Response): Promise<{
         message: string;
     }>;
-    uploadFile(id: string, file: Express.Multer.File): Promise<User>;
+    uploadFile(id: string, file: Express.Multer.File): Promise<{
+        photo: string;
+    }>;
     confirm(body: ConfirmDto, response: Response): Promise<{
         message: string;
     }>;

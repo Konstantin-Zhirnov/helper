@@ -6,14 +6,14 @@ import classes from './MotionLi.module.sass'
 const variants = {
   visible: (i: number) => ({
     opacity: 1,
-    scale: 1,
+    // scale: 1,
     display: 'flex',
     transition: {
       delay: i * 0.3,
     },
   }),
   hidden: {
-    scale: 0.1,
+    // scale: 0.1,
     opacity: 0,
   },
 }
@@ -29,8 +29,8 @@ const MotionLi: React.FC<IProps> = ({ custom, dataTestId, children }) => {
     <motion.li
       variants={variants}
       custom={custom}
-      initial="hidden"
-      animate="visible"
+      initial='hidden'
+      animate='visible'
       className={classes.container}
       data-testid={dataTestId}
     >

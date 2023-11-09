@@ -1,27 +1,29 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ApiProperty } from '@nestjs/swagger';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { HydratedDocument, Types } from 'mongoose'
+
+export type PostDocument = HydratedDocument<Post>;
 
 @Schema()
 export class Post {
-  @ApiProperty({ example: '1', description: 'Unique identifier' })
-  _id: string;
-
-  @ApiProperty({ example: 'Konstantin', description: 'User`s name' })
   @Prop()
-  title: string;
+  title: string
 
-  @ApiProperty({ example: 'user@gmail.com', description: 'User`s email' })
-  @Prop({ required: true })
-  description: string;
+  @Prop()
+  description: string
 
-  @ApiProperty({ example: 'user@gmail.com', description: 'User`s email' })
-  @Prop({ required: true })
-  user: {
-    "$ref" : "users",
-    "$id" : ObjectId("5126bc054aed4daf9e2ab772"),
-    "$db" : "helper-users",
-    "extraField" : "anything"
-  }
+  @Prop()
+  location: string
+
+  @Prop({ type: Types.ObjectId, ref: 'User' })
+  authorId: { type: Types.ObjectId; ref: 'User' }
+
+  @Prop()
+  time: number
+
+  @Prop()
+  images: string[]
+
+  _id: Types.ObjectId
 }
 
-export const PostSchema = SchemaFactory.createForClass(Post);
+export const PostSchema = SchemaFactory.createForClass(Post)

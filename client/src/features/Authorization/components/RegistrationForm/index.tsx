@@ -2,7 +2,7 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Input, InputGroup, InputLeftAddon } from '@chakra-ui/react'
+import { Button, Input } from '@chakra-ui/react'
 import * as yup from 'yup'
 
 import { useAppDispatch } from '../../../../app'
@@ -31,7 +31,7 @@ const RegistrationForm: React.FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-    reset
+    reset,
   } = useForm<UserType>({
     resolver: yupResolver(schema),
   })
@@ -53,7 +53,7 @@ const RegistrationForm: React.FC = () => {
         linkForActivated: '',
         changePasswordLink: '',
         paid: true,
-        paidTime: ""
+        paidTime: '',
       }),
     )
     reset()
@@ -62,37 +62,37 @@ const RegistrationForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
       <span className={classes.input_container}>
-        <label htmlFor="Name">Name:</label>
-        <Input id="name" size="sm" {...register('name')} autoComplete="off" />
+        <label htmlFor='name'>Name:</label>
+        <Input id='name' size='sm' {...register('name')} autoComplete='off' />
         <ErrorMessage
           errors={errors as any}
-          name="name"
+          name='name'
           render={({ message }) => <p className={classes.error}>{message}</p>}
         />
       </span>
 
       <span className={classes.input_container}>
-        <label htmlFor="email">Email:</label>
-        <Input id="email" size="sm" {...register('email')} autoComplete="off" />
+        <label htmlFor='email'>Email:</label>
+        <Input id='email' size='sm' {...register('email')} autoComplete='off' />
         <ErrorMessage
           errors={errors as any}
-          name="email"
+          name='email'
           render={({ message }) => <p className={classes.error}>{message}</p>}
         />
       </span>
 
       <span className={classes.input_container}>
-        <label htmlFor="password">Password:</label>
+        <label htmlFor='password'>Password:</label>
         <PasswordInput register={register} />
 
         <ErrorMessage
           errors={errors as any}
-          name="password"
+          name='password'
           render={({ message }) => <p className={classes.error}>{message}</p>}
         />
       </span>
 
-      <Button type="submit" className={classes.btn}>
+      <Button type='submit' className={classes.btn}>
         Submit
       </Button>
     </form>
