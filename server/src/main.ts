@@ -6,9 +6,17 @@ import { AppModule } from './app.module'
 
 
 async function bootstrap() {
+  const fs = require('fs')
+  const keyFile = fs.readFileSync(__dirname + '/privkey.pem')
+  const certFile = fs.readFileSync(__dirname + '/fullchain.pem')
 
   const PORT = process.env.PORT
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    httpsOptions: {
+      key: keyFile,
+      cert: certFile,
+    },
+  })
   app.setGlobalPrefix('api')
 
   const config = new DocumentBuilder()
