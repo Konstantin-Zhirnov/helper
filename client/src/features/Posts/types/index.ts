@@ -3,8 +3,8 @@ export type PostsStateType = {
   postsByUser: PostType[]
   location: string
   locations: LocationsType
-  skip: number
-  limit: number
+  search: string
+  page: number
   count: number
   pages: number
   message: string
@@ -14,8 +14,8 @@ export type PostsStateType = {
 
 export type PostsQueryType = {
   location: string
-  skip: number
-  limit: number
+  search: string
+  page: number
 }
 
 type AuthorIdType = {
@@ -27,6 +27,7 @@ type AuthorIdType = {
   telegram: string
   viber: string
   photo: string
+  stars: number
 }
 
 export type PostType = {
@@ -50,6 +51,7 @@ export type PostsType = {
   posts: PostType[]
   count: number
   pages: number
+  page: number
 }
 
 export type UpdatePostType = {
@@ -64,11 +66,6 @@ export type RemoveImageType = {
 }
 
 export type RemovePostType = Omit<RemoveImageType, 'image'>
-
-export type PaginationType = {
-  skip: number
-  limit: number
-}
 
 export type LocationsType = string[]
 

@@ -1,40 +1,32 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
-
-import { useAppDispatch } from '../../app'
-import { Authorization, fetchUser, Location } from '../../features'
-import { Wrapper } from '../../shared'
+import cn from 'classnames'
+import { NavLink, useLocation } from 'react-router-dom'
+import { Authorization, Location, Search } from '../../features'
+import { useMatchMedia, Wrapper } from '../../shared'
 
 import classes from './Header.module.sass'
-import { setLocation } from '../../features/Posts/model/slice'
+
 
 const Header: React.FC = () => {
 
-  const dispatch = useAppDispatch()
-
-  React.useEffect(() => {
-    const location = localStorage.getItem('location')
-    if (location) {
-      dispatch(setLocation(location))
-    } else {
-      localStorage.setItem('location', 'Nanaimo')
-      dispatch(setLocation('Nanaimo'))
-    }
-    dispatch(fetchUser())
-
-  }, [])
+  const { isMobile } = useMatchMedia()
+  const { pathname } = useLocation()
 
   return (
     <header className={classes.header}>
       <Wrapper>
         <div className={classes.container}>
-          <NavLink to='/' className={classes.link}>
-            <img src='/images/logo.png' alt='logo' className={classes.logo} />
+          <NavLink to='/' className={cn(classes.link, {
+            [`${classes.mobile}`]: isMobile || pathname !== '/',
+          })}>
+            <img src='/images/ca.svg' alt='logo' className={classes.logo} />
 
             <p className={classes.title}>Helper</p>
           </NavLink>
 
-          <Location />
+          {!isMobile && pathname === '/' && <Search />}
+
+          {pathname === '/' && <Location isMobile={isMobile} />}
 
           <Authorization />
         </div>

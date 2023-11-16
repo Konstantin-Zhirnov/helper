@@ -1,10 +1,13 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import { Avatar, Divider, IconButton, Text } from '@chakra-ui/react'
 import { BsGeoAltFill } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 
-
-import { MotionLi } from '../../../../shared'
+import { useAppDispatch, useAppSelector } from '../../../../app'
+import { Li } from '../../../../shared'
+import { getUserId } from '../../../Authorization/model/slice'
+import { fetchRemovePost } from '../../model/asyncActions'
 
 import { ReasonType } from '../../types'
 import { Images } from './Images'
@@ -12,9 +15,7 @@ import { ContactInformation } from './ContactInformation'
 import { EditableInput } from './EditableInput'
 
 import classes from './Post.module.sass'
-import { fetchRemovePost } from '../../model/asyncActions'
-import { useAppDispatch, useAppSelector } from '../../../../app'
-import { getUserId } from '../../../Authorization/model/slice'
+import { Stars } from '../../../../shared/ui/Stars'
 
 
 interface IProps {
@@ -24,12 +25,14 @@ interface IProps {
   description: string
   location: string
   time: number
+  postAuthorId: string
   name: string
   photo: string
   email: string
   phone: string
   whatsapp: string
   telegram: string
+  stars: number
   images: string[]
   reason: ReasonType
 }
@@ -41,12 +44,14 @@ const Post: React.FC<IProps> = ({
                                   description,
                                   location,
                                   time,
+                                  postAuthorId,
                                   name,
                                   photo,
                                   email,
                                   phone,
                                   whatsapp,
                                   telegram,
+                                  stars,
                                   images,
                                   reason,
                                 }) => {
@@ -59,12 +64,12 @@ const Post: React.FC<IProps> = ({
   }
 
   return (
-    <MotionLi custom={index + 1}>
+    <Li>
       <div className={classes.container}>
         <div className={classes.user}>
           <Avatar size='xl' name={name} src={`${photo}?${new Date().getTime()}`} />
           <Text fontSize='lg' className={classes.name}>{name}</Text>
-          <div className={classes.stars}>Stars</div>
+          <NavLink to={`/reviews/${postAuthorId}`} className={classes.stars}><Stars stars={4.5} /></NavLink>
         </div>
         <div className={classes.info}>
           {
@@ -117,7 +122,7 @@ const Post: React.FC<IProps> = ({
             : null
       }
       <ContactInformation email={email} phone={phone} whatsapp={whatsapp} telegram={telegram} />
-    </MotionLi>
+    </Li>
   )
 }
 

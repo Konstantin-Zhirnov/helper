@@ -11,12 +11,14 @@ async function bootstrap() {
   const certFile = fs.readFileSync(__dirname + '/fullchain.pem')
 
   const PORT = process.env.PORT
-  const app = await NestFactory.create(AppModule, {
-    httpsOptions: {
-      key: keyFile,
-      cert: certFile,
+  const app = await NestFactory.create(AppModule,
+    {
+      httpsOptions: {
+        key: keyFile,
+        cert: certFile,
+      },
     },
-  })
+  )
   app.setGlobalPrefix('api')
 
   const config = new DocumentBuilder()

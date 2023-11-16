@@ -41,7 +41,7 @@ const Images: React.FC<IProps> = ({ imagesSrcArray, _id, reason }) => {
 
   const getAddImages = () => {
     if (reason === 'profile') {
-      if (images.length !== 0 && (currentImages.length === images.length)) {
+      if (images.length !== 0) {
         return <Spinner className={classes.snipper} />
       } else {
         return <AddImages setCurrentImages={setCurrentImages} images={images} setImages={setImages}
@@ -112,7 +112,7 @@ const Images: React.FC<IProps> = ({ imagesSrcArray, _id, reason }) => {
                       </button>
                     )
                   }
-                  
+
                 </div>
 
               </PhotoView>

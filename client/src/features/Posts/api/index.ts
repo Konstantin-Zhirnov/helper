@@ -11,8 +11,8 @@ import {
 
 export const PostsAPI = {
   getPosts(query: PostsQueryType): Promise<PostsType> {
-    const { location, skip, limit } = query
-    const url = `${URL.posts}?location=${location}&skip=${skip}&limit=${limit}`
+    const { location, search, page } = query
+    const url = `${URL.posts}?location=${location}&search=${search}&page=${page}`
     return $api.get(url).then(({ data }) => data)
   },
 

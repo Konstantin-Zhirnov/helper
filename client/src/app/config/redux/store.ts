@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import { authorizationReducer, postsReducer } from '../../../features'
+import { authorizationReducer, postsReducer, reviewsReducer } from '../../../features'
 
 export const store = configureStore({
   reducer: {
     authorization: authorizationReducer,
     posts: postsReducer,
+    reviews: reviewsReducer,
   },
 })
 

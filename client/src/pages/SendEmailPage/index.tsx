@@ -1,9 +1,9 @@
 import React from 'react'
 import cn from 'classnames'
-import { Heading, Text} from '@chakra-ui/react'
+import { Heading, Text } from '@chakra-ui/react'
 
 import { useAppDispatch, useAppSelector } from '../../app'
-import { getSendEmailMessage, getSendEmailReason, SendToEmail, clearSendEmail } from '../../features'
+import { clearSendEmail, getSendEmailMessage, getSendEmailReason, SendToEmail } from '../../features'
 import { Wrapper } from '../../shared'
 
 import classes from './SendEmailPage.module.sass'
@@ -17,16 +17,16 @@ const SendEmailPage: React.FC = () => {
 
   const getText = () => {
     if (sendEmailReason === 'password') {
-      return "On this page you can request a link to change your password."
+      return 'On this page you can request a link to change your password.'
     }
     if (sendEmailReason === 'activation') {
-      return "On this page you can request a re-link to activate your user account."
+      return 'On this page you can request a re-link to activate your user account.'
     }
-    return ""
+    return ''
   }
 
   const getClass = () => {
-      return sendEmailMessage === 'There is no user with such an email'
+    return sendEmailMessage === 'There is no user with such an email'
   }
 
   React.useEffect(() => {
@@ -37,19 +37,19 @@ const SendEmailPage: React.FC = () => {
 
   return (
     <Wrapper>
-      <Heading as="h1" className={classes.title}>
+      <Heading as='h1' size='lg' className={classes.title}>
         Request a link
       </Heading>
       {
         sendEmailReason && (
           <>
-            <Text fontSize='2xl' className={classes.text}>{getText()}</Text>
+            <Text fontSize='lg' className={classes.text}>{getText()}</Text>
 
-            <SendToEmail sendEmailReason={sendEmailReason}/>
+            <SendToEmail sendEmailReason={sendEmailReason} />
           </>
         )
       }
-      <Text fontSize='2xl' className={cn(classes.text, {[`${classes.red}`]: getClass()})}>{ sendEmailMessage }</Text>
+      <Text fontSize='2xl' className={cn(classes.text, { [`${classes.red}`]: getClass() })}>{sendEmailMessage}</Text>
     </Wrapper>
   )
 }

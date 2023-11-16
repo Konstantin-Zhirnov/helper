@@ -24,20 +24,23 @@ const PasswordPage: React.FC = () => {
     if (changePasswordMessage === 'Your password has been successfully changed') {
       const timer = setTimeout(() => {
         dispatch(fetchUser())
-        navigate("/")
-      }, 3000);
-      return () => clearTimeout(timer);
+        navigate('/')
+      }, 3000)
+      return () => clearTimeout(timer)
     }
   }, [changePasswordMessage])
 
   return (
     <Wrapper>
-      <Heading as="h1" className={classes.title}>Password changing</Heading>
+      <Heading as='h1' size='lg' className={classes.title}>
+        Password changing
+      </Heading>
 
-      <PasswordChanging link={link}/>
+      <PasswordChanging link={link} />
 
       {
-        changePasswordMessage && <Text fontSize='2xl' className={cn(classes.text, {[`${classes.red}`]: getClass()})}>{changePasswordMessage}</Text>
+        changePasswordMessage && <Text fontSize='2xl'
+                                       className={cn(classes.text, { [`${classes.red}`]: getClass() })}>{changePasswordMessage}</Text>
       }
     </Wrapper>
   )

@@ -54,8 +54,12 @@ export class PostsController {
   @ApiOperation({ summary: 'Get all posts' })
   @ApiResponse({ status: 200, type: [PostModel] })
   @Get('posts')
-  async getAll(@Query() { location, skip, limit }): Promise<{ posts: PostModel[], count: number, pages: number }> {
-    return await this.postsService.getAll(location, skip, limit, 'authorId', chosenFields)
+  async getAll(@Query() {
+    location,
+    search,
+    page,
+  }): Promise<{ posts: PostModel[], count: number, pages: number }> {
+    return await this.postsService.getAll(location, search, page, 'authorId', chosenFields)
   }
 
 

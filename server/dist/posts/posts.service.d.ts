@@ -41,7 +41,7 @@ export declare class PostsService {
     }>> & import("mongoose").Document<unknown, {}, Post> & Post & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>>;
-    getAll(location: string, skip: number, limit: number, fieldName: string, chosenFields: Record<string, number>): Promise<{
+    getAll(location: string, search: string, page: number, fieldName: string, chosenFields: Record<string, number>): Promise<{
         posts: Omit<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Post> & Post & Required<{
             _id: import("mongoose").Types.ObjectId;
         }>> & import("mongoose").Document<unknown, {}, Post> & Post & Required<{
@@ -49,6 +49,7 @@ export declare class PostsService {
         }>, never>[];
         count: number;
         pages: number;
+        page: number;
     }>;
     remove(id: string): Promise<Post>;
     update(updatePostDto: UpdatePostDto): Promise<Post>;

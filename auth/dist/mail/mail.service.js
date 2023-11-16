@@ -20,8 +20,8 @@ let MailService = class MailService {
         const url = `${process.env.CLIENT_PATH}confirmation/${link}`;
         await this.mailerService.sendMail({
             to: email,
-            from: '"Helper.ca" <kostya.zhirnov@google.com>',
-            subject: 'Welcome to Nice App! Confirm your Email',
+            from: '"Helper.plus" <admin@helper.plus>',
+            subject: 'Welcome to Helper.plus! Confirm your Email',
             template: './confirmation',
             context: {
                 name,
@@ -33,7 +33,7 @@ let MailService = class MailService {
         const url = `${process.env.CLIENT_PATH}password/${link}`;
         await this.mailerService.sendMail({
             to: email,
-            from: '"Helper.ca" <kostya.zhirnov@google.com>',
+            from: '"Helper.plus" <admin@helper.plus>',
             subject: 'Change your password',
             template: './password',
             context: {

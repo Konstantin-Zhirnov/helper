@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app'
 import { getExtension, reduceImage } from '../../../../shared'
 
 import { fetchChangeAvatar } from '../../../Authorization/model/asyncActions'
-import { getIsNewAvatar, setAlertMessage, setIsNewAvatar } from '../../../Authorization/model/slice'
+import { getIsNewAvatar, setAlertMessage } from '../../../Authorization/model/slice'
 
 import classes from './ProfileAvatar.module.sass'
 
@@ -21,10 +21,10 @@ const ProfileAvatar: React.FC<IProps> = ({ name, photo, id }) => {
   const dispatch = useAppDispatch()
   const isNewAvatar = useAppSelector(getIsNewAvatar)
 
+  const [_, setReload] = React.useState(false)
+
   React.useEffect(() => {
-    if (isNewAvatar) {
-      dispatch(setIsNewAvatar(false))
-    }
+    setReload(isNewAvatar)
   }, [isNewAvatar])
 
   const handleChange = (event) => {

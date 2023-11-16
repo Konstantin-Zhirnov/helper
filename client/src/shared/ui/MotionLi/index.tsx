@@ -19,7 +19,7 @@ const variants = {
 }
 
 interface IProps {
-  custom: number
+  custom?: number
   dataTestId?: string
   children: React.ReactNode
 }
@@ -39,4 +39,14 @@ const MotionLi: React.FC<IProps> = ({ custom, dataTestId, children }) => {
   )
 }
 
-export default MotionLi
+const Li: React.FC<IProps> = ({ children }) => {
+  return (
+    <li
+      className={classes.container}
+    >
+      {children}
+    </li>
+  )
+}
+
+export { MotionLi, Li }

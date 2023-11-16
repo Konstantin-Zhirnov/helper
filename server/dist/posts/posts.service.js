@@ -44,19 +44,35 @@ let PostsService = class PostsService {
             .populate({ path: fieldName, select: chosenFields })
             .exec();
     }
-    async getAll(location = 'Nanaimo', skip = 0, limit = 10, fieldName, chosenFields) {
-        const posts = await this.postModel
-            .find({ location: capitalizeFirstLetter(location) })
+    async getAll(location = 'Nanaimo', search, page = 0, fieldName, chosenFields) {
+        let options = {};
+        if (search) {
+            options = {
+                location: capitalizeFirstLetter(location),
+                $or: [
+                    { title: new RegExp(search, 'i') },
+                    { description: new RegExp(search, 'i') },
+                ],
+            };
+        }
+        else {
+            options = {
+                location: capitalizeFirstLetter(location),
+            };
+        }
+        const query = this.postModel.find(options);
+        const limit = 10;
+        const posts = await query
             .sort({ 'time': 'desc' })
+            .skip(((parseInt(page) || 1) - 1) * limit)
             .limit(limit)
-            .skip(skip)
             .populate({
             path: fieldName,
             select: chosenFields,
         });
-        const count = await this.postModel.countDocuments({ location: capitalizeFirstLetter(location) }).exec();
+        const count = await this.postModel.countDocuments(options).exec();
         const pages = Math.floor((count - 1) / limit) + 1;
-        return { posts, count, pages };
+        return { posts, count, pages, page: Number(page) };
     }
     async remove(id) {
         return this.postModel.findByIdAndRemove(id);

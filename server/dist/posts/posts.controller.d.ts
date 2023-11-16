@@ -9,10 +9,10 @@ import { RemovePostDto } from './dto/remove-post.dto';
 export declare class PostsController {
     private readonly postsService;
     constructor(postsService: PostsService);
-    getAll({ location, skip, limit }: {
+    getAll({ location, search, page, }: {
         location: any;
-        skip: any;
-        limit: any;
+        search: any;
+        page: any;
     }): Promise<{
         posts: PostModel[];
         count: number;

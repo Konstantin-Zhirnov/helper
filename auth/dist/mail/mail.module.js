@@ -30,7 +30,7 @@ exports.MailModule = MailModule = __decorate([
                             },
                         },
                         defaults: {
-                            from: '"No Reply" <kostya.zhirnov@gmail.com>',
+                            from: '"No Reply" <admin@helper.plus>',
                         },
                         template: {
                             dir: (0, path_1.join)(__dirname, 'templates'),
@@ -40,7 +40,7 @@ exports.MailModule = MailModule = __decorate([
                             },
                         },
                     };
-                }
+                },
             }),
         ],
         providers: [mail_service_1.MailService],

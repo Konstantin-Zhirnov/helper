@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { Header } from '../../../widgets'
+import { Footer, Header } from '../../../widgets'
 import { Loader } from '../../../shared'
 
 const Layout = () => {
@@ -14,6 +14,7 @@ const Layout = () => {
       <Suspense>
         <Outlet />
       </Suspense>
+      <Footer />
     </>
   )
 }

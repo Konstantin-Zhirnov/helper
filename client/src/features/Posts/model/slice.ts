@@ -20,8 +20,8 @@ const initialState: PostsStateType = {
   postsByUser: [],
   location: '',
   locations: [],
-  skip: 0,
-  limit: 20,
+  search: '',
+  page: 1,
   count: 0,
   pages: 0,
   message: '',
@@ -41,16 +41,22 @@ export const posts = createSlice({
     setMessage: (state, action: PayloadAction<string>) => {
       state.message = action.payload
     },
-    // setPagination: (state, action: PayloadAction<PaginationType>) => {
-    //   state.skip = action.payload.skip
-    //   state.limit = action.payload.limit
-    // },
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload
+    },
+    setSearch: (state, action: PayloadAction<string>) => {
+      state.search = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPosts.pending, pending)
       .addCase(fetchPosts.fulfilled, (state, action: PayloadAction<PostsType>) => {
-        state.posts = action.payload.posts
+        if (action.payload.page === 1) {
+          state.posts = action.payload.posts
+        } else {
+          state.posts = state.posts.concat(action.payload.posts)
+        }
         state.count = action.payload.count
         state.pages = action.payload.pages
       })
@@ -139,12 +145,13 @@ function pending(state: PostsStateType) {
 }
 
 
-export const { setLocation, setModal, setMessage } = posts.actions
+export const { setLocation, setModal, setMessage, setPage, setSearch } = posts.actions
 
 export const getPosts = (state: RootState): PostType[] => state.posts.posts
 export const getPostsByUser = (state: RootState): PostType[] => state.posts.postsByUser
-export const getSkip = (state: RootState): number => state.posts.skip
-export const getLimit = (state: RootState): number => state.posts.limit
+export const getPage = (state: RootState): number => state.posts.page
+export const getPages = (state: RootState): number => state.posts.pages
+export const getSearch = (state: RootState): string => state.posts.search
 export const getLocation = (state: RootState): string => state.posts.location
 export const getLocations = (state: RootState): LocationsType => state.posts.locations
 export const getModal = (state: RootState): boolean => state.posts.isModal

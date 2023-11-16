@@ -1,25 +1,32 @@
 import React from 'react'
+import { Heading } from '@chakra-ui/react'
 
-import { useAppDispatch, useAppSelector } from '../../app'
+import { useAppSelector } from '../../app'
 import { Posts } from '../../widgets'
-import { AddPost, fetchPosts, getAuth, getLimit, getLocation, getPosts, getSkip } from '../../features'
-import { Wrapper } from '../../shared'
+import { AddPost, getAuth, getPosts, Search } from '../../features'
+import { useMatchMedia, Wrapper } from '../../shared'
+
+import classes from './PostPage.module.sass'
 
 
 const PostsPage: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const skip = useAppSelector(getSkip)
-  const limit = useAppSelector(getLimit)
-  const location = useAppSelector(getLocation)
+  const { isMobile } = useMatchMedia()
+
   const isAuth = useAppSelector(getAuth)
   const posts = useAppSelector(getPosts)
 
-  React.useEffect(() => {
-    dispatch(fetchPosts({ skip, limit, location }))
-  }, [skip, limit, location])
-
   return (
     <Wrapper>
+
+      {isMobile && <div className={classes.search_container}><Search isMobile={isMobile} /></div>}
+
+      <Heading as='h1' size='lg' className={classes.title}>
+        Helper - application for people
+      </Heading>
+
+      <p>This application is intended for people who need help and people who can provide this help. The main purpose of
+        this application is to bring these people together. That`s why HELPER is an app for all people.</p>
+      
       <Posts posts={posts} reason='all' />
       {isAuth && <AddPost />}
     </Wrapper>

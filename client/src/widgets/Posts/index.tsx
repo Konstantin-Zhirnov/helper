@@ -22,12 +22,14 @@ const Posts: React.FC<IProps> = ({ posts, reason }) => {
             description={post.description}
             location={post.location}
             time={post.time}
+            postAuthorId={post.authorId._id}
             name={post.authorId.name}
             photo={post.authorId.photo}
             email={post.authorId.email}
             phone={post.authorId.phone}
             whatsapp={post.authorId.whatsapp}
             telegram={post.authorId.telegram}
+            stars={post.authorId.stars}
             images={post.images}
             reason={reason}
           />

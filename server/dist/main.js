@@ -5,8 +5,16 @@ const cookieParser = require("cookie-parser");
 const swagger_1 = require("@nestjs/swagger");
 const app_module_1 = require("./app.module");
 async function bootstrap() {
+    const fs = require('fs');
+    const keyFile = fs.readFileSync(__dirname + '/privkey.pem');
+    const certFile = fs.readFileSync(__dirname + '/fullchain.pem');
     const PORT = process.env.PORT;
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, {
+        httpsOptions: {
+            key: keyFile,
+            cert: certFile,
+        },
+    });
     app.setGlobalPrefix('api');
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Posts')

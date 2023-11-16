@@ -1,4 +1,5 @@
 import React from 'react'
+import cn from 'classnames'
 import {
   Button,
   Popover,
@@ -20,7 +21,11 @@ import { LocationSelect } from './LocationSelect'
 import classes from './Location.module.sass'
 
 
-const Location: React.FC = () => {
+interface IProps {
+  isMobile?: boolean
+}
+
+const Location: React.FC<IProps> = ({ isMobile }) => {
 
   const dispatch = useAppDispatch()
   const location = useAppSelector(getLocation)
@@ -33,7 +38,8 @@ const Location: React.FC = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button className={classes.btn}><BsGeoAltFill />&nbsp;{location}</Button>
+        <Button className={cn(classes.btn, { [`${classes.mobile}`]: isMobile })}><BsGeoAltFill />&nbsp;{location}
+        </Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />

@@ -46,8 +46,8 @@ let PostsController = class PostsController {
     constructor(postsService) {
         this.postsService = postsService;
     }
-    async getAll({ location, skip, limit }) {
-        return await this.postsService.getAll(location, skip, limit, 'authorId', chosenFields);
+    async getAll({ location, search, page, }) {
+        return await this.postsService.getAll(location, search, page, 'authorId', chosenFields);
     }
     async findOne(id) {
         return await this.postsService.findOneAndPopulate(id, 'authorId', chosenFields);
