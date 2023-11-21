@@ -34,6 +34,7 @@ export const posts = createSlice({
   reducers: {
     setLocation: (state, action: PayloadAction<string>) => {
       state.location = action.payload
+      state.page = 1
     },
     setModal: (state, action: PayloadAction<boolean>) => {
       state.isModal = action.payload
