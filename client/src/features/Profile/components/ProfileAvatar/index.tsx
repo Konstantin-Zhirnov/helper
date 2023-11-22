@@ -29,7 +29,7 @@ const ProfileAvatar: React.FC<IProps> = ({ name, photo, id }) => {
 
   const handleChange = (event) => {
     const file = event.target.files[0]
-    const maxSize = 300
+    const maxSize = 120
 
     if (file.type === 'image/jpeg' || file.type === 'image/png') {
 
