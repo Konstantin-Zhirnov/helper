@@ -132,6 +132,12 @@ export const posts = createSlice({
           }
           return post
         })
+        state.posts = state.posts.map(post => {
+          if (post._id === action.payload._id) {
+            return { ...post, ...action.payload.field }
+          }
+          return post
+        })
       })
       .addCase(fetchRemoveImage.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''

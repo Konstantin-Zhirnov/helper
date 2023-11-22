@@ -5,5 +5,5 @@ RUN npm i -g @nestjs/cli
 RUN npm install
 ADD . .
 RUN npm run build
-VOLUME /etc/letsencrypt/live/helper.plus
+ADD ./ssl/*.pem ./dist
 CMD ["node", "./dist/main.js"]
