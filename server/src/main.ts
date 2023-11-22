@@ -7,8 +7,8 @@ import { AppModule } from './app.module'
 
 async function bootstrap() {
   const fs = require('fs')
-  const keyFile = fs.readFileSync(__dirname + '/ssl/privkey.pem')
-  const certFile = fs.readFileSync(__dirname + '/ssl/fullchain.pem')
+  const keyFile = fs.readFileSync(__dirname + '/privkey.pem')
+  const certFile = fs.readFileSync(__dirname + '/fullchain.pem')
 
   const PORT = process.env.PORT
   const app = await NestFactory.create(AppModule,
