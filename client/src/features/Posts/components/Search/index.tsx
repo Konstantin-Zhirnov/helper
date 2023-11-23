@@ -41,7 +41,6 @@ const Search: React.FC<IProps> = ({ isMobile }) => {
       onChange={handleChange}
       placeholder='Search...'
       className={cn(classes.input, { [`${classes.mobile}`]: isMobile })}
-      autoFocus
     />
   )
 }
