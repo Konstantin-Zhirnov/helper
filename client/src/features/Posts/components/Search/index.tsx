@@ -1,6 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
-import { Input } from '@chakra-ui/react'
+import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { MdClose } from 'react-icons/md'
 
 import { useDebounce } from '../../../../shared'
 
@@ -14,7 +15,7 @@ interface IProps {
   isMobile?: boolean
 }
 
-const Search: React.FC<IProps> = ({ isMobile }) => {
+const Search: React.FC<IProps> = React.memo(({ isMobile }) => {
 
   const dispatch = useAppDispatch()
   const search = useAppSelector(getSearch)
@@ -27,22 +28,38 @@ const Search: React.FC<IProps> = ({ isMobile }) => {
   }
 
   React.useEffect(() => {
-    if (search !== debouncedValue) {
+    if (value) {
+      if (search !== debouncedValue) {
+        dispatch(setPage(1))
+        dispatch(setSearch(debouncedValue))
+      }
+    } else {
       dispatch(setPage(1))
-      dispatch(setSearch(debouncedValue))
+      dispatch(setSearch(value))
     }
-  }, [debouncedValue])
+  }, [debouncedValue, value])
+
+  const handleClick = () => {
+    setValue('')
+  }
 
 
   return (
-    <Input
-      size='sm'
-      value={value}
-      onChange={handleChange}
-      placeholder='Search...'
-      className={cn(classes.input, { [`${classes.mobile}`]: isMobile })}
-    />
+    <InputGroup className={cn(classes.input_group, { [`${classes.mobile}`]: isMobile })}>
+      <Input
+        size='sm'
+        value={value}
+        onChange={handleChange}
+        placeholder='Search...'
+        className={classes.input}
+      />
+      <InputRightElement className={classes.input_right_el}>
+        <Button size='sm' onClick={handleClick}>
+          <MdClose />
+        </Button>
+      </InputRightElement>
+    </InputGroup>
   )
-}
+})
 
 export { Search }

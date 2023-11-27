@@ -17,7 +17,7 @@ interface IProps {
   id: string
 }
 
-const ProfileAvatar: React.FC<IProps> = ({ name, photo, id }) => {
+const ProfileAvatar: React.FC<IProps> = React.memo(({ name, photo, id }) => {
   const dispatch = useAppDispatch()
   const isNewAvatar = useAppSelector(getIsNewAvatar)
 
@@ -55,6 +55,6 @@ const ProfileAvatar: React.FC<IProps> = ({ name, photo, id }) => {
       <input type='file' id='avatar' className={classes.input} onChange={handleChange} accept='image/jpeg, image/png' />
     </div>
   )
-}
+})
 
 export { ProfileAvatar }

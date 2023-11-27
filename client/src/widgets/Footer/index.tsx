@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import { useInView } from 'react-intersection-observer'
 
 import { useAppDispatch, useAppSelector } from '../../app'
@@ -6,21 +7,23 @@ import {
   fetchPosts,
   fetchPostsByUser,
   fetchUser,
+  getIsNewAvatar,
   getLocation,
   getPage,
   getPages,
   getSearch,
+  getUserId,
+  setIsNewAvatar,
   setLocation,
   setPage,
 } from '../../features'
 import { Wrapper } from '../../shared'
 
+
 import classes from './Footer.module.sass'
-import { getIsNewAvatar, getUserId, setIsNewAvatar } from '../../features/Authorization/model/slice'
-import { useLocation } from 'react-router-dom'
 
 
-const Footer: React.FC = () => {
+const Footer: React.FC = React.memo(() => {
   const { pathname } = useLocation()
 
   const dispatch = useAppDispatch()
@@ -73,10 +76,11 @@ const Footer: React.FC = () => {
   return (
     <footer className={classes.footer} ref={ref}>
       <Wrapper classes={classes.footer_height}>
-        <p>You can support the project using e-transfer for email: <span
+        <p>You can support the project using the email: <span
           className={classes.email}> kostya.zhirnov@gmail.com</span></p>
       </Wrapper>
     </footer>
   )
-}
-export default Footer
+})
+
+export { Footer }

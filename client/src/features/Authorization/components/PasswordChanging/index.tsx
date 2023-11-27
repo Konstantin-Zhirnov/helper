@@ -16,7 +16,7 @@ interface IProps {
   link: string
 }
 
-const PasswordChanging: React.FC<IProps> = ({link}) => {
+const PasswordChanging: React.FC<IProps> = React.memo(({ link }) => {
 
   const dispatch = useAppDispatch()
 
@@ -24,7 +24,7 @@ const PasswordChanging: React.FC<IProps> = ({link}) => {
     .object()
     .shape({
       password: yup.string().required('Password is required'),
-      passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match')
+      passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
     })
     .required()
 
@@ -33,7 +33,7 @@ const PasswordChanging: React.FC<IProps> = ({link}) => {
     register,
     formState: { errors },
     handleSubmit,
-    reset
+    reset,
   } = useForm<PasswordType>({
     resolver: yupResolver(schema),
   })
@@ -42,38 +42,38 @@ const PasswordChanging: React.FC<IProps> = ({link}) => {
     await dispatch(
       fetchChangePassword({
         password: data.password,
-        link
+        link,
       }),
     )
     reset()
-}
+  }
 
   return (
-      <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
+    <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
           <span className={classes.input_container}>
-              <label htmlFor="password">New password:</label>
-              <Input id="password" size="sm" {...register('password')} autoComplete="off" />
+              <label htmlFor='password'>New password:</label>
+              <Input id='password' size='sm' {...register('password')} autoComplete='off' />
               <ErrorMessage
                 errors={errors as any}
-                name="password"
+                name='password'
                 render={({ message }) => <p className={classes.error}>{message}</p>}
               />
           </span>
 
-          <span className={classes.input_container}>
-              <label htmlFor="passwordConfirmation">Confirmation password:</label>
-              <Input id="passwordConfirmation" size="sm" {...register('passwordConfirmation')} autoComplete="off" />
+      <span className={classes.input_container}>
+              <label htmlFor='passwordConfirmation'>Confirmation password:</label>
+              <Input id='passwordConfirmation' size='sm' {...register('passwordConfirmation')} autoComplete='off' />
               <ErrorMessage
                 errors={errors as any}
-                name="passwordConfirmation"
+                name='passwordConfirmation'
                 render={({ message }) => <p className={classes.error}>{message}</p>}
               />
           </span>
 
-          <button type="submit" className={classes.btn}>Submit</button>
-      </form>
+      <button type='submit' className={classes.btn}>Submit</button>
+    </form>
   )
-}
+})
 
 export { PasswordChanging }
 

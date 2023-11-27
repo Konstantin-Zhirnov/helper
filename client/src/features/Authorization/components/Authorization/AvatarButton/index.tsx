@@ -12,12 +12,12 @@ type PropsType = {
   size?: string
 }
 
-const AvatarButton: React.FC<PropsType> = ({ link, src, name, size }) => {
+const AvatarButton: React.FC<PropsType> = React.memo(({ link, src, name, size }) => {
   return (
-    <NavLink to={link} >
-      <Avatar name={name} src={src} size={size || 'md'} className={classes.avatar}/>
+    <NavLink to={link}>
+      <Avatar name={name} src={src} size={size || 'md'} className={classes.avatar} />
     </NavLink>
   )
-}
+})
 
 export { AvatarButton }

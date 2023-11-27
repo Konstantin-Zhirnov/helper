@@ -16,7 +16,7 @@ interface IProps {
   sendEmailReason: SendEmailReasonType
 }
 
-const SendToEmail: React.FC<IProps> = ({sendEmailReason}) => {
+const SendToEmail: React.FC<IProps> = React.memo(({ sendEmailReason }) => {
 
   const dispatch = useAppDispatch()
 
@@ -25,7 +25,7 @@ const SendToEmail: React.FC<IProps> = ({sendEmailReason}) => {
   const schema = yup
     .object()
     .shape({
-      email: yup.string().email().required()
+      email: yup.string().email().required(),
     })
     .required()
 
@@ -33,7 +33,7 @@ const SendToEmail: React.FC<IProps> = ({sendEmailReason}) => {
     register,
     formState: { errors },
     handleSubmit,
-    reset
+    reset,
   } = useForm<EmailType>({
     resolver: yupResolver(schema),
   })
@@ -42,7 +42,7 @@ const SendToEmail: React.FC<IProps> = ({sendEmailReason}) => {
     await dispatch(
       fetchSendEmail({
         email: data.email.toLowerCase(),
-        reason: sendEmailReason
+        reason: sendEmailReason,
       }),
     )
     reset()
@@ -53,32 +53,32 @@ const SendToEmail: React.FC<IProps> = ({sendEmailReason}) => {
   React.useEffect(() => {
     let timer
     if (seconds > 0) {
-      timer = setTimeout(setSeconds, 1000, seconds - 1);
+      timer = setTimeout(setSeconds, 1000, seconds - 1)
     } else if (timer) {
       clearTimeout(timer)
     }
 
     return () => clearTimeout(timer)
-  }, [ seconds ]);
+  }, [seconds])
 
   return (
-      <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
+    <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
             <span className={classes.input_container}>
-                <label htmlFor="email">Email:</label>
-                <Input id="email" size="sm" {...register('email')} autoComplete="off" />
+                <label htmlFor='email'>Email:</label>
+                <Input id='email' size='sm' {...register('email')} autoComplete='off' />
                 <ErrorMessage
                   errors={errors as any}
-                  name="email"
+                  name='email'
                   render={({ message }) => <p className={classes.error}>{message}</p>}
                 />
             </span>
 
-        <button type="submit" className={classes.btn} disabled={Boolean(seconds)}>
-          { seconds || "Submit" }
-        </button>
-      </form>
+      <button type='submit' className={classes.btn} disabled={Boolean(seconds)}>
+        {seconds || 'Submit'}
+      </button>
+    </form>
   )
-}
+})
 
 export { SendToEmail }
 

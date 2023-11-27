@@ -8,7 +8,7 @@ import { EditableInput, EditablePasswordInput, getUser } from '../../features'
 import classes from './ProfileInfo.module.sass'
 
 
-const ProfileInfo: React.FC = () => {
+const ProfileInfo: React.FC = React.memo(() => {
   const user = useAppSelector(getUser)
 
   return (
@@ -81,6 +81,6 @@ const ProfileInfo: React.FC = () => {
       </Card>
     </div>
   )
-}
+})
 
 export { ProfileInfo }

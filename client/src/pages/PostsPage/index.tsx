@@ -9,11 +9,13 @@ import { useMatchMedia, Wrapper } from '../../shared'
 import classes from './PostPage.module.sass'
 
 
-const PostsPage: React.FC = () => {
+const PostsPage: React.FC = React.memo(() => {
   const { isMobile } = useMatchMedia()
 
   const isAuth = useAppSelector(getAuth)
   const posts = useAppSelector(getPosts)
+
+  const memoizedPosts = React.useMemo(() => posts, [posts])
 
   return (
     <Wrapper>
@@ -26,11 +28,11 @@ const PostsPage: React.FC = () => {
 
       <p>This application is intended for people who need help and people who can provide this help. The main purpose of
         this application is to bring these people together. That`s why HELPER is an app for all people.</p>
-      
-      <Posts posts={posts} reason='all' />
+
+      <Posts posts={memoizedPosts} reason='all' />
       {isAuth && <AddPost />}
     </Wrapper>
   )
-}
+})
 
 export default PostsPage

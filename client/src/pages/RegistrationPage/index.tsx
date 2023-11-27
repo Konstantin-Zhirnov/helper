@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Text } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 
 import { useAppSelector } from '../../app'
 import { getRegistered, getRegistrationErrorMessage, RegistrationForm } from '../../features'
@@ -21,12 +21,12 @@ const RegistrationPage: React.FC = () => {
       {
         isRegistered
           ?
-          <Text fontSize='2xl' className={classes.text}>Your user account has been successfully created. Please confirm
-            your email.</Text>
+          <p className={classes.text}>Your user account has been successfully created. Please confirm
+            your email.</p>
           : <RegistrationForm />
       }
       {
-        registrationErrorMessage && <Text className={classes.error}>{registrationErrorMessage}</Text>
+        registrationErrorMessage && <p className={classes.error}>{registrationErrorMessage}</p>
       }
     </Wrapper>
   )

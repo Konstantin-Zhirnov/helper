@@ -12,7 +12,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: email,
       from: '"Helper.plus" <admin@helper.plus>',
-      subject: 'Welcome to Helper.plus! Confirm your Email',
+      subject: 'Welcome to Helper! Confirm your Email',
       template: './confirmation',
       context: {
         name,

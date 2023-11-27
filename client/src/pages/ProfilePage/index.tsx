@@ -9,13 +9,15 @@ import { useMessage, Wrapper } from '../../shared'
 import classes from './ProfilePage.module.sass'
 
 
-const ProfilePage: React.FC = () => {
+const ProfilePage: React.FC = React.memo(() => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(getUser)
   const isAuth = useAppSelector(getAuth)
   const message = useAppSelector(getAlertMessage)
   const posts = useAppSelector(getPostsByUser)
   useMessage(message)
+
+  const memoizedPosts = React.useMemo(() => posts, [posts])
 
   React.useEffect(() => {
     dispatch(fetchPostsByUser(user._id))
@@ -38,12 +40,12 @@ const ProfilePage: React.FC = () => {
               </AbsoluteCenter>
             </Box>
 
-            <Posts posts={posts} reason='profile' />
+            <Posts posts={memoizedPosts} reason='profile' />
           </>
         )
       }
     </Wrapper>
   )
-}
+})
 
 export default ProfilePage

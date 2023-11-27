@@ -1,6 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
-import { Heading, Text } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 
 import { useAppDispatch, useAppSelector } from '../../app'
 import { clearSendEmail, getSendEmailMessage, getSendEmailReason, SendToEmail } from '../../features'
@@ -41,15 +41,15 @@ const SendEmailPage: React.FC = () => {
         Request a link
       </Heading>
       {
-        sendEmailReason && (
+        !sendEmailReason && (
           <>
-            <Text fontSize='lg' className={classes.text}>{getText()}</Text>
+            <p className={classes.text}>{getText()}</p>
 
             <SendToEmail sendEmailReason={sendEmailReason} />
           </>
         )
       }
-      <Text fontSize='2xl' className={cn(classes.text, { [`${classes.red}`]: getClass() })}>{sendEmailMessage}</Text>
+      <p className={cn(classes.text, { [`${classes.red}`]: getClass() })}>{sendEmailMessage}</p>
     </Wrapper>
   )
 }

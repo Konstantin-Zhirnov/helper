@@ -5,13 +5,16 @@ import authorizationReducer, {
   getChangePasswordMessage,
   getIsActivated,
   getIsLoading,
+  getIsNewAvatar,
   getMessage,
   getRegistered,
   getRegistrationErrorMessage,
   getSendEmailMessage,
   getSendEmailReason,
   getUser,
+  getUserId,
   setAlertMessage,
+  setIsNewAvatar,
 } from './Authorization/model/slice'
 import { fetchConfirmation, fetchSendEmail, fetchUser } from './Authorization/model/asyncActions'
 import { LoginForm } from './Authorization/components/Authorization/Login/LoginForm'
@@ -45,19 +48,23 @@ import { PostType, ReasonType } from './Posts/types'
 import reviewsReducer from './Reviews/model/slice'
 
 export {
-  authorizationReducer, clearSendEmail,
+  authorizationReducer,
+  clearSendEmail,
   getAlertMessage,
   getAuth,
   getChangePasswordMessage,
   getIsActivated,
   getIsLoading,
+  getIsNewAvatar,
   getMessage,
   getRegistered,
   getRegistrationErrorMessage,
   getSendEmailMessage,
   getSendEmailReason,
   getUser,
+  getUserId,
   setAlertMessage,
+  setIsNewAvatar,
 }
 export { fetchConfirmation, fetchSendEmail, fetchUser }
 export { Authorization, LoginForm, RegistrationForm, SendToEmail, PasswordChanging }

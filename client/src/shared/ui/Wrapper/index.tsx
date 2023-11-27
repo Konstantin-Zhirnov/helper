@@ -2,8 +2,15 @@ import React from 'react'
 
 import styles from './Wrapper.module.sass'
 
-const Wrapper = ({ children, classes }: { children: React.ReactNode; classes?: any }) => (
-  <div className={`${styles.wrapper} ${classes}`}>{children}</div>
-)
+interface IProps {
+  children: React.ReactNode;
+  classes?: any
+}
 
-export default Wrapper
+const Wrapper: React.FC<IProps> = React.memo(({ children, classes }) => (
+  <div className={`${styles.wrapper} ${classes}`}>
+    {children}
+  </div>
+))
+
+export { Wrapper }

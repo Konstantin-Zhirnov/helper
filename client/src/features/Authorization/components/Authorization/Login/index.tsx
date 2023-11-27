@@ -1,15 +1,5 @@
 import React from 'react'
-import {
-    Button,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    useDisclosure
-  } from '@chakra-ui/react'
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 
 import { useAppDispatch, useAppSelector } from '../../../../../app'
 import { LoginButton } from '../../../../../shared'
@@ -18,42 +8,42 @@ import { getLoginModal, setLoginModal } from '../../../model/slice'
 import { LoginForm } from './LoginForm'
 
 
+interface IProps {
+  isAuth: boolean
+}
 
-  interface IProps {
-    isAuth: boolean
+const Login: React.FC<IProps> = React.memo(({ isAuth }) => {
+
+  const finalRef = React.useRef(null)
+  const dispatch = useAppDispatch()
+  const isOpen = useAppSelector(getLoginModal)
+
+  const onOpen = React.useCallback(() => {
+    dispatch(setLoginModal(true))
+  }, [])
+
+  const onClose = () => {
+    dispatch(setLoginModal(false))
   }
 
-const Login: React.FC<IProps> = ({isAuth}) => {
+  return (
+    <>
+      <LoginButton onClick={onOpen} isAuth={isAuth} />
 
-    const finalRef = React.useRef(null)
-    const dispatch = useAppDispatch()
-    const isOpen = useAppSelector(getLoginModal)
+      <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Log In</ModalHeader>
+          <ModalCloseButton />
 
-    const onOpen = () => {
-        dispatch(setLoginModal(true))
-    }
-    const onClose = () => {
-        dispatch(setLoginModal(false))
-    }
-    
-    return (
-      <>
-        <LoginButton onClick={onOpen} isAuth={isAuth}/>
+          <ModalBody>
+            <LoginForm />
+          </ModalBody>
 
-        <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Log In</ModalHeader>
-            <ModalCloseButton />
+        </ModalContent>
+      </Modal>
+    </>
+  )
+})
 
-            <ModalBody>
-             <LoginForm />
-            </ModalBody>
-  
-          </ModalContent>
-        </Modal>
-      </>
-    )
-  }
-
-  export default Login
+export { Login }

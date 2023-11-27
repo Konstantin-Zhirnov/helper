@@ -9,16 +9,16 @@ interface IProps {
   isAuth: boolean
 }
 
-const Logout: React.FC<IProps> = ({isAuth}) => {
+const Logout: React.FC<IProps> = React.memo(({ isAuth }) => {
   const dispatch = useAppDispatch()
 
-  const handleClick = () => {
+  const handleClick = React.useCallback(() => {
     dispatch(fetchLogout())
-  }
+  }, [])
 
   return (
-    <LoginButton onClick={handleClick} isAuth={isAuth}/>
+    <LoginButton onClick={handleClick} isAuth={isAuth} />
   )
-}
+})
 
-export default Logout
+export { Logout }

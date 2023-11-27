@@ -30,7 +30,7 @@ import { AddImages } from '../AddImages'
 import classes from './AddPost.module.sass'
 
 
-const AddPost: React.FC = () => {
+const AddPost: React.FC = React.memo(() => {
 
   const dispatch = useAppDispatch()
   const isModal = useAppSelector(getModal)
@@ -41,9 +41,9 @@ const AddPost: React.FC = () => {
   const [images, setImages] = React.useState([])
 
 
-  const onOpen = () => {
+  const onOpen = React.useCallback(() => {
     dispatch(setModal(true))
-  }
+  }, [])
 
   const onClose = () => {
     dispatch(setModal(false))
@@ -142,6 +142,6 @@ const AddPost: React.FC = () => {
       </Modal>
     </>
   )
-}
+})
 
 export { AddPost }

@@ -8,7 +8,7 @@ interface IProps {
   onOpen: () => void
 }
 
-const AddButton: React.FC<IProps> = ({ onOpen }) => {
+const AddButton: React.FC<IProps> = React.memo(({ onOpen }) => {
 
 
   const handleClick = () => {
@@ -23,6 +23,6 @@ const AddButton: React.FC<IProps> = ({ onOpen }) => {
       </svg>
     </Button>
   )
-}
+})
 
 export { AddButton }

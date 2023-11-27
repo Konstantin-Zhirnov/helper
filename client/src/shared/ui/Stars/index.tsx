@@ -8,90 +8,32 @@ interface IProps {
   stars: number
 }
 
-const Stars: React.FC<IProps> = ({ stars }) => {
+const Stars: React.FC<IProps> = React.memo(({ stars }) => {
 
-  const getStars = () => {
-    switch (stars) {
-      case 0.5:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStarHalf /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder />
-          </div>
-        )
+  const starsMap = new Map([
+    [0, <>
+      <MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /></>],
+    [0.5, <>
+      <MdOutlineStarHalf /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /></>],
+    [1, <>
+      <MdOutlineStar /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /></>],
+    [1.5, <>
+      <MdOutlineStar /><MdOutlineStarHalf /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /></>],
+    [2, <><MdOutlineStar /><MdOutlineStar /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /></>],
+    [2.5, <><MdOutlineStar /><MdOutlineStar /><MdOutlineStarHalf /><MdOutlineStarBorder /><MdOutlineStarBorder /></>],
+    [3, <><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStarBorder /><MdOutlineStarBorder /></>],
+    [3.5, <><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStarHalf /><MdOutlineStarBorder /></>],
+    [4, <><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStarBorder /></>],
+    [4.5, <><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStarHalf /></>],
+    [5, <><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /></>],
+  ])
 
-      case 1:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStar /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder />
-          </div>
-        )
 
-      case 1.5:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStar /><MdOutlineStarHalf /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder />
-          </div>
-        )
-
-      case 2:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStar /><MdOutlineStar /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder />
-          </div>
-        )
-
-      case 2.5:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStar /><MdOutlineStar /><MdOutlineStarHalf /><MdOutlineStarBorder /><MdOutlineStarBorder />
-          </div>
-        )
-
-      case 3:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStarBorder /><MdOutlineStarBorder />
-          </div>
-        )
-
-      case 3.5:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStarHalf /><MdOutlineStarBorder />
-          </div>
-        )
-
-      case 4:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStarBorder />
-          </div>
-        )
-
-      case 4.5:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStarHalf />
-          </div>
-        )
-
-      case 5:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar />
-          </div>
-        )
-
-      default:
-        return (
-          <div className={classes.container}>
-            <MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder /><MdOutlineStarBorder />
-          </div>
-        )
-    }
-  }
-
-  return getStars()
-}
+  return (
+    <div className={classes.container}>
+      {starsMap.get(stars)}
+    </div>
+  )
+})
 
 export { Stars }

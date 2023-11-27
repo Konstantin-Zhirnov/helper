@@ -13,16 +13,16 @@ const PasswordInput: React.FC<IProps> = ({ register }) => {
   const handleClick = () => setShow(!show)
 
   return (
-    <InputGroup size="sm">
+    <InputGroup size='sm'>
       <Input
-        pr="4.5rem"
+        pr='4.5rem'
         type={show ? 'text' : 'password'}
-        id="password"
-        autoComplete="off"
+        id='password'
+        autoComplete='off'
         {...register('password')}
       />
-      <InputRightElement width="4.5rem">
-        <Button h="1.6rem" size="sm" onClick={handleClick} className={classes.btn}>
+      <InputRightElement width='4.5rem'>
+        <Button h='1.6rem' size='sm' onClick={handleClick} className={classes.btn}>
           {show ? <MdVisibilityOff /> : <MdVisibility />}
         </Button>
       </InputRightElement>

@@ -5,7 +5,7 @@ import { LinkType } from '../../types'
 
 import classes from './Link.module.sass'
 
-const Link: React.FC<LinkType> = ({ name, to }) => {
+const Link: React.FC<LinkType> = React.memo(({ name, to }) => {
   return (
     <li className={classes.li}>
       <NavLink to={to} className={({ isActive }) => (isActive ? classes.active : '')}>
@@ -13,6 +13,6 @@ const Link: React.FC<LinkType> = ({ name, to }) => {
       </NavLink>
     </li>
   )
-}
+})
 
-export default Link
+export { Link }

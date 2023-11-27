@@ -18,7 +18,7 @@ interface IProps {
 }
 
 
-const AddImages: React.FC<IProps> = ({ currentImages, setCurrentImages, images, setImages, authorId }) => {
+const AddImages: React.FC<IProps> = React.memo(({ currentImages, setCurrentImages, images, setImages, authorId }) => {
 
   const dispatch = useAppDispatch()
   const message = useAppSelector(getMessage)
@@ -75,6 +75,6 @@ const AddImages: React.FC<IProps> = ({ currentImages, setCurrentImages, images, 
       <p className={classes.error_message}>{message}</p>
     </>
   )
-}
+})
 
 export { AddImages }

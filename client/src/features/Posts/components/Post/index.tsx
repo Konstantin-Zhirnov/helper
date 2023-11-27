@@ -5,7 +5,7 @@ import { BsGeoAltFill } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 
 import { useAppDispatch, useAppSelector } from '../../../../app'
-import { Li } from '../../../../shared'
+import { Li, Stars } from '../../../../shared'
 import { getUserId } from '../../../Authorization/model/slice'
 import { fetchRemovePost } from '../../model/asyncActions'
 
@@ -15,12 +15,10 @@ import { ContactInformation } from './ContactInformation'
 import { EditableInput } from './EditableInput'
 
 import classes from './Post.module.sass'
-import { Stars } from '../../../../shared/ui/Stars'
 
 
 interface IProps {
   _id?: string
-  index: number
   title: string
   description: string
   location: string
@@ -37,24 +35,23 @@ interface IProps {
   reason: ReasonType
 }
 
-const Post: React.FC<IProps> = ({
-                                  _id,
-                                  index,
-                                  title,
-                                  description,
-                                  location,
-                                  time,
-                                  postAuthorId,
-                                  name,
-                                  photo,
-                                  email,
-                                  phone,
-                                  whatsapp,
-                                  telegram,
-                                  stars,
-                                  images,
-                                  reason,
-                                }) => {
+const Post: React.FC<IProps> = React.memo(({
+                                             _id,
+                                             title,
+                                             description,
+                                             location,
+                                             time,
+                                             postAuthorId,
+                                             name,
+                                             photo,
+                                             email,
+                                             phone,
+                                             whatsapp,
+                                             telegram,
+                                             stars,
+                                             images,
+                                             reason,
+                                           }) => {
 
   const dispatch = useAppDispatch()
   const authorId = useAppSelector(getUserId)
@@ -124,6 +121,6 @@ const Post: React.FC<IProps> = ({
       <ContactInformation email={email} phone={phone} whatsapp={whatsapp} telegram={telegram} />
     </Li>
   )
-}
+})
 
 export { Post }

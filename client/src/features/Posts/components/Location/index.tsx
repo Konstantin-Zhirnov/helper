@@ -25,7 +25,7 @@ interface IProps {
   isMobile?: boolean
 }
 
-const Location: React.FC<IProps> = ({ isMobile }) => {
+const Location: React.FC<IProps> = React.memo(({ isMobile }) => {
 
   const dispatch = useAppDispatch()
   const location = useAppSelector(getLocation)
@@ -50,7 +50,7 @@ const Location: React.FC<IProps> = ({ isMobile }) => {
     </Popover>
 
   )
-}
+})
 
 export { Location }
 

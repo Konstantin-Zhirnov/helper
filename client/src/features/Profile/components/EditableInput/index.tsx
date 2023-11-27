@@ -15,7 +15,7 @@ interface IProps {
   field: string
 }
 
-const EditableInput: React.FC<IProps> = ({ _id, defaultValue, field }) => {
+const EditableInput: React.FC<IProps> = React.memo(({ _id, defaultValue, field }) => {
 
   const dispatch = useAppDispatch()
   const [value, setValue] = React.useState(defaultValue)
@@ -77,6 +77,6 @@ const EditableInput: React.FC<IProps> = ({ _id, defaultValue, field }) => {
   }
 
   return isEdit ? getInput() : getText()
-}
+})
 
 export { EditableInput }

@@ -4,13 +4,13 @@ import { useAppSelector } from '../../../../app'
 
 import { getAuth, getIsNewAvatar, getName, getPhoto } from '../../model/slice'
 import { AvatarButton } from './AvatarButton'
-import Logout from './Logout'
-import Login from './Login'
+import { Logout } from './Logout'
+import { Login } from './Login'
 
 import classes from './Authorization.module.sass'
 
 
-const Authorization: React.FC = () => {
+const Authorization: React.FC = React.memo(() => {
 
   const isAuth = useAppSelector(getAuth)
   const photo = useAppSelector(getPhoto)
@@ -31,6 +31,6 @@ const Authorization: React.FC = () => {
         <Logout isAuth={isAuth} />
       </div>
     )
-}
+})
 
 export { Authorization }

@@ -1,13 +1,12 @@
 import React from 'react'
-import cn from 'classnames'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { Authorization, Location, Search } from '../../features'
-import { useMatchMedia, Wrapper } from '../../shared'
+import { Logo, useMatchMedia, Wrapper } from '../../shared'
 
 import classes from './Header.module.sass'
 
 
-const Header: React.FC = () => {
+const Header: React.FC = React.memo(() => {
 
   const { isMobile } = useMatchMedia()
   const { pathname } = useLocation()
@@ -16,13 +15,8 @@ const Header: React.FC = () => {
     <header className={classes.header}>
       <Wrapper>
         <div className={classes.container}>
-          <NavLink to='/' className={cn(classes.link, {
-            [`${classes.mobile}`]: isMobile || pathname !== '/',
-          })}>
-            <img src='/images/ca.svg' alt='logo' className={classes.logo} />
 
-            <p className={classes.title}>Helper</p>
-          </NavLink>
+          <Logo isMobile={isMobile} pathname={pathname} />
 
           {!isMobile && pathname === '/' && <Search />}
 
@@ -33,5 +27,6 @@ const Header: React.FC = () => {
       </Wrapper>
     </header>
   )
-}
-export default Header
+})
+
+export { Header }
