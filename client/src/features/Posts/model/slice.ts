@@ -152,6 +152,7 @@ export const posts = createSlice({
       .addCase(fetchRemovePost.pending, pending)
       .addCase(fetchRemovePost.fulfilled, (state, action: PayloadAction<{ _id: string }>) => {
         state.postsByUser = state.postsByUser.filter(post => post._id !== action.payload._id)
+        state.posts = state.posts.filter(post => post._id !== action.payload._id)
       })
       .addCase(fetchRemovePost.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
