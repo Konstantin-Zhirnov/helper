@@ -22,7 +22,7 @@ const RegistrationPage: React.FC = () => {
         isRegistered
           ?
           <p className={classes.text}>Your user account has been successfully created. Please confirm
-            your email.</p>
+            your email. If you haven`t received an email within 30 seconds, then check the Spam folder.</p>
           : <RegistrationForm />
       }
       {

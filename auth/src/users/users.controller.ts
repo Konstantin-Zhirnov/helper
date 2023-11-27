@@ -259,7 +259,7 @@ export class UsersController {
       throw new BadRequestException('There is no user with such an email')
     }
 
-    return { message: 'The activation link has been sent successfully. If you haven`t received an email within 30 seconds, then check the Spam folder.' }
+    return { message: 'The activation link has been successfully sent.' }
   }
 
 
