@@ -105,8 +105,8 @@ export class UsersController {
       isActivated: false,
       linkForActivated: createUserDto.linkForActivated,
       changePasswordLink: '',
-      stars: user.stars,
-      countReviews: user.countReviews,
+      stars: createUserDto.stars,
+      countReviews: createUserDto.countReviews,
       paid: createUserDto.paid,
       paidTime: createUserDto.paidTime,
     })

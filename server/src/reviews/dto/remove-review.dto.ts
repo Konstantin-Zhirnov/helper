@@ -5,5 +5,8 @@ export class RemoveReviewDto {
   readonly _id?: string
 
   @ApiProperty({ example: '6846x1db645xd', description: 'Unique user`s number' })
-  readonly folder: string
+  readonly userId: string
+
+  @ApiProperty({ example: 5, description: 'Number of stars' })
+  readonly stars: number
 }

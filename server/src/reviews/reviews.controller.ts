@@ -90,10 +90,10 @@ export class PostsController {
   @ApiResponse({ status: 200, type: ReviewModel })
   @Post('remove-review')
   async remove(@Body() removeReviewDto: RemoveReviewDto): Promise<{ _id: string }> {
-    const post = await this.reviewsService.remove(removeReviewDto._id)
-    post.images.forEach(src => {
+    const review = await this.reviewsService.remove(removeReviewDto)
+    review.images.forEach(src => {
       const image = src.split('/').at(-1)
-      unlinkSync(`./public/${removeReviewDto.folder}/reviews/${image}`)
+      unlinkSync(`./public/${removeReviewDto.userId}/reviews/${image}`)
     })
     return { _id: removeReviewDto._id }
   }
@@ -111,7 +111,7 @@ export class PostsController {
   async getAllPostsByUserId(@Query() {
     id,
     page,
-  }): Promise<ReviewModel[]> {
+  }): Promise<{ reviews: ReviewModel[], count: number, pages: number }> {
     return await this.reviewsService.getAllPostsByUserId(id, page, 'authorId', chosenFields)
   }
 }

@@ -9,10 +9,6 @@ import { Review, ReviewDocument } from './schemas/review.schema'
 import { CreateReviewDto } from './dto/create-review.dto'
 
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
-
 @Injectable()
 export class ReviewsService {
 
@@ -29,11 +25,13 @@ export class ReviewsService {
     }
     const review = new this.reviewModel(postWithTime)
 
-    const { stars, countReviews } = this.userModel.findById(createReviewDto.userId)
-    await this.userModel.findByIdAndUpdate(createReviewDto.userId, {
-      stars: stars + createReviewDto.stars,
-      countReviews: countReviews + 1,
-    })
+    const user = await this.userModel.findById(createReviewDto.userId) as User
+    if (user) {
+      await this.userModel.findByIdAndUpdate(createReviewDto.userId, {
+        stars: user.stars + createReviewDto.stars,
+        countReviews: user.countReviews + 1,
+      })
+    }
 
     return (await review.save()).populate({
       path: fieldName,
@@ -41,16 +39,17 @@ export class ReviewsService {
     })
   }
 
-  async remove(id: string): Promise<Review> {
+  async remove(removeReviewDto): Promise<Review> {
+    const user = await this.userModel.findById(removeReviewDto.userId) as User
 
-    const review = await this.reviewModel.findById(id)
-    const { stars, countReviews } = await this.userModel.findById(review.userId)
-    await this.userModel.findByIdAndUpdate(review.userId, {
-      stars: stars - review.stars,
-      countReviews: countReviews - 1,
-    })
+    if (user) {
+      await this.userModel.findByIdAndUpdate(removeReviewDto.userId, {
+        stars: user.stars - removeReviewDto.stars,
+        countReviews: user.countReviews - 1,
+      })
+    }
 
-    return this.reviewModel.findByIdAndRemove(id)
+    return this.reviewModel.findByIdAndRemove(removeReviewDto._id)
   }
 
   async getAllPostsByAuthorId(authorId: string, fieldName: string, chosenFields: Record<string, number>): Promise<Review[]> {

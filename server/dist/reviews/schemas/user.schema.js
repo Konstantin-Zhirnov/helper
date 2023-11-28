@@ -71,7 +71,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "linkForActivated", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'dzvjndd6552sgbsz', description: 'Link to change the user\'s password' }),
+    (0, swagger_1.ApiProperty)({ example: 'dzvjndd6552sgbsz', description: 'Link to change the user`s password' }),
     (0, mongoose_1.Prop)({ required: false }),
     __metadata("design:type", String)
 ], User.prototype, "changePasswordLink", void 0);

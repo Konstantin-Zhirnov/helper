@@ -23,27 +23,25 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { HydratedDocument, Types } from 'mongoose';
-export type UserDocument = HydratedDocument<User>;
-export declare class User {
+export type ReviewDocument = HydratedDocument<Review>;
+export declare class Review {
     _id: Types.ObjectId;
-    name: string;
-    email: string;
-    password: string;
-    phone: string;
-    whatsapp: string;
-    telegram: string;
-    viber: string;
-    photo: string;
-    isActivated: boolean;
-    linkForActivated: string;
-    changePasswordLink: string;
+    title: string;
+    description: string;
     stars: number;
-    countReviews: number;
-    paid: boolean;
-    paidTime: string;
+    userId: {
+        type: Types.ObjectId;
+        ref: 'User';
+    };
+    authorId: {
+        type: Types.ObjectId;
+        ref: 'User';
+    };
+    time: number;
+    images: string[];
 }
-export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, import("mongoose").Document<unknown, any, User> & User & Required<{
+export declare const ReviewSchema: import("mongoose").Schema<Review, import("mongoose").Model<Review, any, any, any, import("mongoose").Document<unknown, any, Review> & Review & Required<{
     _id: Types.ObjectId;
-}>, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, User, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<User>> & import("mongoose").FlatRecord<User> & Required<{
+}>, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Review, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<Review>> & import("mongoose").FlatRecord<Review> & Required<{
     _id: Types.ObjectId;
 }>>;
