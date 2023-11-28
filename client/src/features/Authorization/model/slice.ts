@@ -164,7 +164,7 @@ export const authorization = createSlice({
       .addCase(fetchRemoveUser.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
         state.isAuth = false
         state.alertMessage = action.payload.message
-        window.location.href = 'https/helper.plus'
+        window.location.href = '/'
       })
       .addCase(fetchRemoveUser.rejected, (state, action) => {
         state.alertMessage = (action.payload as string) ?? ''
