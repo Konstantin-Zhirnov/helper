@@ -1,5 +1,5 @@
 import React from 'react'
-import { AbsoluteCenter, Box, Divider, Text } from '@chakra-ui/react'
+import { AbsoluteCenter, Box, Divider } from '@chakra-ui/react'
 
 import { useAppDispatch, useAppSelector } from '../../app'
 import { Posts, ProfileInfo } from '../../widgets'
@@ -23,7 +23,7 @@ const ProfilePage: React.FC = React.memo(() => {
     dispatch(fetchPostsByUser(user._id))
   }, [user])
 
-  if (!isAuth) return <Text fontSize='2xl' className={classes.text}>You need to log in</Text>
+  if (!isAuth) return <p className={classes.text}>You need to log in</p>
 
   return (
     <Wrapper>
