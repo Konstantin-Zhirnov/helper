@@ -162,6 +162,7 @@ export const authorization = createSlice({
 
       .addCase(fetchRemoveUser.pending, pendingNewPassword)
       .addCase(fetchRemoveUser.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
+        state.isAuth = false
         state.alertMessage = action.payload.message
       })
       .addCase(fetchRemoveUser.rejected, (state, action) => {
