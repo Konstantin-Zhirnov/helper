@@ -113,14 +113,6 @@ export class UsersController {
   }
 
 
-  @ApiOperation({ summary: 'Delete user' })
-  @ApiResponse({ status: 200, type: User })
-  @Delete('users/:id')
-  remove(@Param('id') id: string): Promise<User> {
-    return this.usersService.remove(id)
-  }
-
-
   @ApiOperation({ summary: 'Update user' })
   @ApiResponse({ status: 201, type: User })
   @Put('users/:id')
@@ -315,5 +307,19 @@ export class UsersController {
     }
 
     return { message: 'Your password has been successfully changed' }
+  }
+
+  @ApiOperation({ summary: 'Delete user' })
+  @ApiResponse({ status: 200, type: User })
+  @Delete('remove-user/:id')
+  async remove(@Res({ passthrough: true }) response: Response, @Param('id') id: string): Promise<{ message: string }> {
+
+    const result = await this.usersService.remove(id)
+    if (result) {
+      response.clearCookie('jwt')
+      return { message: 'User successfully deleted!' }
+    } else {
+      throw new BadRequestException('The user was not deleted!')
+    }
   }
 }

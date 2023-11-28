@@ -8,6 +8,7 @@ import {
   fetchLogout,
   fetchNewPassword,
   fetchRegistration,
+  fetchRemoveUser,
   fetchSendEmail,
   fetchUpdateUser,
   fetchUser,
@@ -156,6 +157,14 @@ export const authorization = createSlice({
         state.alertMessage = action.payload.message
       })
       .addCase(fetchNewPassword.rejected, (state, action) => {
+        state.alertMessage = (action.payload as string) ?? ''
+      })
+
+      .addCase(fetchRemoveUser.pending, pendingNewPassword)
+      .addCase(fetchRemoveUser.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
+        state.alertMessage = action.payload.message
+      })
+      .addCase(fetchRemoveUser.rejected, (state, action) => {
         state.alertMessage = (action.payload as string) ?? ''
       })
   },

@@ -3,12 +3,16 @@ import { Box, Card, CardBody, CardHeader, Heading, Text } from '@chakra-ui/react
 import { FaSquareWhatsapp, FaTelegram } from 'react-icons/fa6'
 
 import { useAppSelector } from '../../app'
-import { EditableInput, EditablePasswordInput, getUser } from '../../features'
+import { EditableInput, EditablePasswordInput, getUser, RemoveAccount } from '../../features'
 
 import classes from './ProfileInfo.module.sass'
 
 
-const ProfileInfo: React.FC = React.memo(() => {
+interface IProps {
+  canRemove: boolean
+}
+
+const ProfileInfo: React.FC<IProps> = React.memo(({ canRemove }) => {
   const user = useAppSelector(getUser)
 
   return (
@@ -79,6 +83,8 @@ const ProfileInfo: React.FC = React.memo(() => {
           </Box>
         </CardBody>
       </Card>
+
+      <RemoveAccount _id={user._id} canRemove={canRemove} />
     </div>
   )
 })

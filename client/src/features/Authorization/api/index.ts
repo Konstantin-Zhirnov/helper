@@ -51,4 +51,8 @@ export const AuthAPI = {
   newPassword(body: NewPasswordType): Promise<MessageResponseType> {
     return $api.put(URL.newPassword, body).then(({ data }) => data)
   },
+
+  removeUser(_id: string): Promise<MessageResponseType> {
+    return $api.delete(`${URL.removeUser}/${_id}`).then(({ data }) => data)
+  },
 }

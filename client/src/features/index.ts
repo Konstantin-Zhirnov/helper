@@ -27,6 +27,7 @@ import { EmailType } from './Authorization/types'
 import { EditablePasswordInput } from './Profile/components/EditablePasswordInput'
 import { ProfileAvatar } from './Profile/components/ProfileAvatar'
 import { EditableInput } from './Profile/components/EditableInput'
+import { RemoveAccount } from './Profile/components/RemoveAccount'
 
 import postsReducer, {
   getLocation,
@@ -71,7 +72,7 @@ export { Authorization, LoginForm, RegistrationForm, SendToEmail, PasswordChangi
 export type { EmailType }
 
 
-export { ProfileAvatar, EditablePasswordInput, EditableInput }
+export { ProfileAvatar, EditablePasswordInput, EditableInput, RemoveAccount }
 export { postsReducer, getSearch, getLocation, getPosts, getPostsByUser, getPage, getPages, setPage, setLocation }
 export { fetchPosts, fetchPostsByUser }
 export { Location, AddPost, Post, Search }
