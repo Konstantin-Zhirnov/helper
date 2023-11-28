@@ -49,7 +49,7 @@ export class User {
   @Prop({ required: false })
   linkForActivated: string
 
-  @ApiProperty({ example: 'dzvjndd6552sgbsz', description: 'Link to change the user\'s password' })
+  @ApiProperty({ example: 'dzvjndd6552sgbsz', description: 'Link to change the user`s password' })
   @Prop({ required: false })
   changePasswordLink: string
 

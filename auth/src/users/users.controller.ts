@@ -48,6 +48,8 @@ const getUserWithoutPassword = (user: User) => {
     isActivated: user.isActivated,
     linkForActivated: user.linkForActivated,
     changePasswordLink: '',
+    stars: user.stars,
+    countReviews: user.countReviews,
     paid: user.paid,
     paidTime: user.paidTime,
   }
@@ -103,6 +105,8 @@ export class UsersController {
       isActivated: false,
       linkForActivated: createUserDto.linkForActivated,
       changePasswordLink: '',
+      stars: user.stars,
+      countReviews: user.countReviews,
       paid: createUserDto.paid,
       paidTime: createUserDto.paidTime,
     })
