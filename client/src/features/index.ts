@@ -47,6 +47,7 @@ import { Search } from './Posts/components/Search'
 import { PostType, ReasonType } from './Posts/types'
 
 import reviewsReducer from './Reviews/model/slice'
+import { UserInfo } from './Reviews/components/UserInfo'
 
 export {
   authorizationReducer,
@@ -78,4 +79,4 @@ export { fetchPosts, fetchPostsByUser }
 export { Location, AddPost, Post, Search }
 export type { PostType, ReasonType }
 
-export { reviewsReducer }
+export { reviewsReducer, UserInfo }

@@ -16,5 +16,5 @@ import { ReviewsController } from './reviews.controller'
   controllers: [ReviewsController],
   providers: [ReviewsService],
 })
-export class PostsModule {
+export class ReviewsModule {
 }
