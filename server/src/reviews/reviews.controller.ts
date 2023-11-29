@@ -16,6 +16,7 @@ import { existsSync, mkdirSync, unlinkSync } from 'fs'
 import { diskStorage } from 'multer'
 
 import { Review as ReviewModel } from './schemas/review.schema'
+import { User as UserModel } from './schemas/user.schema'
 import { ReviewsService } from './reviews.service'
 import { CreateReviewDto } from './dto/create-review.dto'
 import { RemoveReviewDto } from './dto/remove-review.dto'
@@ -38,8 +39,16 @@ const getExtension = (fileName: string): string => {
 }
 
 @Controller()
-export class PostsController {
+export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {
+  }
+
+  @ApiOperation({ summary: 'Get one user by id' })
+  @ApiResponse({ status: 200, type: UserModel })
+  @Get('review-user/:id')
+  async getUser(@Param('id') id: string) {
+    const user = await this.reviewsService.getById(id)
+    return { name: user.name, photo: user.photo, stars: user.stars, countReviews: user.countReviews }
   }
 
   @ApiOperation({ summary: 'Create review' })

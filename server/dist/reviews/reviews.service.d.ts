@@ -23,13 +23,14 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Model } from 'mongoose';
-import { UserDocument } from './schemas/user.schema';
+import { User, UserDocument } from './schemas/user.schema';
 import { Review, ReviewDocument } from './schemas/review.schema';
 import { CreateReviewDto } from './dto/create-review.dto';
 export declare class ReviewsService {
     private userModel;
     private reviewModel;
     constructor(userModel: Model<UserDocument>, reviewModel: Model<ReviewDocument>);
+    getById(id: string): Promise<User>;
     create(createReviewDto: CreateReviewDto & {
         images: string[];
     }, fieldName: string, chosenFields: Record<string, number>): Promise<Review>;

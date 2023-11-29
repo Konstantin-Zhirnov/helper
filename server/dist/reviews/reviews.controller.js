@@ -12,13 +12,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostsController = void 0;
+exports.ReviewsController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const platform_express_1 = require("@nestjs/platform-express");
 const fs_1 = require("fs");
 const multer_1 = require("multer");
 const review_schema_1 = require("./schemas/review.schema");
+const user_schema_1 = require("./schemas/user.schema");
 const reviews_service_1 = require("./reviews.service");
 const create_review_dto_1 = require("./dto/create-review.dto");
 const remove_review_dto_1 = require("./dto/remove-review.dto");
@@ -34,9 +35,13 @@ const getExtension = (fileName) => {
     }
     return fileName.slice(i + 1).toLowerCase();
 };
-let PostsController = class PostsController {
+let ReviewsController = class ReviewsController {
     constructor(reviewsService) {
         this.reviewsService = reviewsService;
+    }
+    async getUser(id) {
+        const user = await this.reviewsService.getById(id);
+        return { name: user.name, photo: user.photo, stars: user.stars, countReviews: user.countReviews };
     }
     async create(createReviewDto, files) {
         const images = [];
@@ -64,7 +69,16 @@ let PostsController = class PostsController {
         return await this.reviewsService.getAllPostsByUserId(id, page, 'authorId', chosenFields);
     }
 };
-exports.PostsController = PostsController;
+exports.ReviewsController = ReviewsController;
+__decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Get one user by id' }),
+    (0, swagger_1.ApiResponse)({ status: 200, type: user_schema_1.User }),
+    (0, common_1.Get)('review-user/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ReviewsController.prototype, "getUser", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Create review' }),
     (0, swagger_1.ApiResponse)({ status: 200, type: review_schema_1.Review }),
@@ -99,7 +113,7 @@ __decorate([
     __metadata("design:paramtypes", [create_review_dto_1.CreateReviewDto,
         Array]),
     __metadata("design:returntype", Promise)
-], PostsController.prototype, "create", null);
+], ReviewsController.prototype, "create", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Delete review' }),
     (0, swagger_1.ApiResponse)({ status: 200, type: review_schema_1.Review }),
@@ -108,7 +122,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [remove_review_dto_1.RemoveReviewDto]),
     __metadata("design:returntype", Promise)
-], PostsController.prototype, "remove", null);
+], ReviewsController.prototype, "remove", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get all posts by author id' }),
     (0, swagger_1.ApiResponse)({ status: 200, type: [review_schema_1.Review] }),
@@ -117,7 +131,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], PostsController.prototype, "getAllPostsByAuthorId", null);
+], ReviewsController.prototype, "getAllPostsByAuthorId", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get all posts by user id' }),
     (0, swagger_1.ApiResponse)({ status: 200, type: [review_schema_1.Review] }),
@@ -126,9 +140,9 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], PostsController.prototype, "getAllPostsByUserId", null);
-exports.PostsController = PostsController = __decorate([
+], ReviewsController.prototype, "getAllPostsByUserId", null);
+exports.ReviewsController = ReviewsController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [reviews_service_1.ReviewsService])
-], PostsController);
+], ReviewsController);
 //# sourceMappingURL=reviews.controller.js.map

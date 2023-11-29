@@ -23,6 +23,9 @@ let ReviewsService = class ReviewsService {
         this.userModel = userModel;
         this.reviewModel = reviewModel;
     }
+    async getById(id) {
+        return this.userModel.findById(id);
+    }
     async create(createReviewDto, fieldName, chosenFields) {
         const postWithTime = {
             ...createReviewDto,

@@ -35,6 +35,8 @@ const chosenFields: Record<string, number> = {
   whatsapp: 1,
   telegram: 1,
   viber: 1,
+  stars: 1,
+  countReviews: 1,
 }
 
 const getExtension = (fileName: string): string => {

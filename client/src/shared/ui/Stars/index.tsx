@@ -6,9 +6,10 @@ import classes from './Stars.module.sass'
 
 interface IProps {
   stars: number
+  countReviews: number
 }
 
-const Stars: React.FC<IProps> = React.memo(({ stars }) => {
+const Stars: React.FC<IProps> = React.memo(({ stars, countReviews }) => {
 
   const starsMap = new Map([
     [0, <>
@@ -28,10 +29,13 @@ const Stars: React.FC<IProps> = React.memo(({ stars }) => {
     [5, <><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /><MdOutlineStar /></>],
   ])
 
+  function roundToHalf(number) {
+    return Math.round(number * 2) / 2
+  }
 
   return (
     <div className={classes.container}>
-      {starsMap.get(stars)}
+      {starsMap.get(roundToHalf(stars / countReviews) || 0)}
     </div>
   )
 })

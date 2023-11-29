@@ -51,6 +51,8 @@ const RegistrationForm: React.FC = () => {
         isActivated: false,
         linkForActivated: '',
         changePasswordLink: '',
+        stars: 0,
+        countReviews: 0,
         paid: true,
         paidTime: '',
       }),

@@ -1,9 +1,9 @@
 import { $api, URL } from './config'
-import { ReviewType } from '../types'
+import { UserType } from '../types'
 
 
 export const ReviewsAPI = {
-  getReviews(): Promise<ReviewType[]> {
-    return $api.get(URL.reviews).then(({ data }) => data)
+  getUser(_id: string): Promise<UserType> {
+    return $api.get(`${URL.user}/${_id}`).then(({ data }) => data)
   },
 }

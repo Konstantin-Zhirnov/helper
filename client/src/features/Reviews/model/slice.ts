@@ -1,10 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-
-import { ReviewsStateType } from '../types'
+import { fetchUser } from './asyncActions'
+import { ReviewsStateType, UserType } from '../types'
+import { RootState } from '../../../app'
 
 
 const initialState: ReviewsStateType = {
+  user: {
+    name: '',
+    photo: '',
+    stars: 0,
+    countReviews: 0,
+  },
   reviews: [],
   message: '',
 }
@@ -14,20 +21,14 @@ export const reviews = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // builder
-    //   .addCase(fetchPosts.pending, pending)
-    //   .addCase(fetchPosts.fulfilled, (state, action: PayloadAction<PostsType>) => {
-    //     if (action.payload.page === 1) {
-    //       state.posts = action.payload.posts
-    //     } else {
-    //       state.posts = state.posts.concat(action.payload.posts)
-    //     }
-    //     state.count = action.payload.count
-    //     state.pages = action.payload.pages
-    //   })
-    //   .addCase(fetchPosts.rejected, (state, action) => {
-    //     state.message = (action.payload as string) ?? ''
-    //   })
+    builder
+      .addCase(fetchUser.pending, pending)
+      .addCase(fetchUser.fulfilled, (state, action: PayloadAction<UserType>) => {
+        state.user = action.payload
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.message = (action.payload as string) ?? ''
+      })
   },
 })
 
@@ -37,6 +38,6 @@ function pending(state: ReviewsStateType) {
 
 
 // export const { setLocation } = reviews.actions
-
+export const getUser = (state: RootState): UserType => state.reviews.user
 
 export default reviews.reducer

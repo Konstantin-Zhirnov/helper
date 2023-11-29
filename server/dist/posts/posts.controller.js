@@ -34,6 +34,8 @@ const chosenFields = {
     whatsapp: 1,
     telegram: 1,
     viber: 1,
+    stars: 1,
+    countReviews: 1,
 };
 const getExtension = (fileName) => {
     const i = fileName.lastIndexOf('.');

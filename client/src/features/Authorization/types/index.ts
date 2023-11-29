@@ -31,6 +31,8 @@ export type UserType = {
   isActivated: boolean
   linkForActivated: string
   changePasswordLink: string
+  stars: number
+  countReviews: number
   paid: boolean
   paidTime: string
 }

@@ -28,6 +28,7 @@ type AuthorIdType = {
   viber: string
   photo: string
   stars: number
+  countReviews: number
 }
 
 export type PostType = {

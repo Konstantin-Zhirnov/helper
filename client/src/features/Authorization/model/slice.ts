@@ -42,6 +42,8 @@ const initialState: AuthorizationStateType = {
     isActivated: false,
     linkForActivated: '',
     changePasswordLink: '',
+    stars: 0,
+    countReviews: 0,
     paid: false,
     paidTime: '',
   },

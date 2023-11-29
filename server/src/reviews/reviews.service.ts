@@ -18,6 +18,10 @@ export class ReviewsService {
   ) {
   }
 
+  async getById(id: string): Promise<User> {
+    return this.userModel.findById(id)
+  }
+
   async create(createReviewDto: CreateReviewDto & { images: string[] }, fieldName: string, chosenFields: Record<string, number>): Promise<Review> {
     const postWithTime = {
       ...createReviewDto,

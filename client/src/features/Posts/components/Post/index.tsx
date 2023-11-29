@@ -31,6 +31,7 @@ interface IProps {
   whatsapp: string
   telegram: string
   stars: number
+  countReviews: number
   images: string[]
   reason: ReasonType
 }
@@ -49,6 +50,7 @@ const Post: React.FC<IProps> = React.memo(({
                                              whatsapp,
                                              telegram,
                                              stars,
+                                             countReviews,
                                              images,
                                              reason,
                                            }) => {
@@ -66,7 +68,9 @@ const Post: React.FC<IProps> = React.memo(({
         <div className={classes.user}>
           <Avatar size='xl' name={name} src={`${photo}?${new Date().getTime()}`} />
           <Text fontSize='lg' className={classes.name}>{name}</Text>
-          <NavLink to={`/reviews/${postAuthorId}`} className={classes.stars}><Stars stars={4.5} /></NavLink>
+          <NavLink to={`/reviews/${postAuthorId}`} className={classes.stars}>
+            <Stars stars={stars} countReviews={countReviews} />
+          </NavLink>
         </div>
         <div className={classes.info}>
           {

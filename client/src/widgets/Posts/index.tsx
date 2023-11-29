@@ -27,6 +27,7 @@ const Posts: React.FC<IProps> = React.memo(({ posts, reason }) => {
       whatsapp={post.authorId.whatsapp}
       telegram={post.authorId.telegram}
       stars={post.authorId.stars}
+      countReviews={post.authorId.countReviews}
       images={post.images}
       reason={reason}
     />
