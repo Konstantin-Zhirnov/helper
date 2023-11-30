@@ -25,12 +25,15 @@ const UserInfo: React.FC<IProps> = React.memo(({ id }) => {
   return (
     <>
       <Heading as='h1' size='lg' className={classes.title}>
-        All reviews about {user.name}
+        Reviews about {user.name}
       </Heading>
 
-      <Avatar size='2xl' name={user.name} src={`${user.photo}?${new Date().getTime()}`} />
-
-      <Stars stars={user.stars} countReviews={user.countReviews} />
+      <div className={classes.container}>
+        <span>
+           <Avatar size='lg' name={user.name} src={user.photo} />
+            <Stars stars={user.stars} countReviews={user.countReviews} />
+        </span>
+      </div>
     </>
 
   )

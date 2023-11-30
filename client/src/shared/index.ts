@@ -14,10 +14,14 @@ import { useDebounce } from './lib/hooks/useDebounce'
 
 import { getExtension, reduceImage } from './lib/helpers'
 
+import type { MessageResponseType, PasswordType, UserType } from './types'
+
 export { AddButton, Circular, Li, Link, Loader, LoginButton, Logo, Stars, Wrapper }
 
 
 export { useMessage, useMatchMedia, useDebounce }
 
 export { getExtension, reduceImage }
+
+export type { UserType, MessageResponseType, PasswordType }
 

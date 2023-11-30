@@ -6,8 +6,10 @@ import { Button, Input } from '@chakra-ui/react'
 import * as yup from 'yup'
 
 import { useAppDispatch } from '../../../../app'
+import type { UserType } from '../../../../shared'
+
 import { fetchRegistration } from '../../model/asyncActions'
-import { UserType } from '../../types'
+
 import { PasswordInput } from '../PasswordInput'
 
 import classes from './RegistrationForm.module.sass'

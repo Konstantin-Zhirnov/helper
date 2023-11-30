@@ -7,11 +7,11 @@ import { ButtonGroup, IconButton, Input, Text } from '@chakra-ui/react'
 import * as yup from 'yup'
 
 import { useAppDispatch } from '../../../../app'
-import { PasswordType } from '../../../Authorization/types'
+import type { PasswordType } from '../../../../shared'
 
-import { fetchNewPassword } from '../../../Authorization/model/asyncActions'
 
 import classes from './EditablePasswordInput.module.sass'
+import { fetchNewPassword } from '../../model/asyncActions'
 
 interface IProps {
   _id: string

@@ -24,8 +24,9 @@ const initialState: PostsStateType = {
   page: 1,
   count: 0,
   pages: 0,
-  message: '',
   isModal: false,
+  message: '',
+  alertMessage: '',
 }
 
 export const posts = createSlice({
@@ -38,6 +39,9 @@ export const posts = createSlice({
     },
     setModal: (state, action: PayloadAction<boolean>) => {
       state.isModal = action.payload
+    },
+    setAlertPostsMessage: (state, action: PayloadAction<string>) => {
+      state.alertMessage = action.payload
     },
     setMessage: (state, action: PayloadAction<string>) => {
       state.message = action.payload
@@ -165,7 +169,7 @@ function pending(state: PostsStateType) {
 }
 
 
-export const { setLocation, setModal, setMessage, setPage, setSearch } = posts.actions
+export const { setLocation, setModal, setAlertPostsMessage, setMessage, setPage, setSearch } = posts.actions
 
 export const getPosts = (state: RootState): PostType[] => state.posts.posts
 export const getPostsByUser = (state: RootState): PostType[] => state.posts.postsByUser
@@ -176,6 +180,7 @@ export const getLocation = (state: RootState): string => state.posts.location
 export const getLocations = (state: RootState): LocationsType => state.posts.locations
 export const getModal = (state: RootState): boolean => state.posts.isModal
 export const getMessage = (state: RootState): string => state.posts.message
+export const getAlertPostsMessage = (state: RootState): string => state.posts.alertMessage
 
 
 export default posts.reducer

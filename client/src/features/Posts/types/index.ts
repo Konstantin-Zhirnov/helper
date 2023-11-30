@@ -7,8 +7,9 @@ export type PostsStateType = {
   page: number
   count: number
   pages: number
-  message: string
   isModal: boolean
+  alertMessage: string
+  message: string
 }
 
 

@@ -4,7 +4,8 @@ import { Card, CardBody, CardHeader, Heading, IconButton, Text } from '@chakra-u
 import { MdDelete, MdWarningAmber } from 'react-icons/md'
 
 import { useAppDispatch } from '../../../../app'
-import { fetchRemoveUser } from '../../../Authorization/model/asyncActions'
+
+import { fetchRemoveUser } from '../../model/asyncActions'
 
 import 'react-international-phone/style.css'
 import classes from './RemoveAccount.module.sass'

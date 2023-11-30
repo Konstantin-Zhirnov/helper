@@ -7,17 +7,21 @@ import {
   fetchPosts,
   fetchPostsByUser,
   fetchUser,
+  getAlertAuthorizationMessage,
+  getAlertPostsMessage,
   getIsNewAvatar,
   getLocation,
   getPage,
   getPages,
   getSearch,
   getUserId,
+  setAlertAuthorizationMessage,
+  setAlertPostsMessage,
   setIsNewAvatar,
   setLocation,
   setPage,
 } from '../../features'
-import { Wrapper } from '../../shared'
+import { useMessage, Wrapper } from '../../shared'
 
 
 import classes from './Footer.module.sass'
@@ -33,6 +37,17 @@ const Footer: React.FC = React.memo(() => {
   const location = useAppSelector(getLocation)
   const isNewAvatar = useAppSelector(getIsNewAvatar)
   const userId = useAppSelector(getUserId)
+
+  const authorizationMessage = useAppSelector(getAlertAuthorizationMessage)
+  const postsMessage = useAppSelector(getAlertPostsMessage)
+
+
+  const clear = () => {
+    dispatch(setAlertAuthorizationMessage(''))
+    dispatch(setAlertPostsMessage(''))
+  }
+
+  useMessage(authorizationMessage || postsMessage, clear)
 
 
   const { ref, inView } = useInView({

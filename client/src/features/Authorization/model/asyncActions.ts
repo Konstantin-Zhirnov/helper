@@ -2,21 +2,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 
 import { AuthAPI } from '../api'
-import {
-  ChangePasswordType,
-  LinkType,
-  LoginType,
-  NewPasswordType,
-  SendEmailType,
-  UpdateUserType,
-  UserType,
-} from '../types'
+import { setIsActivated, setUser } from '../../../features'
+import type { UserType } from '../../../shared'
+
+import type { ChangePasswordType, LinkType, LoginType, SendEmailType } from '../types'
+
 
 export const fetchLogin = createAsyncThunk(
   'authorization/fetchLogin',
-  async function(body: LoginType, { rejectWithValue }) {
+  async function(body: LoginType, { rejectWithValue, dispatch }) {
     try {
-      return await AuthAPI.login(body)
+      const user = await AuthAPI.login(body)
+      dispatch(setUser(user))
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.message)
@@ -44,9 +41,11 @@ export const fetchRegistration = createAsyncThunk(
 
 export const fetchConfirmation = createAsyncThunk(
   'authorization/fetchConfirmation',
-  async function(body: LinkType, { rejectWithValue }) {
+  async function(body: LinkType, { rejectWithValue, dispatch }) {
     try {
-      return await AuthAPI.confirmation(body)
+      await AuthAPI.confirmation(body)
+      dispatch(setIsActivated(true))
+      return 'success!'
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.message)
@@ -59,9 +58,11 @@ export const fetchConfirmation = createAsyncThunk(
 
 export const fetchUser = createAsyncThunk(
   'authorization/fetchUser',
-  async function(_, { rejectWithValue }) {
+  async function(_, { rejectWithValue, dispatch }) {
     try {
-      return await AuthAPI.getUser()
+      const user = await AuthAPI.getUser()
+      dispatch(setUser(user))
+      return user
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.message)
@@ -107,66 +108,6 @@ export const fetchChangePassword = createAsyncThunk(
   async function(body: ChangePasswordType, { rejectWithValue }) {
     try {
       return await AuthAPI.changePassword(body)
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data.message)
-      } else {
-        return rejectWithValue(error)
-      }
-    }
-  },
-)
-
-export const fetchChangeAvatar = createAsyncThunk(
-  'authorization/fetchChangeAvatar',
-  async function(data: FormData, { rejectWithValue }) {
-    try {
-      return await AuthAPI.changeAvatar(data)
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data.message)
-      } else {
-        return rejectWithValue(error)
-      }
-    }
-  },
-)
-
-export const fetchUpdateUser = createAsyncThunk(
-  'authorization/fetchUpdateUser',
-  async function(body: UpdateUserType, { rejectWithValue }) {
-    try {
-      return await AuthAPI.updateUser(body)
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data.message)
-      } else {
-        return rejectWithValue(error)
-      }
-    }
-  },
-)
-
-export const fetchNewPassword = createAsyncThunk(
-  'authorization/fetchNewPassword',
-  async function(body: NewPasswordType, { rejectWithValue }) {
-    try {
-      return await AuthAPI.newPassword(body)
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data.message)
-      } else {
-        return rejectWithValue(error)
-      }
-    }
-  },
-)
-
-export const fetchRemoveUser = createAsyncThunk(
-  'authorization/fetchRemoveUser',
-  async function(_id: string, { rejectWithValue, dispatch }) {
-    try {
-      return await AuthAPI.removeUser(_id)
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.message)

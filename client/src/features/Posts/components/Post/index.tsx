@@ -4,9 +4,8 @@ import { Avatar, Divider, IconButton, Text } from '@chakra-ui/react'
 import { BsGeoAltFill } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 
-import { useAppDispatch, useAppSelector } from '../../../../app'
+import { useAppDispatch } from '../../../../app'
 import { Li, Stars } from '../../../../shared'
-import { getUserId } from '../../../Authorization/model/slice'
 import { fetchRemovePost } from '../../model/asyncActions'
 
 import { ReasonType } from '../../types'
@@ -56,10 +55,9 @@ const Post: React.FC<IProps> = React.memo(({
                                            }) => {
 
   const dispatch = useAppDispatch()
-  const authorId = useAppSelector(getUserId)
 
   const removePost = () => {
-    dispatch(fetchRemovePost({ _id, folder: authorId }))
+    dispatch(fetchRemovePost({ _id, folder: postAuthorId }))
   }
 
   return (
@@ -117,9 +115,9 @@ const Post: React.FC<IProps> = React.memo(({
       </div>
       {
         reason === 'profile'
-          ? <Images imagesSrcArray={images} _id={_id} reason={reason} />
+          ? <Images imagesSrcArray={images} _id={_id} reason={reason} authorId={postAuthorId} />
           : !!images.length
-            ? <Images imagesSrcArray={images} _id={_id} reason={reason} />
+            ? <Images imagesSrcArray={images} _id={_id} reason={reason} authorId={postAuthorId} />
             : null
       }
       <ContactInformation email={email} phone={phone} whatsapp={whatsapp} telegram={telegram} />

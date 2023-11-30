@@ -2,20 +2,22 @@ import React from 'react'
 
 import { useAppSelector } from '../../../../app'
 
-import { getAuth, getIsNewAvatar, getName, getPhoto } from '../../model/slice'
+import { getAuth } from '../../model/slice'
 import { AvatarButton } from './AvatarButton'
 import { Logout } from './Logout'
 import { Login } from './Login'
 
 import classes from './Authorization.module.sass'
 
+interface IProps {
+  photo: string
+  name: string
+  isNewAvatar: boolean
+}
 
-const Authorization: React.FC = React.memo(() => {
+const Authorization: React.FC<IProps> = React.memo(({ photo, name, isNewAvatar }) => {
 
   const isAuth = useAppSelector(getAuth)
-  const photo = useAppSelector(getPhoto)
-  const name = useAppSelector(getName)
-  const isNewAvatar = useAppSelector(getIsNewAvatar)
 
   const [_, setReload] = React.useState(false)
 

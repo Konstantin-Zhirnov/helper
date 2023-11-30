@@ -1,23 +1,11 @@
 import { $api, URL } from './config'
-import {
-  AvatarResponseType,
-  ChangePasswordType,
-  LinkType,
-  LoginType,
-  MessageResponseType,
-  NewPasswordType,
-  SendEmailType,
-  UpdateUserType,
-  UserType,
-} from '../types'
+import type { ChangePasswordType, LinkType, LoginType, SendEmailType } from '../types'
+
+import type { MessageResponseType, UserType } from '../../../shared'
 
 export const AuthAPI = {
   login(obj: LoginType): Promise<UserType> {
     return $api.post(URL.login, obj).then(({ data }) => data)
-  },
-
-  logout(): Promise<MessageResponseType> {
-    return $api.post(URL.logout).then(({ data }) => data)
   },
 
   registration(obj: UserType): Promise<UserType> {
@@ -32,27 +20,15 @@ export const AuthAPI = {
     return $api.get(URL.user).then(({ data }) => data)
   },
 
+  logout(): Promise<MessageResponseType> {
+    return $api.post(URL.logout).then(({ data }) => data)
+  },
+
   sendEmail(body: SendEmailType): Promise<MessageResponseType> {
     return $api.post(body.reason === 'password' ? URL.sendEmailForPassword : URL.sendEmailForActivation, { email: body.email }).then(({ data }) => data)
   },
 
   changePassword(body: ChangePasswordType): Promise<MessageResponseType> {
     return $api.put(URL.changePassword, body).then(({ data }) => data)
-  },
-
-  changeAvatar(data: FormData): Promise<AvatarResponseType> {
-    return $api.post(URL.changeAvatar, data).then(({ data }) => data)
-  },
-
-  updateUser(body: UpdateUserType): Promise<UserType> {
-    return $api.put(`${URL.users}/${body._id}`, body.field).then(({ data }) => data)
-  },
-
-  newPassword(body: NewPasswordType): Promise<MessageResponseType> {
-    return $api.put(URL.newPassword, body).then(({ data }) => data)
-  },
-
-  removeUser(_id: string): Promise<MessageResponseType> {
-    return $api.delete(`${URL.removeUser}/${_id}`).then(({ data }) => data)
   },
 }

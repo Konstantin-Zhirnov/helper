@@ -17,3 +17,18 @@ export const fetchUser = createAsyncThunk(
     }
   },
 )
+
+export const fetchAddReview = createAsyncThunk(
+  'reviews/fetchAddReview',
+  async function(body: FormData, { rejectWithValue }) {
+    try {
+      return await ReviewsAPI.addReview(body)
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data.message)
+      } else {
+        return rejectWithValue(error)
+      }
+    }
+  },
+)

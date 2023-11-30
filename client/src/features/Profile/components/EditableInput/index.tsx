@@ -4,10 +4,11 @@ import { MdClear, MdCreate, MdDone } from 'react-icons/md'
 import { PhoneInput } from 'react-international-phone'
 
 import { useAppDispatch } from '../../../../app'
-import { fetchUpdateUser } from '../../../Authorization/model/asyncActions'
+import { fetchUpdateUser } from '../../model/asyncActions'
 
 import 'react-international-phone/style.css'
 import classes from './EditableInput.module.sass'
+
 
 interface IProps {
   _id: string

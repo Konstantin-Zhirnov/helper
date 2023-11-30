@@ -2,12 +2,8 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { useAppDispatch } from '../../../app'
-import { setAlertMessage } from '../../../features'
 
-
-export const useMessage = (message) => {
-  const dispatch = useAppDispatch()
+export const useMessage = (message, clear) => {
 
   React.useEffect(() => {
     if (message) {
@@ -22,7 +18,7 @@ export const useMessage = (message) => {
         theme: 'dark',
         type: 'error',
       })
-      dispatch(setAlertMessage(''))
+      clear()
     }
   }, [message])
 }

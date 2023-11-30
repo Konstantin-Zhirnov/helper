@@ -1,11 +1,8 @@
 import React from 'react'
 import { FcAddImage } from 'react-icons/fc'
 
-import { useAppDispatch, useAppSelector } from '../../../../app'
 import { getExtension, reduceImage } from '../../../../shared'
 
-import { setAlertMessage } from '../../../Authorization/model/slice'
-import { getMessage, setMessage } from '../../model/slice'
 
 import classes from './AddImages.module.sass'
 
@@ -15,13 +12,25 @@ interface IProps {
   images: any[]
   setImages: (value: (((prevState: any[]) => any[]) | any[])) => void
   authorId: string
+  message: string
+
+  setMessage(text: string): void
+
+  setAlertMessage(text: string): void
 }
 
 
-const AddImages: React.FC<IProps> = React.memo(({ currentImages, setCurrentImages, images, setImages, authorId }) => {
+const AddImages: React.FC<IProps> = React.memo(({
+                                                  currentImages,
+                                                  setCurrentImages,
+                                                  images,
+                                                  setImages,
+                                                  authorId,
+                                                  message,
+                                                  setMessage,
+                                                  setAlertMessage,
+                                                }) => {
 
-  const dispatch = useAppDispatch()
-  const message = useAppSelector(getMessage)
   const id = React.useId()
 
 
@@ -40,9 +49,9 @@ const AddImages: React.FC<IProps> = React.memo(({ currentImages, setCurrentImage
     if (files.length > 5) {
       setCurrentImages([])
       event.target.value = ''
-      dispatch(setMessage('Select no more than 5 files!'))
+      setMessage('Select no more than 5 files!')
     } else if (message) {
-      dispatch(setMessage(''))
+      setMessage('')
     }
     const imagesName = []
     for (const file of files) {
@@ -56,7 +65,7 @@ const AddImages: React.FC<IProps> = React.memo(({ currentImages, setCurrentImage
           setImages(prevState => [...prevState, { image: reducedImage, name }])
         })
       } else {
-        dispatch(setAlertMessage('Invalid extension of the selected file'))
+        setAlertMessage('Invalid extension of the selected file')
       }
     }
     setCurrentImages(imagesName)

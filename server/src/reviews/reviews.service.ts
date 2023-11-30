@@ -32,7 +32,7 @@ export class ReviewsService {
     const user = await this.userModel.findById(createReviewDto.userId) as User
     if (user) {
       await this.userModel.findByIdAndUpdate(createReviewDto.userId, {
-        stars: user.stars + createReviewDto.stars,
+        stars: user.stars + Number(createReviewDto.stars),
         countReviews: user.countReviews + 1,
       })
     }

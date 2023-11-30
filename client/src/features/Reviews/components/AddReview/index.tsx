@@ -21,19 +21,21 @@ import { useAppDispatch, useAppSelector } from '../../../../app'
 import { AddImages } from '../../../../entities'
 import { AddButton } from '../../../../shared'
 
-import { getMessage, getModal, setAlertPostsMessage, setMessage, setModal } from '../../model/slice'
-import { fetchAddPost } from '../../model/asyncActions'
-import { CreatePostType } from '../../types'
+
+import { getMessage, getModal, setAlertReviewsMessage, setMessage, setModal } from '../../model/slice'
+import { fetchAddReview } from '../../model/asyncActions'
+import { CreateReviewType } from '../../types'
 
 
-import classes from './AddPost.module.sass'
+import classes from './AddReview.module.sass'
 
 
 interface IProps {
   authorId: string
+  userId: string
 }
 
-const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
+const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
 
   const dispatch = useAppDispatch()
   const isModal = useAppSelector(getModal)
@@ -57,7 +59,6 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
     .shape({
       title: yup.string().required(),
       description: yup.string().required(),
-      location: yup.string().required(),
     })
     .required()
 
@@ -66,22 +67,23 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm<Omit<CreatePostType, 'authorId'>>({
+  } = useForm<Omit<CreateReviewType, 'authorId'>>({
     resolver: yupResolver(schema),
   })
 
 
-  const onSubmit: SubmitHandler<CreatePostType> = async (data) => {
+  const onSubmit: SubmitHandler<CreateReviewType> = async (data) => {
     if (currentImages.length === images.length) {
       const formData = new FormData()
       formData.append('title', data.title)
       formData.append('description', data.description)
-      formData.append('location', data.location)
+      formData.append('stars', '5')
       formData.append('authorId', authorId)
+      formData.append('userId', userId)
       await images.forEach(image => {
         formData.append('images', image.image, image.name)
       })
-      await dispatch(fetchAddPost(formData))
+      await dispatch(fetchAddReview(formData))
       setCurrentImages([])
       setImages([])
       reset()
@@ -89,7 +91,7 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   }
 
   const onAlertMessage = (text) => {
-    dispatch(setAlertPostsMessage(text))
+    dispatch(setAlertReviewsMessage(text))
   }
 
   const onMessage = (text) => {
@@ -107,15 +109,6 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
             <ModalHeader className={classes.header}>Add a post</ModalHeader>
             <ModalCloseButton />
             <ModalBody className={classes.container}>
-              <span className={classes.input_container}>
-                <label htmlFor='location'>Location:</label>
-                <Input id='location' size='sm' {...register('location')} autoComplete='off' />
-                <ErrorMessage
-                  errors={errors as any}
-                  name='location'
-                  render={({ message }) => <p className={classes.error}>{message}</p>}
-                />
-              </span>
 
               <span className={classes.input_container}>
                 <label htmlFor='title'>Title:</label>
@@ -163,4 +156,4 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   )
 })
 
-export { AddPost }
+export { AddReview }

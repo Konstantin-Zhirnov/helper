@@ -6,8 +6,10 @@ import { Input } from '@chakra-ui/react'
 import * as yup from 'yup'
 
 import { useAppDispatch } from '../../../../app'
+import type { PasswordType } from '../../../../shared'
+
 import { fetchChangePassword } from '../../model/asyncActions'
-import { PasswordType } from '../../types'
+
 
 import classes from './PasswordChanging.module.sass'
 

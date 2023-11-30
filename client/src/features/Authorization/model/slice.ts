@@ -1,52 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import {
-  fetchChangeAvatar,
   fetchChangePassword,
   fetchConfirmation,
   fetchLogin,
   fetchLogout,
-  fetchNewPassword,
   fetchRegistration,
-  fetchRemoveUser,
   fetchSendEmail,
-  fetchUpdateUser,
   fetchUser,
 } from './asyncActions'
-import { AuthorizationStateType, MessageResponseType, SendEmailReasonType, UserType } from '../types'
-import { RootState } from '../../../app'
+import { AuthorizationStateType, SendEmailReasonType } from '../types'
+import type { RootState } from '../../../app'
+import type { MessageResponseType, UserType } from '../../../shared'
 
 const initialState: AuthorizationStateType = {
   isAuth: false,
-  message: '',
-  isLoading: false,
   isLoginModal: false,
   loginErrorMessage: '',
   registrationErrorMessage: '',
-  alertMessage: '',
   isRegistered: false,
   sendEmailMessage: '',
   sendEmailReason: '',
   changePasswordMessage: '',
-  isNewAvatar: false,
-  user: {
-    _id: '',
-    name: '',
-    email: '',
-    password: '',
-    phone: '',
-    photo: '',
-    whatsapp: '',
-    telegram: '',
-    viber: '',
-    isActivated: false,
-    linkForActivated: '',
-    changePasswordLink: '',
-    stars: 0,
-    countReviews: 0,
-    paid: false,
-    paidTime: '',
-  },
+  message: '',
+  alertMessage: '',
 }
 
 export const authorization = createSlice({
@@ -64,20 +41,19 @@ export const authorization = createSlice({
       state.sendEmailReason = action.payload
       state.isLoginModal = false
     },
-    setAlertMessage: (state, action: PayloadAction<string>) => {
+    setAlertAuthorizationMessage: (state, action: PayloadAction<string>) => {
       state.alertMessage = action.payload
     },
-    setIsNewAvatar: (state, action: PayloadAction<boolean>) => {
-      state.isNewAvatar = action.payload
+    setIsAuth: (state, action: PayloadAction<boolean>) => {
+      state.isAuth = action.payload
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchLogin.pending, pendingLogin)
-      .addCase(fetchLogin.fulfilled, (state, action) => {
+      .addCase(fetchLogin.fulfilled, (state) => {
         state.loginErrorMessage = ''
         state.isLoginModal = false
-        state.user = action.payload
         state.isAuth = true
       })
       .addCase(fetchLogin.rejected, (state, action) => {
@@ -93,8 +69,8 @@ export const authorization = createSlice({
       })
 
       .addCase(fetchConfirmation.pending, pending)
-      .addCase(fetchConfirmation.fulfilled, (state) => {
-        state.user.isActivated = true
+      .addCase(fetchConfirmation.fulfilled, (state, action) => {
+        state.message = action.payload
       })
       .addCase(fetchConfirmation.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -102,7 +78,6 @@ export const authorization = createSlice({
 
       .addCase(fetchUser.pending, pending)
       .addCase(fetchUser.fulfilled, (state, action: PayloadAction<UserType>) => {
-        state.user = action.payload
         if (action.payload.isActivated) {
           state.isAuth = true
         }
@@ -136,40 +111,6 @@ export const authorization = createSlice({
       .addCase(fetchChangePassword.rejected, (state, action) => {
         state.changePasswordMessage = (action.payload as string) ?? ''
       })
-
-      .addCase(fetchChangeAvatar.pending, pending)
-      .addCase(fetchChangeAvatar.fulfilled, (state, action) => {
-        state.user.photo = action.payload.photo
-        state.isNewAvatar = true
-      })
-      .addCase(fetchChangeAvatar.rejected, (state, action) => {
-        state.message = (action.payload as string) ?? ''
-      })
-
-      .addCase(fetchUpdateUser.pending, pending)
-      .addCase(fetchUpdateUser.fulfilled, (state, action) => {
-        state.user = action.payload
-      })
-      .addCase(fetchUpdateUser.rejected, (state, action) => {
-        state.message = (action.payload as string) ?? ''
-      })
-
-      .addCase(fetchNewPassword.pending, pendingNewPassword)
-      .addCase(fetchNewPassword.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
-        state.alertMessage = action.payload.message
-      })
-      .addCase(fetchNewPassword.rejected, (state, action) => {
-        state.alertMessage = (action.payload as string) ?? ''
-      })
-
-      .addCase(fetchRemoveUser.pending, pendingNewPassword)
-      .addCase(fetchRemoveUser.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
-        state.isAuth = false
-        window.location.href = '/'
-      })
-      .addCase(fetchRemoveUser.rejected, (state, action) => {
-        state.alertMessage = (action.payload as string) ?? ''
-      })
   },
 })
 
@@ -194,25 +135,17 @@ function pendingChangePassword(state: AuthorizationStateType) {
   state.changePasswordMessage = ''
 }
 
-function pendingNewPassword(state: AuthorizationStateType) {
-  state.alertMessage = ''
-}
-
 
 export const {
   setLoginModal,
   clearSendEmail,
   goToSendEmailPage,
-  setAlertMessage,
-  setIsNewAvatar,
+  setAlertAuthorizationMessage,
+  setIsAuth,
 } = authorization.actions
 
 export const getAuth = (state: RootState): boolean => state.authorization.isAuth
-export const getUser = (state: RootState): UserType => state.authorization.user
-export const getMessage = (state: RootState): string => state.authorization.message
 export const getLoginErrorMessage = (state: RootState): string => state.authorization.loginErrorMessage
-export const getIsActivated = (state: RootState): boolean => state.authorization.user.isActivated
-export const getIsLoading = (state: RootState): boolean => state.authorization.isLoading
 export const getLoginModal = (state: RootState): boolean => state.authorization.isLoginModal
 export const getRegistered = (state: RootState): boolean => state.authorization.isRegistered
 export const getSendEmailReason = (state: RootState): SendEmailReasonType => state.authorization.sendEmailReason
@@ -222,11 +155,7 @@ export const getChangePasswordMessage = (state: RootState): string =>
   state.authorization.changePasswordMessage
 export const getRegistrationErrorMessage = (state: RootState): string =>
   state.authorization.registrationErrorMessage
-export const getPhoto = (state: RootState): string => state.authorization.user.photo
-export const getName = (state: RootState): string => state.authorization.user.name
-export const getUserId = (state: RootState): string => state.authorization.user._id
-export const getAlertMessage = (state: RootState): string => state.authorization.alertMessage
-export const getIsNewAvatar = (state: RootState): boolean => state.authorization.isNewAvatar
+export const getAlertAuthorizationMessage = (state: RootState): string => state.authorization.alertMessage
 
 
 export default authorization.reducer

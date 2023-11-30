@@ -1,15 +1,19 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import { Authorization, Location, Search } from '../../features'
+import { Authorization, getIsNewAvatar, getName, getPhoto, Location, Search } from '../../features'
 import { Logo, useMatchMedia, Wrapper } from '../../shared'
 
 import classes from './Header.module.sass'
+import { useAppSelector } from '../../app'
 
 
 const Header: React.FC = React.memo(() => {
 
   const { isMobile } = useMatchMedia()
   const { pathname } = useLocation()
+  const photo = useAppSelector(getPhoto)
+  const name = useAppSelector(getName)
+  const isNewAvatar = useAppSelector(getIsNewAvatar)
 
   return (
     <header className={classes.header}>
@@ -22,7 +26,7 @@ const Header: React.FC = React.memo(() => {
 
           {pathname === '/' && <Location isMobile={isMobile} />}
 
-          <Authorization />
+          <Authorization photo={photo} name={name} isNewAvatar={isNewAvatar} />
         </div>
       </Wrapper>
     </header>

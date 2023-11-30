@@ -16,9 +16,10 @@ import { TiDelete } from 'react-icons/ti'
 
 
 import { useAppDispatch, useAppSelector } from '../../../../../app'
-import { getUserId } from '../../../../Authorization/model/slice'
+import { AddImages } from '../../../../../entities'
+
 import { fetchAddImages, fetchRemoveImage } from '../../../model/asyncActions'
-import { AddImages } from '../../AddImages'
+import { getMessage, setAlertPostsMessage, setMessage } from '../../../model/slice'
 import { ReasonType } from '../../../types'
 
 import 'react-photo-view/dist/react-photo-view.css'
@@ -29,23 +30,40 @@ interface IProps {
   imagesSrcArray: string[]
   _id: string
   reason: ReasonType
+  authorId: string
 }
 
-const Images: React.FC<IProps> = ({ imagesSrcArray, _id, reason }) => {
+const Images: React.FC<IProps> = ({ imagesSrcArray, _id, reason, authorId }) => {
 
   const dispatch = useAppDispatch()
-  const authorId = useAppSelector(getUserId)
+  const message = useAppSelector(getMessage)
 
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
+
+
+  const onAlertMessage = (text) => {
+    dispatch(setAlertPostsMessage(text))
+  }
+
+  const onMessage = (text) => {
+    dispatch(setMessage(text))
+  }
 
   const getAddImages = () => {
     if (reason === 'profile') {
       if (images.length !== 0) {
         return <Spinner className={classes.snipper} />
       } else {
-        return <AddImages setCurrentImages={setCurrentImages} images={images} setImages={setImages}
-                          authorId={authorId} />
+        return <AddImages
+          setCurrentImages={setCurrentImages}
+          images={images}
+          setImages={setImages}
+          authorId={authorId}
+          message={message}
+          setMessage={onMessage}
+          setAlertMessage={onAlertMessage}
+        />
       }
     }
     return null

@@ -5,8 +5,8 @@ import { Avatar } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '../../../../app'
 import { getExtension, reduceImage } from '../../../../shared'
 
-import { fetchChangeAvatar } from '../../../Authorization/model/asyncActions'
-import { getIsNewAvatar, setAlertMessage } from '../../../Authorization/model/slice'
+import { fetchChangeAvatar } from '../../model/asyncActions'
+import { getIsNewAvatar, setAlertProfileMessage } from '../../model/slice'
 
 import classes from './ProfileAvatar.module.sass'
 
@@ -41,7 +41,7 @@ const ProfileAvatar: React.FC<IProps> = React.memo(({ name, photo, id }) => {
         dispatch(fetchChangeAvatar(formData))
       })
     } else {
-      dispatch(setAlertMessage('Invalid extension of the selected file'))
+      dispatch(setAlertProfileMessage('Invalid extension of the selected file'))
     }
 
     event.target.value = null

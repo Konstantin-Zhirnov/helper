@@ -3,7 +3,7 @@ import { Heading } from '@chakra-ui/react'
 
 import { useAppSelector } from '../../app'
 import { Posts } from '../../widgets'
-import { AddPost, getAuth, getPosts, Search } from '../../features'
+import { AddPost, getAuth, getPosts, getUserId, Search } from '../../features'
 import { useMatchMedia, Wrapper } from '../../shared'
 
 import classes from './PostPage.module.sass'
@@ -14,6 +14,7 @@ const PostsPage: React.FC = React.memo(() => {
 
   const isAuth = useAppSelector(getAuth)
   const posts = useAppSelector(getPosts)
+  const authorId = useAppSelector(getUserId)
 
   const memoizedPosts = React.useMemo(() => posts, [posts])
 
@@ -30,7 +31,7 @@ const PostsPage: React.FC = React.memo(() => {
         this application is to bring these people together. That`s why HELPER is an app for all people.</p>
 
       <Posts posts={memoizedPosts} reason='all' />
-      {isAuth && <AddPost />}
+      {isAuth && <AddPost authorId={authorId} />}
     </Wrapper>
   )
 })

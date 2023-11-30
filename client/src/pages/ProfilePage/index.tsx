@@ -3,8 +3,8 @@ import { AbsoluteCenter, Box, Divider } from '@chakra-ui/react'
 
 import { useAppDispatch, useAppSelector } from '../../app'
 import { Posts, ProfileInfo } from '../../widgets'
-import { fetchPostsByUser, getAlertMessage, getAuth, getPostsByUser, getUser, ProfileAvatar } from '../../features'
-import { useMessage, Wrapper } from '../../shared'
+import { fetchPostsByUser, getAuth, getPostsByUser, getUser, ProfileAvatar } from '../../features'
+import { Wrapper } from '../../shared'
 
 import classes from './ProfilePage.module.sass'
 
@@ -13,9 +13,8 @@ const ProfilePage: React.FC = React.memo(() => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(getUser)
   const isAuth = useAppSelector(getAuth)
-  const message = useAppSelector(getAlertMessage)
   const posts = useAppSelector(getPostsByUser)
-  useMessage(message)
+
 
   const memoizedPosts = React.useMemo(() => posts, [posts])
 
