@@ -1,6 +1,7 @@
 export type ReviewsStateType = {
   user: UserType
   reviews: ReviewType[]
+  reviewsByAuthor: ReviewType[]
   isModal: boolean
   page: number
   count: number
@@ -14,11 +15,15 @@ export type ReviewType = {
   title: string
   description: string
   stars: number
+  images: string[]
   authorId: AuthorType
   userId: string
+  time: number
 }
 
+
 type AuthorType = {
+  _id: string
   name: string
   photo: string
 }
@@ -46,4 +51,12 @@ export type AllReviewsByUserIdResponseType = {
   reviews: ReviewType[]
   count: number
   pages: number
+}
+
+export type ReasonReviewType = 'all' | 'user'
+
+export type RemoveReviewType = {
+  _id: string
+  authorId: string
+  stars: number
 }

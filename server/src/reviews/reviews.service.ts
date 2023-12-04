@@ -46,10 +46,10 @@ export class ReviewsService {
 
 
   async remove(removeReviewDto): Promise<Review> {
-    const user = await this.userModel.findById(removeReviewDto.userId) as User
+    const user = await this.userModel.findById(removeReviewDto.authorId) as User
 
     if (user) {
-      await this.userModel.findByIdAndUpdate(removeReviewDto.userId, {
+      await this.userModel.findByIdAndUpdate(removeReviewDto.authorId, {
         stars: user.stars - removeReviewDto.stars,
         countReviews: user.countReviews - 1,
       })

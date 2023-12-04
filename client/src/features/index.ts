@@ -58,10 +58,12 @@ import { Search } from './Posts/components/Search'
 import { PostType, ReasonType } from './Posts/types'
 
 // Reviews
-import { getReviewsPage, getReviewsPages, setReviewsPage } from './Reviews/model/slice'
-import { fetchAllReviewsByUserId } from './Reviews/model/asyncActions'
+import { getReviews, getReviewsByAuthor, getReviewsPage, getReviewsPages, setReviewsPage } from './Reviews/model/slice'
+import { fetchAllReviewsByUserId, fetchRemoveReview, fetchReviewsByAuthor } from './Reviews/model/asyncActions'
 import { UserInfo } from './Reviews/components/UserInfo'
 import { AddReview } from './Reviews/components/AddReview'
+import { Review } from './Reviews/components/Review'
+import type { ReasonReviewType, ReviewType } from './Reviews/types'
 
 
 // Authorization
@@ -113,8 +115,9 @@ export { Location, AddPost, Post, Search }
 export type { PostType, ReasonType }
 
 // Reviews
-export { fetchAllReviewsByUserId }
-export { getReviewsPage, getReviewsPages, setReviewsPage }
-export { UserInfo, AddReview }
+export { fetchAllReviewsByUserId, fetchReviewsByAuthor, fetchRemoveReview }
+export { getReviewsPage, getReviewsPages, setReviewsPage, getReviews, getReviewsByAuthor }
+export { UserInfo, AddReview, Review }
+export type { ReviewType, ReasonReviewType }
 
 

@@ -34,7 +34,7 @@ const RemoveAccount: React.FC<IProps> = React.memo(({ _id, canRemove }) => {
       </CardHeader>
 
       <CardBody className={classes.cardBody}>
-        <Text fontSize='lg'>You can delete your account if you have no active posts</Text>
+        <Text fontSize='lg'>You can delete your account if you have no active posts and reviews</Text>
         <IconButton
           isRound={true}
           variant='solid'

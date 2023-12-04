@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { fetchAddReview, fetchAllReviewsByUserId, fetchUser } from './asyncActions'
+import {
+  fetchAddReview,
+  fetchAllReviewsByUserId,
+  fetchRemoveReview,
+  fetchReviewsByAuthor,
+  fetchUser,
+} from './asyncActions'
 import type { ReviewsStateType, ReviewType, UserType } from '../types'
 import { AllReviewsByUserIdResponseType } from '../types'
 import type { RootState } from '../../../shared'
@@ -14,6 +20,7 @@ const initialState: ReviewsStateType = {
     countReviews: 0,
   },
   reviews: [],
+  reviewsByAuthor: [],
   isModal: false,
   page: 1,
   count: 0,
@@ -67,6 +74,22 @@ export const reviews = createSlice({
       .addCase(fetchAllReviewsByUserId.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
       })
+
+      .addCase(fetchReviewsByAuthor.pending, pending)
+      .addCase(fetchReviewsByAuthor.fulfilled, (state, action: PayloadAction<ReviewType[]>) => {
+        state.reviewsByAuthor = action.payload
+      })
+      .addCase(fetchReviewsByAuthor.rejected, (state, action) => {
+        state.message = (action.payload as string) ?? ''
+      })
+
+      .addCase(fetchRemoveReview.pending, pending)
+      .addCase(fetchRemoveReview.fulfilled, (state, action: PayloadAction<{ _id: string }>) => {
+        state.reviewsByAuthor = state.reviewsByAuthor.filter(review => review._id !== action.payload._id)
+      })
+      .addCase(fetchRemoveReview.rejected, (state, action) => {
+        state.message = (action.payload as string) ?? ''
+      })
   },
 })
 
@@ -81,5 +104,8 @@ export const getModal = (state: RootState): boolean => state.reviews.isModal
 export const getMessage = (state: RootState): string => state.reviews.message
 export const getReviewsPage = (state: RootState): number => state.reviews.page
 export const getReviewsPages = (state: RootState): number => state.reviews.pages
+export const getReviews = (state: RootState): ReviewType[] => state.reviews.reviews
+export const getReviewsByAuthor = (state: RootState): ReviewType[] => state.reviews.reviewsByAuthor
+
 
 export default reviews.reducer

@@ -103,7 +103,7 @@ export class ReviewsController {
     const review = await this.reviewsService.remove(removeReviewDto)
     review.images.forEach(src => {
       const image = src.split('/').at(-1)
-      unlinkSync(`./public/${removeReviewDto.userId}/reviews/${image}`)
+      unlinkSync(`./public/${removeReviewDto.authorId}/reviews/${image}`)
     })
     return { _id: removeReviewDto._id }
   }

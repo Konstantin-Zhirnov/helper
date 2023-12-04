@@ -1,5 +1,11 @@
 import { $api, URL } from './config'
-import { AllReviewsByUserIdResponseType, AllReviewsByUserIdType, ReviewType, UserType } from '../types'
+import {
+  AllReviewsByUserIdResponseType,
+  AllReviewsByUserIdType,
+  RemoveReviewType,
+  ReviewType,
+  UserType,
+} from '../types'
 
 
 export const ReviewsAPI = {
@@ -13,5 +19,13 @@ export const ReviewsAPI = {
 
   getAllReviewsByUserId(query: AllReviewsByUserIdType): Promise<AllReviewsByUserIdResponseType> {
     return $api.get(`${URL.reviews}?id=${query.id}&page=${query.page}`).then(({ data }) => data)
+  },
+
+  getReviewsByAuthor(id): Promise<ReviewType[]> {
+    return $api.get(`${URL.reviewsByAuthor}/${id}`).then(({ data }) => data)
+  },
+
+  removeReview(body: RemoveReviewType): Promise<{ _id: string }> {
+    return $api.post(URL.removeReview, body).then(({ data }) => data)
   },
 }

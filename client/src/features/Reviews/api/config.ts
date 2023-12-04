@@ -7,6 +7,8 @@ export const URL = {
   user: BaseURL + '/review-user',
   addReview: BaseURL + '/create-review',
   reviews: BaseURL + '/reviews',
+  reviewsByAuthor: BaseURL + '/reviews-author',
+  removeReview: BaseURL + '/remove-review',
 }
 
 const $api = axios.create({ withCredentials: true })
