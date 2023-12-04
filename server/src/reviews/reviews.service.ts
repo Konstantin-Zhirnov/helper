@@ -80,7 +80,7 @@ export class ReviewsService {
         select: chosenFields,
       })
 
-    const count = await query.countDocuments({ userId: userId }).exec()
+    const count = await this.reviewModel.countDocuments({ userId: userId }).exec()
     const pages = Math.floor((count - 1) / limit) + 1
 
     return { reviews, count, pages, page: Number(page) }
