@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { useAppSelector } from '../../../../app'
+import { useAppSelector } from '../../../../shared'
 
 import { getAuth } from '../../model/slice'
 import { AvatarButton } from './AvatarButton'
 import { Logout } from './Logout'
 import { Login } from './Login'
+
 
 import classes from './Authorization.module.sass'
 

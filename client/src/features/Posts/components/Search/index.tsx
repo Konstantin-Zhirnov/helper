@@ -3,10 +3,9 @@ import cn from 'classnames'
 import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { MdClose } from 'react-icons/md'
 
-import { useDebounce } from '../../../../shared'
+import { useAppDispatch, useAppSelector, useDebounce } from '../../../../shared'
 
 import { getSearch, setPage, setSearch } from '../../model/slice'
-import { useAppDispatch, useAppSelector } from '../../../../app'
 
 import classes from './Search.module.sass'
 

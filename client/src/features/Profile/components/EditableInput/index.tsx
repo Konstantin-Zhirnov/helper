@@ -3,7 +3,8 @@ import { ButtonGroup, IconButton, Input, Text } from '@chakra-ui/react'
 import { MdClear, MdCreate, MdDone } from 'react-icons/md'
 import { PhoneInput } from 'react-international-phone'
 
-import { useAppDispatch } from '../../../../app'
+
+import { useAppDispatch } from '../../../../shared'
 import { fetchUpdateUser } from '../../model/asyncActions'
 
 import 'react-international-phone/style.css'

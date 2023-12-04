@@ -5,8 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Input } from '@chakra-ui/react'
 import * as yup from 'yup'
 
-import { useAppDispatch } from '../../../../app'
+
 import type { UserType } from '../../../../shared'
+import { useAppDispatch } from '../../../../shared'
 
 import { fetchRegistration } from '../../model/asyncActions'
 

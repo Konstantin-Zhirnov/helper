@@ -1,5 +1,5 @@
 import { $api, URL } from './config'
-import { ReviewType, UserType } from '../types'
+import { AllReviewsByUserIdResponseType, AllReviewsByUserIdType, ReviewType, UserType } from '../types'
 
 
 export const ReviewsAPI = {
@@ -9,5 +9,9 @@ export const ReviewsAPI = {
 
   addReview(body: FormData): Promise<ReviewType> {
     return $api.post(URL.addReview, body).then(({ data }) => data)
+  },
+
+  getAllReviewsByUserId(query: AllReviewsByUserIdType): Promise<AllReviewsByUserIdResponseType> {
+    return $api.get(`${URL.reviews}?id=${query.id}&page=${query.page}`).then(({ data }) => data)
   },
 }

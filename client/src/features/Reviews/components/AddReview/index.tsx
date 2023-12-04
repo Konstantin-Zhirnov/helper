@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import { ErrorMessage } from '@hookform/error-message'
 import cn from 'classnames'
 import * as yup from 'yup'
+import ReactStars from 'react-rating-stars-component'
 import {
   Button,
   Input,
@@ -16,16 +17,14 @@ import {
   ModalOverlay,
   Textarea,
 } from '@chakra-ui/react'
+import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md'
 
-import { useAppDispatch, useAppSelector } from '../../../../app'
 import { AddImages } from '../../../../entities'
-import { AddButton } from '../../../../shared'
+import { AddButton, useAppDispatch, useAppSelector } from '../../../../shared'
 
-
-import { getMessage, getModal, setAlertReviewsMessage, setMessage, setModal } from '../../model/slice'
 import { fetchAddReview } from '../../model/asyncActions'
+import { getMessage, getModal, setAlertReviewsMessage, setMessage, setModal } from '../../model/slice'
 import { CreateReviewType } from '../../types'
-
 
 import classes from './AddReview.module.sass'
 
@@ -44,6 +43,7 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
 
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
+  const [stars, setStars] = React.useState(0)
 
 
   const onOpen = React.useCallback(() => {
@@ -77,16 +77,18 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
       const formData = new FormData()
       formData.append('title', data.title)
       formData.append('description', data.description)
-      formData.append('stars', '5')
+      formData.append('stars', stars.toString())
       formData.append('authorId', authorId)
       formData.append('userId', userId)
       await images.forEach(image => {
         formData.append('images', image.image, image.name)
       })
-      await dispatch(fetchAddReview(formData))
-      setCurrentImages([])
-      setImages([])
-      reset()
+      if (stars) {
+        await dispatch(fetchAddReview(formData))
+        setCurrentImages([])
+        setImages([])
+        reset()
+      }
     }
   }
 
@@ -96,6 +98,10 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
 
   const onMessage = (text) => {
     dispatch(setMessage(text))
+  }
+
+  const ratingChanged = (newRating) => {
+    setStars(newRating)
   }
 
   return (
@@ -129,6 +135,15 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
                   render={({ message }) => <p className={classes.error}>{message}</p>}
                 />
               </span>
+
+              <ReactStars
+                count={5}
+                onChange={ratingChanged}
+                size={28}
+                emptyIcon={<MdOutlineStarBorder />}
+                fullIcon={<MdOutlineStar />}
+                activeColor='#ffd700'
+              />
 
               <AddImages
                 currentImages={currentImages}

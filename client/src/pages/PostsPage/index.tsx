@@ -1,10 +1,10 @@
 import React from 'react'
 import { Heading } from '@chakra-ui/react'
 
-import { useAppSelector } from '../../app'
+
 import { Posts } from '../../widgets'
 import { AddPost, getAuth, getPosts, getUserId, Search } from '../../features'
-import { useMatchMedia, Wrapper } from '../../shared'
+import { useAppSelector, useMatchMedia, Wrapper } from '../../shared'
 
 import classes from './PostPage.module.sass'
 

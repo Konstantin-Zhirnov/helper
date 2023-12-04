@@ -4,7 +4,8 @@ import { ButtonGroup, IconButton, Input, Text, Textarea } from '@chakra-ui/react
 import { MdClear, MdCreate, MdDone } from 'react-icons/md'
 import { BsGeoAltFill } from 'react-icons/bs'
 
-import { useAppDispatch } from '../../../../../app'
+
+import { useAppDispatch } from '../../../../../shared'
 import { fetchUpdatePost } from '../../../model/asyncActions'
 
 import 'react-international-phone/style.css'

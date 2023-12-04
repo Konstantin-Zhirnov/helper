@@ -2,9 +2,8 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Heading } from '@chakra-ui/react'
 
-import { useAppDispatch, useAppSelector } from '../../app'
 import { fetchConfirmation, fetchUser, getIsActivated } from '../../features'
-import { Wrapper } from '../../shared'
+import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
 import classes from './ConfirmationPage.module.sass'
 

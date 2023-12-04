@@ -7,7 +7,8 @@ import { Button, Input } from '@chakra-ui/react'
 import cn from 'classnames'
 import * as yup from 'yup'
 
-import { useAppDispatch, useAppSelector } from '../../../../../../app'
+
+import { useAppDispatch, useAppSelector } from '../../../../../../shared'
 import { fetchLogin } from '../../../../model/asyncActions'
 import { getLoginErrorMessage, goToSendEmailPage } from '../../../../model/slice'
 import { LoginType, SendEmailReasonType } from '../../../../types'
@@ -32,7 +33,7 @@ const LoginForm: React.FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-    reset
+    reset,
   } = useForm<LoginType>({
     resolver: yupResolver(schema),
   })
@@ -52,44 +53,50 @@ const LoginForm: React.FC = () => {
   }
 
   const getLink = () => {
-    if (loginErrorMessage === "You need to confirm your email") {
-      return <NavLink to="/send-email" className={classes.link} onClick={handleClick('activation')}>activation link</NavLink>
+    if (loginErrorMessage === 'You need to confirm your email') {
+      return <NavLink to='/send-email' className={classes.link} onClick={handleClick('activation')}>activation
+        link</NavLink>
     }
-    return ""
+    return ''
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
       <span className={classes.input_container}>
-        <label htmlFor="email">Email:</label>
-        <Input id="email" size="sm" {...register('email')} autoComplete="off" />
+        <label htmlFor='email'>Email:</label>
+        <Input id='email' size='sm' {...register('email')} autoComplete='off' />
         <ErrorMessage
           errors={errors as any}
-          name="email"
+          name='email'
           render={({ message }) => <p className={classes.error}>{message}</p>}
         />
       </span>
 
       <span className={classes.input_container}>
-        <label htmlFor="password">Password:</label>
+        <label htmlFor='password'>Password:</label>
         <PasswordInput register={register} />
 
         <ErrorMessage
           errors={errors as any}
-          name="password"
+          name='password'
           render={({ message }) => <p className={classes.error}>{message}</p>}
         />
       </span>
 
-      <NavLink to='/send-email' onClick={handleClick('password')} className={cn(classes.link, classes.mb05)}>Forgot password?</NavLink>
+      <NavLink to='/send-email' onClick={handleClick('password')} className={cn(classes.link, classes.mb05)}>Forgot
+        password?</NavLink>
 
-      <p>If you are not registered, then you can register by clicking on the link:&nbsp;&nbsp;<NavLink to='/registration' onClick={handleClick("")} className={classes.link}>registration</NavLink></p>
+      <p>If you are not registered, then you can register by clicking on the link:&nbsp;&nbsp;<NavLink
+        to='/registration' onClick={handleClick('')} className={classes.link}>registration</NavLink></p>
 
-      <p className={cn(classes.serverError, { [`${classes.visible}`]: loginErrorMessage, [`${classes.hidden}`]: !loginErrorMessage })}>
+      <p className={cn(classes.serverError, {
+        [`${classes.visible}`]: loginErrorMessage,
+        [`${classes.hidden}`]: !loginErrorMessage,
+      })}>
         {loginErrorMessage} <span>&nbsp;&nbsp;</span> {getLink()}
       </p>
 
-      <Button type="submit" className={classes.btn}>
+      <Button type='submit' className={classes.btn}>
         Submit
       </Button>
     </form>

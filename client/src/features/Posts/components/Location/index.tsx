@@ -12,7 +12,8 @@ import {
 } from '@chakra-ui/react'
 import { BsGeoAltFill } from 'react-icons/bs'
 
-import { useAppDispatch, useAppSelector } from '../../../../app'
+
+import { useAppDispatch, useAppSelector } from '../../../../shared'
 
 import { fetchLocations } from '../../model/asyncActions'
 import { getLocation } from '../../model/slice'

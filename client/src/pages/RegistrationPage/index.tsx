@@ -1,9 +1,9 @@
 import React from 'react'
 import { Heading } from '@chakra-ui/react'
 
-import { useAppSelector } from '../../app'
+
 import { getRegistered, getRegistrationErrorMessage, RegistrationForm } from '../../features'
-import { Wrapper } from '../../shared'
+import { useAppSelector, Wrapper } from '../../shared'
 
 import classes from './RegistrationPage.module.sass'
 

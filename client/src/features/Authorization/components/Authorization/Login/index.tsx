@@ -1,12 +1,10 @@
 import React from 'react'
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 
-import { useAppDispatch, useAppSelector } from '../../../../../app'
-import { LoginButton } from '../../../../../shared'
+import { LoginButton, useAppDispatch, useAppSelector } from '../../../../../shared'
 
 import { getLoginModal, setLoginModal } from '../../../model/slice'
 import { LoginForm } from './LoginForm'
-
 
 interface IProps {
   isAuth: boolean

@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import { authorizationReducer, postsReducer, profileReducer, reviewsReducer } from '../../../features'
+import authorizationReducer from '../../../features/Authorization/model/slice'
+import postsReducer from '../../../features/Posts/model/slice'
+import profileReducer from '../../../features/Profile/model/slice'
+import reviewsReducer from '../../../features/Reviews/model/slice'
 
 export const store = configureStore({
   reducer: {

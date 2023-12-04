@@ -3,8 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { fetchChangeAvatar, fetchNewPassword, fetchRemoveUser, fetchUpdateUser } from './asyncActions'
 import { ProfileStateType } from '../types'
 
-import { RootState } from '../../../app'
-import type { UserType } from '../../../shared'
+import type { RootState, UserType } from '../../../shared'
 
 const initialState: ProfileStateType = {
   user: {

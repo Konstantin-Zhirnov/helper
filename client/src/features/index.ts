@@ -1,4 +1,5 @@
-import authorizationReducer, {
+// Authorization
+import {
   clearSendEmail,
   getAlertAuthorizationMessage,
   getAuth,
@@ -18,12 +19,26 @@ import { Authorization } from './Authorization/components/Authorization'
 import { SendToEmail } from './Authorization/components/SendToEmail'
 import { EmailType } from './Authorization/types'
 
+// Profile
+import {
+  getAlertProfileMessage,
+  getIsActivated,
+  getIsNewAvatar,
+  getName,
+  getPhoto,
+  getUser,
+  getUserId,
+  setIsActivated,
+  setIsNewAvatar,
+  setUser,
+} from './Profile/model/slice'
 import { EditablePasswordInput } from './Profile/components/EditablePasswordInput'
 import { ProfileAvatar } from './Profile/components/ProfileAvatar'
 import { EditableInput } from './Profile/components/EditableInput'
 import { RemoveAccount } from './Profile/components/RemoveAccount'
 
-import postsReducer, {
+// Posts
+import {
   getAlertPostsMessage,
   getLocation,
   getPage,
@@ -42,25 +57,15 @@ import { Post } from './Posts/components/Post'
 import { Search } from './Posts/components/Search'
 import { PostType, ReasonType } from './Posts/types'
 
-import reviewsReducer from './Reviews/model/slice'
+// Reviews
+import { getReviewsPage, getReviewsPages, setReviewsPage } from './Reviews/model/slice'
+import { fetchAllReviewsByUserId } from './Reviews/model/asyncActions'
 import { UserInfo } from './Reviews/components/UserInfo'
 import { AddReview } from './Reviews/components/AddReview'
 
-import profileReducer, {
-  getAlertProfileMessage,
-  getIsActivated,
-  getIsNewAvatar,
-  getName,
-  getPhoto,
-  getUser,
-  getUserId,
-  setIsActivated,
-  setIsNewAvatar,
-  setUser,
-} from './Profile/model/slice'
 
+// Authorization
 export {
-  authorizationReducer,
   clearSendEmail,
   getAlertAuthorizationMessage,
   getAuth,
@@ -76,10 +81,22 @@ export { fetchConfirmation, fetchSendEmail, fetchUser }
 export { Authorization, LoginForm, RegistrationForm, SendToEmail, PasswordChanging }
 export type { EmailType }
 
-
-export { ProfileAvatar, EditablePasswordInput, EditableInput, RemoveAccount }
+// Profile
 export {
-  postsReducer,
+  getAlertProfileMessage,
+  getIsActivated,
+  getIsNewAvatar,
+  getUser,
+  getUserId,
+  setIsActivated,
+  setUser,
+  setIsNewAvatar,
+  getName, getPhoto,
+}
+export { ProfileAvatar, EditablePasswordInput, EditableInput, RemoveAccount }
+
+// Posts
+export {
   getAlertPostsMessage,
   getSearch,
   getLocation,
@@ -95,17 +112,9 @@ export { fetchPosts, fetchPostsByUser }
 export { Location, AddPost, Post, Search }
 export type { PostType, ReasonType }
 
-export { reviewsReducer, UserInfo, AddReview }
+// Reviews
+export { fetchAllReviewsByUserId }
+export { getReviewsPage, getReviewsPages, setReviewsPage }
+export { UserInfo, AddReview }
 
-export {
-  profileReducer,
-  getAlertProfileMessage,
-  getIsActivated,
-  getIsNewAvatar,
-  getUser,
-  getUserId,
-  setIsActivated,
-  setUser,
-  setIsNewAvatar,
-  getName, getPhoto,
-}
+

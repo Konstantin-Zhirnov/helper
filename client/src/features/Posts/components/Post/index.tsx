@@ -4,8 +4,8 @@ import { Avatar, Divider, IconButton, Text } from '@chakra-ui/react'
 import { BsGeoAltFill } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 
-import { useAppDispatch } from '../../../../app'
-import { Li, Stars } from '../../../../shared'
+
+import { Li, Stars, useAppDispatch } from '../../../../shared'
 import { fetchRemovePost } from '../../model/asyncActions'
 
 import { ReasonType } from '../../types'

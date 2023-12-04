@@ -22,6 +22,7 @@ export class ReviewsService {
     return this.userModel.findById(id)
   }
 
+
   async create(createReviewDto: CreateReviewDto & { images: string[] }, fieldName: string, chosenFields: Record<string, number>): Promise<Review> {
     const postWithTime = {
       ...createReviewDto,
@@ -43,6 +44,7 @@ export class ReviewsService {
     })
   }
 
+
   async remove(removeReviewDto): Promise<Review> {
     const user = await this.userModel.findById(removeReviewDto.userId) as User
 
@@ -56,16 +58,17 @@ export class ReviewsService {
     return this.reviewModel.findByIdAndRemove(removeReviewDto._id)
   }
 
-  async getAllPostsByAuthorId(authorId: string, fieldName: string, chosenFields: Record<string, number>): Promise<Review[]> {
-    return await this.reviewModel.find({ 'authorId': authorId }).populate({
+
+  async getAllReviewsByAuthorId(authorId: string, fieldName: string, chosenFields: Record<string, number>): Promise<Review[]> {
+    return await this.reviewModel.find({ authorId: authorId }).populate({
       path: fieldName,
       select: chosenFields,
     }).sort({ 'time': 'desc' }).exec()
   }
 
 
-  async getAllPostsByUserId(userId: string, page: number = 0, fieldName: string, chosenFields: Record<string, number>) {
-    const query = this.reviewModel.find({ 'userId': userId })
+  async getAllReviewsByUserId(userId: string, page: number = 0, fieldName: string, chosenFields: Record<string, number>) {
+    const query = this.reviewModel.find({ userId: userId })
     const limit = 10
 
     const reviews = await query
@@ -77,7 +80,7 @@ export class ReviewsService {
         select: chosenFields,
       })
 
-    const count = await query.countDocuments().exec()
+    const count = await query.countDocuments({ userId: userId }).exec()
     const pages = Math.floor((count - 1) / limit) + 1
 
     return { reviews, count, pages, page: Number(page) }

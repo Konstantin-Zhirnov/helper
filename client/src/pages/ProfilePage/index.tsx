@@ -1,10 +1,10 @@
 import React from 'react'
 import { AbsoluteCenter, Box, Divider } from '@chakra-ui/react'
 
-import { useAppDispatch, useAppSelector } from '../../app'
+
 import { Posts, ProfileInfo } from '../../widgets'
 import { fetchPostsByUser, getAuth, getPostsByUser, getUser, ProfileAvatar } from '../../features'
-import { Wrapper } from '../../shared'
+import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
 import classes from './ProfilePage.module.sass'
 

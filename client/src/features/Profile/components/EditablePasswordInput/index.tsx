@@ -6,12 +6,13 @@ import { ErrorMessage } from '@hookform/error-message'
 import { ButtonGroup, IconButton, Input, Text } from '@chakra-ui/react'
 import * as yup from 'yup'
 
-import { useAppDispatch } from '../../../../app'
 import type { PasswordType } from '../../../../shared'
+import { useAppDispatch } from '../../../../shared'
 
+import { fetchNewPassword } from '../../model/asyncActions'
 
 import classes from './EditablePasswordInput.module.sass'
-import { fetchNewPassword } from '../../model/asyncActions'
+
 
 interface IProps {
   _id: string

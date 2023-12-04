@@ -51,6 +51,7 @@ export class ReviewsController {
     return { name: user.name, photo: user.photo, stars: user.stars, countReviews: user.countReviews }
   }
 
+
   @ApiOperation({ summary: 'Create review' })
   @ApiResponse({ status: 200, type: ReviewModel })
   @Post('create-review')
@@ -107,20 +108,22 @@ export class ReviewsController {
     return { _id: removeReviewDto._id }
   }
 
+
   @ApiOperation({ summary: 'Get all posts by author id' })
   @ApiResponse({ status: 200, type: [ReviewModel] })
   @Get('reviews-author/:id')
-  async getAllPostsByAuthorId(@Param('id') id: string): Promise<ReviewModel[]> {
-    return await this.reviewsService.getAllPostsByAuthorId(id, 'authorId', chosenFields)
+  async getAllReviewsByAuthorId(@Param('id') id: string): Promise<ReviewModel[]> {
+    return await this.reviewsService.getAllReviewsByAuthorId(id, 'authorId', chosenFields)
   }
+
 
   @ApiOperation({ summary: 'Get all posts by user id' })
   @ApiResponse({ status: 200, type: [ReviewModel] })
   @Get('reviews')
-  async getAllPostsByUserId(@Query() {
+  async getAllReviewsByUserId(@Query() {
     id,
     page,
   }): Promise<{ reviews: ReviewModel[], count: number, pages: number }> {
-    return await this.reviewsService.getAllPostsByUserId(id, page, 'authorId', chosenFields)
+    return await this.reviewsService.getAllReviewsByUserId(id, page, 'authorId', chosenFields)
   }
 }

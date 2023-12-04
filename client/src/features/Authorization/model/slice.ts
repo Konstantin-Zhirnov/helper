@@ -10,8 +10,7 @@ import {
   fetchUser,
 } from './asyncActions'
 import { AuthorizationStateType, SendEmailReasonType } from '../types'
-import type { RootState } from '../../../app'
-import type { MessageResponseType, UserType } from '../../../shared'
+import type { MessageResponseType, RootState, UserType } from '../../../shared'
 
 const initialState: AuthorizationStateType = {
   isAuth: false,

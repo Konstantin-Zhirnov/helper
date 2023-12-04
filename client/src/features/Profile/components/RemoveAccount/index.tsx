@@ -3,7 +3,8 @@ import cn from 'classnames'
 import { Card, CardBody, CardHeader, Heading, IconButton, Text } from '@chakra-ui/react'
 import { MdDelete, MdWarningAmber } from 'react-icons/md'
 
-import { useAppDispatch } from '../../../../app'
+
+import { useAppDispatch } from '../../../../shared'
 
 import { fetchRemoveUser } from '../../model/asyncActions'
 

@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { fetchAddReview, fetchUser } from './asyncActions'
-import { ReviewsStateType, ReviewType, UserType } from '../types'
-import { RootState } from '../../../app'
+import { fetchAddReview, fetchAllReviewsByUserId, fetchUser } from './asyncActions'
+import type { ReviewsStateType, ReviewType, UserType } from '../types'
+import { AllReviewsByUserIdResponseType } from '../types'
+import type { RootState } from '../../../shared'
 
 
 const initialState: ReviewsStateType = {
@@ -14,6 +15,9 @@ const initialState: ReviewsStateType = {
   },
   reviews: [],
   isModal: false,
+  page: 1,
+  count: 0,
+  pages: 0,
   message: '',
   alertMessage: '',
 }
@@ -30,6 +34,9 @@ export const reviews = createSlice({
     },
     setMessage: (state, action: PayloadAction<string>) => {
       state.message = action.payload
+    },
+    setReviewsPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -50,6 +57,16 @@ export const reviews = createSlice({
       .addCase(fetchAddReview.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
       })
+
+      .addCase(fetchAllReviewsByUserId.pending, pending)
+      .addCase(fetchAllReviewsByUserId.fulfilled, (state, action: PayloadAction<AllReviewsByUserIdResponseType>) => {
+        state.reviews = action.payload.reviews
+        state.count = action.payload.count
+        state.pages = action.payload.pages
+      })
+      .addCase(fetchAllReviewsByUserId.rejected, (state, action) => {
+        state.message = (action.payload as string) ?? ''
+      })
   },
 })
 
@@ -58,9 +75,11 @@ function pending(state: ReviewsStateType) {
 }
 
 
-export const { setModal, setMessage, setAlertReviewsMessage } = reviews.actions
+export const { setModal, setMessage, setAlertReviewsMessage, setReviewsPage } = reviews.actions
 export const getUser = (state: RootState): UserType => state.reviews.user
 export const getModal = (state: RootState): boolean => state.reviews.isModal
 export const getMessage = (state: RootState): string => state.reviews.message
+export const getReviewsPage = (state: RootState): number => state.reviews.page
+export const getReviewsPages = (state: RootState): number => state.reviews.pages
 
 export default reviews.reducer

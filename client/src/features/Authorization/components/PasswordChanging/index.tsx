@@ -5,11 +5,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Input } from '@chakra-ui/react'
 import * as yup from 'yup'
 
-import { useAppDispatch } from '../../../../app'
 import type { PasswordType } from '../../../../shared'
+import { useAppDispatch } from '../../../../shared'
 
 import { fetchChangePassword } from '../../model/asyncActions'
-
 
 import classes from './PasswordChanging.module.sass'
 
@@ -17,6 +16,7 @@ import classes from './PasswordChanging.module.sass'
 interface IProps {
   link: string
 }
+
 
 const PasswordChanging: React.FC<IProps> = React.memo(({ link }) => {
 

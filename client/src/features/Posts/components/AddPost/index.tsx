@@ -17,9 +17,9 @@ import {
   Textarea,
 } from '@chakra-ui/react'
 
-import { useAppDispatch, useAppSelector } from '../../../../app'
+
 import { AddImages } from '../../../../entities'
-import { AddButton } from '../../../../shared'
+import { AddButton, useAppDispatch, useAppSelector } from '../../../../shared'
 
 import { getMessage, getModal, setAlertPostsMessage, setMessage, setModal } from '../../model/slice'
 import { fetchAddPost } from '../../model/asyncActions'

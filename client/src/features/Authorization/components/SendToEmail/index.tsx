@@ -5,7 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Input } from '@chakra-ui/react'
 import * as yup from 'yup'
 
-import { useAppDispatch } from '../../../../app'
+
+import { useAppDispatch } from '../../../../shared'
 import { fetchSendEmail } from '../../model/asyncActions'
 import { EmailType, SendEmailReasonType } from '../../types'
 

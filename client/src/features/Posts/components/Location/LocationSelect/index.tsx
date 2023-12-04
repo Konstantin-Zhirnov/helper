@@ -1,7 +1,8 @@
 import React from 'react'
 import { Select } from '@chakra-ui/react'
 
-import { useAppDispatch, useAppSelector } from '../../../../../app'
+
+import { useAppDispatch, useAppSelector } from '../../../../../shared'
 import { getLocations, setLocation } from '../../../model/slice'
 
 import classes from './LocationSelect.module.sass'

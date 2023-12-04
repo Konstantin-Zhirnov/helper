@@ -1,10 +1,10 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
+
 import { Authorization, getIsNewAvatar, getName, getPhoto, Location, Search } from '../../features'
-import { Logo, useMatchMedia, Wrapper } from '../../shared'
+import { Logo, useAppSelector, useMatchMedia, Wrapper } from '../../shared'
 
 import classes from './Header.module.sass'
-import { useAppSelector } from '../../app'
 
 
 const Header: React.FC = React.memo(() => {

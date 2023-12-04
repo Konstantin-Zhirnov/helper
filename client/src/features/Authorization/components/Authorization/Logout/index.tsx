@@ -1,9 +1,7 @@
 import React from 'react'
 
-import { useAppDispatch } from '../../../../../app'
+import { LoginButton, useAppDispatch } from '../../../../../shared'
 import { fetchLogout } from '../../../model/asyncActions'
-
-import { LoginButton } from '../../../../../shared'
 
 interface IProps {
   isAuth: boolean

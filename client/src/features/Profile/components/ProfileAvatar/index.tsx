@@ -2,8 +2,8 @@ import React from 'react'
 import { MdAddAPhoto } from 'react-icons/md'
 import { Avatar } from '@chakra-ui/react'
 
-import { useAppDispatch, useAppSelector } from '../../../../app'
-import { getExtension, reduceImage } from '../../../../shared'
+
+import { getExtension, reduceImage, useAppDispatch, useAppSelector } from '../../../../shared'
 
 import { fetchChangeAvatar } from '../../model/asyncActions'
 import { getIsNewAvatar, setAlertProfileMessage } from '../../model/slice'

@@ -1,12 +1,12 @@
 import React from 'react'
 import { Avatar, Heading } from '@chakra-ui/react'
 
-import { useAppDispatch, useAppSelector } from '../../../../app'
+import { Stars, useAppDispatch, useAppSelector } from '../../../../shared'
+
 import { getUser } from '../../model/slice'
 import { fetchUser } from '../../model/asyncActions'
 
 import classes from './UserInfo.module.sass'
-import { Stars } from '../../../../shared'
 
 
 interface IProps {

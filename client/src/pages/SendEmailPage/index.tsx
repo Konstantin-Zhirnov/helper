@@ -2,9 +2,9 @@ import React from 'react'
 import cn from 'classnames'
 import { Heading } from '@chakra-ui/react'
 
-import { useAppDispatch, useAppSelector } from '../../app'
+
 import { clearSendEmail, getSendEmailMessage, getSendEmailReason, SendToEmail } from '../../features'
-import { Wrapper } from '../../shared'
+import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
 import classes from './SendEmailPage.module.sass'
 

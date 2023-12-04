@@ -2,8 +2,9 @@ import React from 'react'
 import { Box, Card, CardBody, CardHeader, Heading, Text } from '@chakra-ui/react'
 import { FaSquareWhatsapp, FaTelegram } from 'react-icons/fa6'
 
-import { useAppSelector } from '../../app'
+
 import { EditableInput, EditablePasswordInput, getUser, RemoveAccount } from '../../features'
+import { useAppSelector } from '../../shared'
 
 import classes from './ProfileInfo.module.sass'
 

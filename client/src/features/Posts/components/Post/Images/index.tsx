@@ -15,8 +15,8 @@ import { ImImages } from 'react-icons/im'
 import { TiDelete } from 'react-icons/ti'
 
 
-import { useAppDispatch, useAppSelector } from '../../../../../app'
 import { AddImages } from '../../../../../entities'
+import { useAppDispatch, useAppSelector } from '../../../../../shared'
 
 import { fetchAddImages, fetchRemoveImage } from '../../../model/asyncActions'
 import { getMessage, setAlertPostsMessage, setMessage } from '../../../model/slice'
