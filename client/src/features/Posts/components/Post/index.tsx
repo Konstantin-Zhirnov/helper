@@ -1,17 +1,18 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Avatar, Divider, IconButton, Text } from '@chakra-ui/react'
+import { Avatar, Divider, IconButton, Text, Tooltip } from '@chakra-ui/react'
 import { BsGeoAltFill } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 
-
 import { Li, Stars, useAppDispatch } from '../../../../shared'
-import { fetchRemovePost } from '../../model/asyncActions'
 
+import { fetchRemovePost } from '../../model/asyncActions'
 import { ReasonType } from '../../types'
-import { Images } from './Images'
+
 import { ContactInformation } from './ContactInformation'
 import { EditableInput } from './EditableInput'
+import { Images } from './Images'
+
 
 import classes from './Post.module.sass'
 
@@ -68,9 +69,11 @@ const Post: React.FC<IProps> = React.memo(({
         <div className={classes.user}>
           <Avatar size='xl' name={name} src={`${photo}?${new Date().getTime()}`} />
           <Text fontSize='lg' className={classes.name}>{name}</Text>
-          <NavLink to={`/reviews/${postAuthorId}`} className={classes.stars} aria-label='link to review page'>
-            <Stars stars={stars} countReviews={countReviews} />
-          </NavLink>
+          <Tooltip hasArrow label='View reviews'>
+            <NavLink to={`/reviews/${postAuthorId}`} className={classes.stars} aria-label='link to review page'>
+              <Stars stars={stars} countReviews={countReviews} />
+            </NavLink>
+          </Tooltip>
         </div>
         <div className={classes.info}>
           {
