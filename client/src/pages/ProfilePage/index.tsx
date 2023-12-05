@@ -50,10 +50,10 @@ const ProfilePage: React.FC = React.memo(() => {
               <Tab>Reviews</Tab>
             </TabList>
             <TabPanels>
-              <TabPanel>
+              <TabPanel className={classes.tab_panel}>
                 {!!posts.length && <Posts posts={memoizedPosts} reason='profile' />}
               </TabPanel>
-              <TabPanel>
+              <TabPanel className={classes.tab_panel}>
                 <Reviews reviews={memoizedReviews} reason='user' />
               </TabPanel>
             </TabPanels>
