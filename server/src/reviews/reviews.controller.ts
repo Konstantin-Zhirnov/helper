@@ -101,10 +101,13 @@ export class ReviewsController {
   @Post('remove-review')
   async remove(@Body() removeReviewDto: RemoveReviewDto): Promise<{ _id: string }> {
     const review = await this.reviewsService.remove(removeReviewDto)
-    review.images.forEach(src => {
-      const image = src.split('/').at(-1)
-      unlinkSync(`./public/${removeReviewDto.authorId}/reviews/${image}`)
-    })
+    if (review.images.length) {
+      review.images.forEach(src => {
+        const image = src.split('/').at(-1)
+        unlinkSync(`./public/${removeReviewDto.authorId}/reviews/${image}`)
+      })
+    }
+
     return { _id: removeReviewDto._id }
   }
 

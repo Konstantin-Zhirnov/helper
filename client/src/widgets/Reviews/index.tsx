@@ -18,6 +18,7 @@ const Reviews: React.FC<IProps> = React.memo(({ reviews, reason }) => {
       title={review.title}
       description={review.description}
       stars={review.stars}
+      userId={review.userId}
       images={review.images}
       name={review.authorId.name}
       photo={review.authorId.photo}

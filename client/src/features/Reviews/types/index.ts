@@ -57,6 +57,7 @@ export type ReasonReviewType = 'all' | 'user'
 
 export type RemoveReviewType = {
   _id: string
+  userId: string
   authorId: string
   stars: number
 }

@@ -16,6 +16,7 @@ interface IProps {
   title: string
   description: string
   stars: number
+  userId: string
   images: string[]
   name: string
   photo: string
@@ -29,6 +30,7 @@ const Review: React.FC<IProps> = React.memo(({
                                                title,
                                                description,
                                                stars,
+                                               userId,
                                                images,
                                                name,
                                                photo,
@@ -40,7 +42,7 @@ const Review: React.FC<IProps> = React.memo(({
   const dispatch = useAppDispatch()
 
   const removePost = () => {
-    dispatch(fetchRemoveReview({ _id, stars, authorId }))
+    dispatch(fetchRemoveReview({ _id, stars, authorId, userId }))
   }
 
   const memoizedImages = React.useMemo(() => images, [images])
