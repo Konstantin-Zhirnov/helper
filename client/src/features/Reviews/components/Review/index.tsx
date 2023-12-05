@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Divider, IconButton, Text } from '@chakra-ui/react'
+import { Avatar, Divider, IconButton, Text, Tooltip } from '@chakra-ui/react'
 import { MdDelete } from 'react-icons/md'
 
 import { Li, Stars, useAppDispatch } from '../../../../shared'
@@ -9,6 +9,7 @@ import { ReasonReviewType } from '../../types'
 import { Images } from './Images'
 
 import classes from './Review.module.sass'
+import { NavLink, useLocation } from 'react-router-dom'
 
 
 interface IProps {
@@ -40,6 +41,7 @@ const Review: React.FC<IProps> = React.memo(({
                                              }) => {
 
   const dispatch = useAppDispatch()
+  const { pathname } = useLocation()
 
   const removePost = () => {
     dispatch(fetchRemoveReview({ _id, stars, authorId, userId }))
@@ -50,8 +52,20 @@ const Review: React.FC<IProps> = React.memo(({
   return (
     <Li classes={classes.container}>
       <div className={classes.user}>
-        <Stars stars={stars} countReviews={1} />
+
+        {
+          pathname === '/profile'
+            ? (
+              <Tooltip hasArrow label='View all reviews'>
+                <NavLink to={`/reviews/${userId}`} className={classes.stars} aria-label='link to review page'>
+                  <Stars stars={stars} countReviews={1} />
+                </NavLink>
+              </Tooltip>
+            )
+            : <Stars stars={stars} countReviews={1} />
+        }
       </div>
+
       <div className={classes.info}>
         {
           reason === 'user' && (
