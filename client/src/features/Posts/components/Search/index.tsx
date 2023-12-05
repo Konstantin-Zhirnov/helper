@@ -53,7 +53,7 @@ const Search: React.FC<IProps> = React.memo(({ isMobile }) => {
         className={classes.input}
       />
       <InputRightElement className={classes.input_right_el}>
-        <Button size='sm' onClick={handleClick}>
+        <Button size='sm' onClick={handleClick} aria-label='button clear search'>
           <MdClose />
         </Button>
       </InputRightElement>

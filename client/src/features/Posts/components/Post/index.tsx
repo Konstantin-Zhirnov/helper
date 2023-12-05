@@ -68,7 +68,7 @@ const Post: React.FC<IProps> = React.memo(({
         <div className={classes.user}>
           <Avatar size='xl' name={name} src={`${photo}?${new Date().getTime()}`} />
           <Text fontSize='lg' className={classes.name}>{name}</Text>
-          <NavLink to={`/reviews/${postAuthorId}`} className={classes.stars}>
+          <NavLink to={`/reviews/${postAuthorId}`} className={classes.stars} aria-label='link to review page'>
             <Stars stars={stars} countReviews={countReviews} />
           </NavLink>
         </div>
