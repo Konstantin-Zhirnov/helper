@@ -46,8 +46,8 @@ const ProfilePage: React.FC = React.memo(() => {
         (posts.length > 0 || reviews.length > 0) && (
           <Tabs isFitted variant='enclosed'>
             <TabList className={classes.tab_list}>
-              <Tab isDisabled={posts.length < 1}>Posts</Tab>
-              <Tab>Reviews</Tab>
+              <Tab isDisabled={posts.length < 1} className={classes.tab}>Posts</Tab>
+              <Tab isDisabled={reviews.length < 1 className={classes.tab}}>Reviews</Tab>
             </TabList>
             <TabPanels>
               <TabPanel className={classes.tab_panel}>
