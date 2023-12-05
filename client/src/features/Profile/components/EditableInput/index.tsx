@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonGroup, IconButton, Input, Text } from '@chakra-ui/react'
+import { ButtonGroup, IconButton, Input } from '@chakra-ui/react'
 import { MdClear, MdCreate, MdDone } from 'react-icons/md'
 import { PhoneInput } from 'react-international-phone'
 
@@ -72,7 +72,7 @@ const EditableInput: React.FC<IProps> = React.memo(({ _id, defaultValue, field }
   const getText = () => {
     return (
       <div className={classes.textContainer}>
-        <Text fontSize='lg'>{value || 'No information available'}</Text>
+        <p>{value || 'No information available'}</p>
         <IconButton size='sm' icon={<MdCreate />} onClick={open} aria-label='button create' className={classes.blue} />
       </div>
     )

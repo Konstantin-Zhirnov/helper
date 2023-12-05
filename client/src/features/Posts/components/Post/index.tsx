@@ -60,6 +60,8 @@ const Post: React.FC<IProps> = React.memo(({
     dispatch(fetchRemovePost({ _id, folder: postAuthorId }))
   }
 
+  const memoizedImages = React.useMemo(() => images, [images])
+
   return (
     <Li>
       <div className={classes.container}>
@@ -115,9 +117,9 @@ const Post: React.FC<IProps> = React.memo(({
       </div>
       {
         reason === 'profile'
-          ? <Images imagesSrcArray={images} _id={_id} reason={reason} authorId={postAuthorId} />
+          ? <Images imagesSrcArray={memoizedImages} _id={_id} reason={reason} authorId={postAuthorId} />
           : !!images.length
-            ? <Images imagesSrcArray={images} _id={_id} reason={reason} authorId={postAuthorId} />
+            ? <Images imagesSrcArray={memoizedImages} _id={_id} reason={reason} authorId={postAuthorId} />
             : null
       }
       <ContactInformation email={email} phone={phone} whatsapp={whatsapp} telegram={telegram} />

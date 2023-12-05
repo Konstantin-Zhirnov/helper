@@ -1,10 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-
+import { Reviews } from '../../widgets'
 import { AddReview, fetchAllReviewsByUserId, getReviews, getReviewsPage, getUserId, UserInfo } from '../../features'
 import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
-import { Reviews } from '../../widgets'
 
 
 const ReviewsPage: React.FC = () => {
@@ -24,7 +23,9 @@ const ReviewsPage: React.FC = () => {
   return (
     <Wrapper>
       <UserInfo id={id} />
+
       {authorId && <AddReview authorId={authorId} userId={id} />}
+
       <Reviews reviews={memoizedReviews} reason='all' />
     </Wrapper>
   )

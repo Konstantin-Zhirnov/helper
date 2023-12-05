@@ -2,10 +2,6 @@
 
 .container
   position: relative
-  padding: 1rem 1rem 0.4rem
-  display: flex
-  flex-wrap: wrap
-  gap: 1rem
 
   .remove
     position: absolute
@@ -20,8 +16,8 @@
       fill: $red
 
   .user
-    text-align: center
-    width: 200px
+    display: flex
+    padding: 1rem
     overflow: hidden
 
     .name
@@ -38,34 +34,30 @@
 
     .title
       font-weight: 600
+      padding: 0 1rem
 
     .divider
       margin: 0.7rem 0
 
+    .description
+      padding: 0 1rem 0.5rem
+
     .footer
-      margin-top: auto
+      padding: 1rem 1rem 0.5rem 0.7rem
       display: flex
       justify-content: space-between
-      align-items: center
+      align-items: end
 
-      .location
-        color: $primary-color
+      .avatar_container
         display: flex
-        align-items: baseline
-        gap: 6px
-        font-weight: 600
+        align-items: end
 
-        svg
-          fill: $red
+        p
+          margin-left: 0.7rem
+          color: $primary-color
+          font-size: 0.86rem
 
       .time
         color: $primary-color
+        font-size: 0.86rem
 
-
-@media only screen and (max-width: 640px)
-  .container
-    .user
-      width: 100%
-
-    .info .footer
-      margin-top: 1rem

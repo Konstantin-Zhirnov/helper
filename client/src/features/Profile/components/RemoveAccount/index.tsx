@@ -1,6 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
-import { Card, CardBody, CardHeader, Heading, IconButton, Text } from '@chakra-ui/react'
+import { Card, CardBody, CardHeader, Heading, IconButton } from '@chakra-ui/react'
 import { MdDelete, MdWarningAmber } from 'react-icons/md'
 
 
@@ -34,7 +34,7 @@ const RemoveAccount: React.FC<IProps> = React.memo(({ _id, canRemove }) => {
       </CardHeader>
 
       <CardBody className={classes.cardBody}>
-        <Text fontSize='lg'>You can delete your account if you have no active posts and reviews</Text>
+        <p>You can delete your account if you have no active posts and reviews</p>
         <IconButton
           isRound={true}
           variant='solid'

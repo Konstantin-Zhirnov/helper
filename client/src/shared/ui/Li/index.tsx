@@ -1,17 +1,16 @@
 import React from 'react'
 
-import classes from './Li.module.sass'
+import styles from './Li.module.sass'
 
 
 interface IProps {
-  custom?: number
-  dataTestId?: string
+  classes?: any
   children: React.ReactNode
 }
 
 
-const Li: React.FC<IProps> = ({ children }) => {
-  return <li className={classes.container}>{children}</li>
+const Li: React.FC<IProps> = ({ classes, children }) => {
+  return <li className={`${styles.container} ${classes}`}>{children}</li>
 }
 
 export { Li }

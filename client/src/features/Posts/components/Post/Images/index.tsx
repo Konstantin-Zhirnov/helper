@@ -33,7 +33,7 @@ interface IProps {
   authorId: string
 }
 
-const Images: React.FC<IProps> = ({ imagesSrcArray, _id, reason, authorId }) => {
+const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, reason, authorId }) => {
 
   const dispatch = useAppDispatch()
   const message = useAppSelector(getMessage)
@@ -143,6 +143,6 @@ const Images: React.FC<IProps> = ({ imagesSrcArray, _id, reason, authorId }) => 
       </AccordionItem>
     </Accordion>
   )
-}
+})
 
 export { Images }
