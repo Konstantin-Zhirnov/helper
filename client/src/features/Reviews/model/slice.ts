@@ -60,6 +60,8 @@ export const reviews = createSlice({
       .addCase(fetchAddReview.fulfilled, (state, action: PayloadAction<ReviewType>) => {
         state.reviews.unshift(action.payload)
         state.isModal = false
+        state.user.stars = state.user.stars + action.payload.stars
+        state.user.countReviews = state.user.countReviews + 1
       })
       .addCase(fetchAddReview.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''

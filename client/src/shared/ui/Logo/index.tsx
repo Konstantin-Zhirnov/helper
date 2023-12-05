@@ -2,6 +2,8 @@ import React from 'react'
 import cn from 'classnames'
 import { NavLink } from 'react-router-dom'
 
+import { ReactComponent as LogoIcon } from './ca.svg'
+
 import classes from './Logo.module.sass'
 
 
@@ -17,7 +19,7 @@ const Logo: React.FC<IProps> = React.memo(({ isMobile, pathname }) => {
       to='/'
       className={cn(classes.link, { [`${classes.mobile}`]: isMobile || pathname !== '/' })}
     >
-      <img src='/images/ca.svg' alt='logo' className={classes.logo} />
+      <LogoIcon className={classes.logo} aria-label='icon flag of Canada' />
 
       <p className={classes.title}>Helper</p>
     </NavLink>
