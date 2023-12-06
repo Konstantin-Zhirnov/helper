@@ -44,6 +44,7 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
   const [stars, setStars] = React.useState(0)
+  const [isMessage, setIsMessage] = React.useState(false)
 
 
   const onOpen = React.useCallback(() => {
@@ -88,6 +89,8 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
         setCurrentImages([])
         setImages([])
         reset()
+      } else {
+        setIsMessage(true)
       }
     }
   }
@@ -103,6 +106,12 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
   const ratingChanged = (newRating) => {
     setStars(newRating)
   }
+
+  React.useEffect(() => {
+    if (isMessage && stars) {
+      setIsMessage(false)
+    }
+  }, [isMessage, stars])
 
   return (
     <>
@@ -136,14 +145,17 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
                 />
               </span>
 
-              <ReactStars
-                count={5}
-                onChange={ratingChanged}
-                size={28}
-                emptyIcon={<MdOutlineStarBorder />}
-                fullIcon={<MdOutlineStar />}
-                activeColor='#ffd700'
-              />
+              <div className={classes.stars_container}>
+                <ReactStars
+                  count={5}
+                  onChange={ratingChanged}
+                  size={28}
+                  emptyIcon={<MdOutlineStarBorder />}
+                  fullIcon={<MdOutlineStar />}
+                  activeColor='#ffd700'
+                />
+                {isMessage && <p className={classes.stars_error}>Select the number of stars</p>}
+              </div>
 
               <AddImages
                 currentImages={currentImages}
