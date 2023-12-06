@@ -29,9 +29,11 @@ const ProfilePage: React.FC = React.memo(() => {
   const memoizedReviews = React.useMemo(() => reviews, [reviews])
 
   React.useEffect(() => {
-    dispatch(fetchPostsByUser(user._id))
-    dispatch(fetchReviewsByAuthor(user._id))
-  }, [user])
+    if (user._id) {
+      dispatch(fetchPostsByUser(user._id))
+      dispatch(fetchReviewsByAuthor(user._id))
+    }
+  }, [user?._id])
 
 
   if (!isAuth) return <p className={classes.text}>You need to log in</p>
