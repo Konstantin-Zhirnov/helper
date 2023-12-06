@@ -16,13 +16,13 @@ export type ReviewType = {
   description: string
   stars: number
   images: string[]
-  authorId: AuthorType
-  userId: string
+  authorId: PersonType
+  userId: PersonType
   time: number
 }
 
 
-type AuthorType = {
+type PersonType = {
   _id: string
   name: string
   photo: string
@@ -50,6 +50,7 @@ export type AllReviewsByUserIdType = {
 export type AllReviewsByUserIdResponseType = {
   reviews: ReviewType[]
   count: number
+  page: number
   pages: number
 }
 

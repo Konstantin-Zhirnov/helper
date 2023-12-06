@@ -116,7 +116,7 @@ export class ReviewsController {
   @ApiResponse({ status: 200, type: [ReviewModel] })
   @Get('reviews-author/:id')
   async getAllReviewsByAuthorId(@Param('id') id: string): Promise<ReviewModel[]> {
-    return await this.reviewsService.getAllReviewsByAuthorId(id, 'authorId', chosenFields)
+    return await this.reviewsService.getAllReviewsByAuthorId(id, 'authorId', 'userId', chosenFields)
   }
 
 
@@ -126,7 +126,7 @@ export class ReviewsController {
   async getAllReviewsByUserId(@Query() {
     id,
     page,
-  }): Promise<{ reviews: ReviewModel[], count: number, pages: number }> {
-    return await this.reviewsService.getAllReviewsByUserId(id, page, 'authorId', chosenFields)
+  }): Promise<{ reviews: ReviewModel[], count: number, pages: number, page: number }> {
+    return await this.reviewsService.getAllReviewsByUserId(id, page, 'authorId', 'userId', chosenFields)
   }
 }

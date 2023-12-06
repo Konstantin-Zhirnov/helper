@@ -69,7 +69,11 @@ export const reviews = createSlice({
 
       .addCase(fetchAllReviewsByUserId.pending, pending)
       .addCase(fetchAllReviewsByUserId.fulfilled, (state, action: PayloadAction<AllReviewsByUserIdResponseType>) => {
-        state.reviews = action.payload.reviews
+        if (action.payload.page === 1) {
+          state.reviews = action.payload.reviews
+        } else {
+          state.reviews = state.reviews.concat(action.payload.reviews)
+        }
         state.count = action.payload.count
         state.pages = action.payload.pages
       })

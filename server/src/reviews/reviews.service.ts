@@ -59,15 +59,22 @@ export class ReviewsService {
   }
 
 
-  async getAllReviewsByAuthorId(authorId: string, fieldName: string, chosenFields: Record<string, number>): Promise<Review[]> {
-    return await this.reviewModel.find({ authorId: authorId }).populate({
-      path: fieldName,
-      select: chosenFields,
-    }).sort({ 'time': 'desc' }).exec()
+  async getAllReviewsByAuthorId(authorId: string, firstFieldName: string, secondFieldName: string, chosenFields: Record<string, number>): Promise<Review[]> {
+    return await this.reviewModel.find({ authorId: authorId })
+      .populate({
+        path: firstFieldName,
+        select: chosenFields,
+      })
+      .populate({
+        path: secondFieldName,
+        select: chosenFields,
+      })
+      .sort({ 'time': 'desc' })
+      .exec()
   }
 
 
-  async getAllReviewsByUserId(userId: string, page: number = 0, fieldName: string, chosenFields: Record<string, number>) {
+  async getAllReviewsByUserId(userId: string, page: number = 0, firstFieldName: string, secondFieldName: string, chosenFields: Record<string, number>) {
     const query = this.reviewModel.find({ userId: userId })
     const limit = 10
 
@@ -76,7 +83,11 @@ export class ReviewsService {
       .skip(((parseInt(page as any) || 1) - 1) * limit)
       .limit(limit)
       .populate({
-        path: fieldName,
+        path: firstFieldName,
+        select: chosenFields,
+      })
+      .populate({
+        path: secondFieldName,
         select: chosenFields,
       })
 

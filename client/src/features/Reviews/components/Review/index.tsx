@@ -18,6 +18,8 @@ interface IProps {
   description: string
   stars: number
   userId: string
+  userName: string
+  userPhoto: string
   images: string[]
   name: string
   photo: string
@@ -32,6 +34,8 @@ const Review: React.FC<IProps> = React.memo(({
                                                description,
                                                stars,
                                                userId,
+                                               userName,
+                                               userPhoto,
                                                images,
                                                name,
                                                photo,
@@ -56,11 +60,17 @@ const Review: React.FC<IProps> = React.memo(({
         {
           pathname === '/profile'
             ? (
-              <Tooltip hasArrow label='View all reviews'>
-                <NavLink to={`/reviews/${userId}`} className={classes.stars} aria-label='link to review page'>
-                  <Stars stars={stars} countReviews={1} />
-                </NavLink>
-              </Tooltip>
+              <>
+                <div className={classes.user_container}>
+                  <Avatar size='sm' name={userName} src={`${userPhoto}?${new Date().getTime()}`} />
+                  <p>{userName}</p>
+                </div>
+                <Tooltip hasArrow label='View all reviews'>
+                  <NavLink to={`/reviews/${userId}`} className={classes.stars} aria-label='link to review page'>
+                    <Stars stars={stars} countReviews={1} />
+                  </NavLink>
+                </Tooltip>
+              </>
             )
             : <Stars stars={stars} countReviews={1} />
         }
