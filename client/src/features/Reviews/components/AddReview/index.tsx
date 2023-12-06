@@ -88,6 +88,7 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
         await dispatch(fetchAddReview(formData))
         setCurrentImages([])
         setImages([])
+        setStars(0)
         reset()
       } else {
         setIsMessage(true)
@@ -145,16 +146,16 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
                 />
               </span>
 
-              <div className={classes.stars_container}>
-                <ReactStars
-                  count={5}
-                  onChange={ratingChanged}
-                  size={28}
-                  emptyIcon={<MdOutlineStarBorder />}
-                  fullIcon={<MdOutlineStar />}
-                  activeColor='#ffd700'
-                />
-                {isMessage && <p className={classes.stars_error}>Select the number of stars</p>}
+              <ReactStars
+                count={5}
+                onChange={ratingChanged}
+                size={28}
+                emptyIcon={<MdOutlineStarBorder />}
+                fullIcon={<MdOutlineStar />}
+                activeColor='#ffd700'
+              />
+              <div className={classes.stars_error_container}>
+                {isMessage && <p className={classes.stars_error_text}>Select the number of stars</p>}
               </div>
 
               <AddImages
