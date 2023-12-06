@@ -88,6 +88,7 @@ export const reviews = createSlice({
       .addCase(fetchRemoveReview.pending, pending)
       .addCase(fetchRemoveReview.fulfilled, (state, action: PayloadAction<{ _id: string }>) => {
         state.reviewsByAuthor = state.reviewsByAuthor.filter(review => review._id !== action.payload._id)
+        state.reviews = state.reviews.filter(review => review._id !== action.payload._id)
       })
       .addCase(fetchRemoveReview.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
