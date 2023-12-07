@@ -39,6 +39,7 @@ import { RemoveAccount } from './Profile/components/RemoveAccount'
 
 // Posts
 import {
+  clearPages,
   getAlertPostsMessage,
   getLocation,
   getPage,
@@ -58,7 +59,14 @@ import { Search } from './Posts/components/Search'
 import { PostType, ReasonType } from './Posts/types'
 
 // Reviews
-import { getReviews, getReviewsByAuthor, getReviewsPage, getReviewsPages, setReviewsPage } from './Reviews/model/slice'
+import {
+  clearReviews,
+  getReviews,
+  getReviewsByAuthor,
+  getReviewsPage,
+  getReviewsPages,
+  setReviewsPage,
+} from './Reviews/model/slice'
 import { fetchAllReviewsByUserId, fetchRemoveReview, fetchReviewsByAuthor } from './Reviews/model/asyncActions'
 import { UserInfo } from './Reviews/components/UserInfo'
 import { AddReview } from './Reviews/components/AddReview'
@@ -100,6 +108,7 @@ export { ProfileAvatar, EditablePasswordInput, EditableInput, RemoveAccount }
 // Posts
 export {
   getAlertPostsMessage,
+  clearPages,
   getSearch,
   getLocation,
   getPosts,
@@ -116,7 +125,14 @@ export type { PostType, ReasonType }
 
 // Reviews
 export { fetchAllReviewsByUserId, fetchReviewsByAuthor, fetchRemoveReview }
-export { getReviewsPage, getReviewsPages, setReviewsPage, getReviews, getReviewsByAuthor }
+export {
+  getReviewsPage,
+  getReviewsPages,
+  setReviewsPage,
+  getReviews,
+  getReviewsByAuthor,
+  clearReviews,
+}
 export { UserInfo, AddReview, Review }
 export type { ReviewType, ReasonReviewType }
 

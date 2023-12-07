@@ -52,6 +52,10 @@ export const posts = createSlice({
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload
     },
+    clearPages: (state) => {
+      state.posts = []
+      state.page = 1
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -169,7 +173,7 @@ function pending(state: PostsStateType) {
 }
 
 
-export const { setLocation, setModal, setAlertPostsMessage, setMessage, setPage, setSearch } = posts.actions
+export const { setLocation, setModal, setAlertPostsMessage, setMessage, setPage, setSearch, clearPages } = posts.actions
 
 export const getPosts = (state: RootState): PostType[] => state.posts.posts
 export const getPostsByUser = (state: RootState): PostType[] => state.posts.postsByUser

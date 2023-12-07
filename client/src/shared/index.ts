@@ -10,6 +10,8 @@ import { LoginButton } from './ui/LoginButton'
 import { Logo } from './ui/Logo'
 import { Stars } from './ui/Stars'
 import { Wrapper } from './ui/Wrapper'
+import { ReviewSkeleton } from './ui/ReviewSkeleton'
+import { PostSkeleton } from './ui/PostSkeleton'
 
 import { useMatchMedia } from './lib/hooks/useMatchMedia'
 import { useDebounce } from './lib/hooks/useDebounce'
@@ -18,10 +20,11 @@ import { getExtension, reduceImage } from './lib/helpers'
 
 import type { MessageResponseType, PasswordType, UserType } from './types'
 
+
 export type { AppDispatch, RootState }
 export { store, useAppDispatch, useAppSelector }
 
-export { AddButton, Circular, Li, Link, Loader, LoginButton, Logo, Stars, Wrapper }
+export { AddButton, Circular, Li, Link, Loader, LoginButton, Logo, Stars, Wrapper, ReviewSkeleton, PostSkeleton }
 
 
 export { useMatchMedia, useDebounce }

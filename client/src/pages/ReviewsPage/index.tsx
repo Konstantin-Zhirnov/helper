@@ -2,7 +2,16 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import { Reviews } from '../../widgets'
-import { AddReview, fetchAllReviewsByUserId, getReviews, getReviewsPage, getUserId, UserInfo } from '../../features'
+import {
+  AddReview,
+  clearReviews,
+  fetchAllReviewsByUserId,
+  getReviews,
+  getReviewsPage,
+  getUserId,
+  UserInfo,
+} from '../../features'
+import { ReviewSkeletons } from '../../entities'
 import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
 
@@ -20,13 +29,23 @@ const ReviewsPage: React.FC = () => {
     dispatch(fetchAllReviewsByUserId({ page, id }))
   }, [page, id])
 
+  React.useEffect(() => {
+    return () => {
+      dispatch(clearReviews())
+    }
+  }, [])
+
   return (
     <Wrapper>
       <UserInfo id={id} />
 
-      {authorId && <AddReview authorId={authorId} userId={id} />}
+      {
+        !memoizedReviews.length
+          ? <ReviewSkeletons />
+          : <Reviews reviews={memoizedReviews} reason='all' />
+      }
 
-      <Reviews reviews={memoizedReviews} reason='all' />
+      {authorId && <AddReview authorId={authorId} userId={id} />}
     </Wrapper>
   )
 }

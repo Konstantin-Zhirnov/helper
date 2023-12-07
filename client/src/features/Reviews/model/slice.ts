@@ -45,6 +45,10 @@ export const reviews = createSlice({
     setReviewsPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload
     },
+    clearReviews: (state) => {
+      state.reviews = []
+      state.page = 1
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,7 +73,7 @@ export const reviews = createSlice({
 
       .addCase(fetchAllReviewsByUserId.pending, pending)
       .addCase(fetchAllReviewsByUserId.fulfilled, (state, action: PayloadAction<AllReviewsByUserIdResponseType>) => {
-        if (action.payload.page === 1) {
+        if (action.payload.page === 1 && !state.reviews.length) {
           state.reviews = action.payload.reviews
         } else {
           state.reviews = state.reviews.concat(action.payload.reviews)
@@ -105,7 +109,9 @@ function pending(state: ReviewsStateType) {
 }
 
 
-export const { setModal, setMessage, setAlertReviewsMessage, setReviewsPage } = reviews.actions
+export const { setModal, setMessage, setAlertReviewsMessage, setReviewsPage, clearReviews } = reviews.actions
+
+
 export const getUser = (state: RootState): UserType => state.reviews.user
 export const getModal = (state: RootState): boolean => state.reviews.isModal
 export const getMessage = (state: RootState): string => state.reviews.message

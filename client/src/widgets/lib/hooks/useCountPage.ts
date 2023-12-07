@@ -1,10 +1,14 @@
 import React from 'react'
-
+import { useLocation } from 'react-router-dom'
 
 import { getPage, getPages, getReviewsPage, getReviewsPages, setPage, setReviewsPage } from '../../../features'
 import { useAppDispatch, useAppSelector } from '../../../shared'
 
-export const useCountPage = (inView, pathname) => {
+
+export const useCountPage = (inView) => {
+
+  const { pathname } = useLocation()
+
   const dispatch = useAppDispatch()
   const postsPage = useAppSelector(getPage)
   const postsPages = useAppSelector(getPages)
@@ -21,5 +25,5 @@ export const useCountPage = (inView, pathname) => {
         dispatch(setReviewsPage(reviewsPage + 1))
       }
     }
-  }, [inView, pathname, postsPage, postsPages, reviewsPage, reviewsPages])
+  }, [inView])
 }
