@@ -50,7 +50,7 @@ export const profile = createSlice({
     builder
       .addCase(fetchChangeAvatar.pending, pending)
       .addCase(fetchChangeAvatar.fulfilled, (state, action) => {
-        state.user.photo = action.payload.photo
+        state.user[`${action.payload.fieldName}`] = action.payload.value
         state.isNewAvatar = true
       })
       .addCase(fetchChangeAvatar.rejected, (state, action) => {
@@ -59,7 +59,7 @@ export const profile = createSlice({
 
       .addCase(fetchUpdateUser.pending, pending)
       .addCase(fetchUpdateUser.fulfilled, (state, action) => {
-        state.user = action.payload
+        state.user[`${action.payload.fieldName}`] = action.payload.value
       })
       .addCase(fetchUpdateUser.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -102,9 +102,12 @@ export const {
 
 export const getUser = (state: RootState): UserType => state.profile.user
 export const getIsActivated = (state: RootState): boolean => state.profile.user.isActivated
-export const getPhoto = (state: RootState): string => state.profile.user.photo
-export const getName = (state: RootState): string => state.profile.user.name
+export const getUserPhoto = (state: RootState): string => state.profile.user.photo
+export const getUserPhone = (state: RootState): string => state.profile.user.phone
+export const getUserName = (state: RootState): string => state.profile.user.name
+export const getUserEmail = (state: RootState): string => state.profile.user.email
 export const getUserId = (state: RootState): string => state.profile.user._id
+export const getUserWhatsApp = (state: RootState): string => state.profile.user.whatsapp
 export const getAlertProfileMessage = (state: RootState): string => state.profile.alertMessage
 export const getIsNewAvatar = (state: RootState): boolean => state.profile.isNewAvatar
 

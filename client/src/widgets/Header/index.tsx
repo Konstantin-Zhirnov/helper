@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { Authorization, getIsNewAvatar, getName, getPhoto, Location, Search } from '../../features'
+import { Authorization, getIsNewAvatar, getUserName, getUserPhoto, Location, Search } from '../../features'
 import { Logo, useAppSelector, useMatchMedia, Wrapper } from '../../shared'
 
 import classes from './Header.module.sass'
@@ -11,8 +11,8 @@ const Header: React.FC = React.memo(() => {
 
   const { isMobile } = useMatchMedia()
   const { pathname } = useLocation()
-  const photo = useAppSelector(getPhoto)
-  const name = useAppSelector(getName)
+  const photo = useAppSelector(getUserPhoto)
+  const name = useAppSelector(getUserName)
   const isNewAvatar = useAppSelector(getIsNewAvatar)
 
   return (

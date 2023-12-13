@@ -3,23 +3,18 @@ import { ButtonGroup, IconButton, Input } from '@chakra-ui/react'
 import { MdClear, MdCreate, MdDone } from 'react-icons/md'
 import { PhoneInput } from 'react-international-phone'
 
-
-import { useAppDispatch } from '../../../../shared'
-import { fetchUpdateUser } from '../../model/asyncActions'
-
 import 'react-international-phone/style.css'
 import classes from './EditableInput.module.sass'
 
 
 interface IProps {
-  _id: string
   defaultValue: string
-  field: string
+  cb: (value: unknown) => void
+  isPhone?: boolean
 }
 
-const EditableInput: React.FC<IProps> = React.memo(({ _id, defaultValue, field }) => {
+const EditableInput: React.FC<IProps> = React.memo(({ defaultValue, cb, isPhone }) => {
 
-  const dispatch = useAppDispatch()
   const [value, setValue] = React.useState(defaultValue)
   const [isEdit, setIsEdit] = React.useState(false)
 
@@ -37,11 +32,7 @@ const EditableInput: React.FC<IProps> = React.memo(({ _id, defaultValue, field }
   }
 
   const handleDoneClick = () => {
-    const body = {
-      _id,
-      field: { [`${field}`]: value },
-    }
-    dispatch(fetchUpdateUser(body))
+    cb(value)
     setIsEdit(false)
   }
 
@@ -49,7 +40,7 @@ const EditableInput: React.FC<IProps> = React.memo(({ _id, defaultValue, field }
     return (
       <div className={classes.inputContainer}>
         {
-          field === 'phone'
+          isPhone
             ? <PhoneInput
               defaultCountry='ca'
               value={value}

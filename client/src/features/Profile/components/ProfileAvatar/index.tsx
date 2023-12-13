@@ -2,24 +2,20 @@ import React from 'react'
 import { MdAddAPhoto } from 'react-icons/md'
 import { Avatar } from '@chakra-ui/react'
 
-
 import { getExtension, reduceImage, useAppDispatch, useAppSelector } from '../../../../shared'
 
 import { fetchChangeAvatar } from '../../model/asyncActions'
-import { getIsNewAvatar, setAlertProfileMessage } from '../../model/slice'
+import { getIsNewAvatar, getUserId, getUserName, getUserPhoto, setAlertProfileMessage } from '../../model/slice'
 
 import classes from './ProfileAvatar.module.sass'
 
 
-interface IProps {
-  name: string
-  photo: string
-  id: string
-}
-
-const ProfileAvatar: React.FC<IProps> = React.memo(({ name, photo, id }) => {
+const ProfileAvatar: React.FC = React.memo(() => {
   const dispatch = useAppDispatch()
   const isNewAvatar = useAppSelector(getIsNewAvatar)
+  const name = useAppSelector(getUserName)
+  const photo = useAppSelector(getUserPhoto)
+  const id = useAppSelector(getUserId)
 
   const [_, setReload] = React.useState(false)
 

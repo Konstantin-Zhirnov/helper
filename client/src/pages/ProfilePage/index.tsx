@@ -40,7 +40,7 @@ const ProfilePage: React.FC = React.memo(() => {
 
   return (
     <Wrapper>
-      <ProfileAvatar name={user.name} photo={user.photo} id={user._id} />
+      <ProfileAvatar />
 
       <ProfileInfo canRemove={posts.length === 0 && reviews.length === 0} />
 

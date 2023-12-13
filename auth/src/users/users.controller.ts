@@ -121,12 +121,10 @@ export class UsersController {
   @ApiResponse({ status: 201, type: User })
   @Put('users/:id')
   async update(
-    @Body() updateFieldObject: { [key: string]: string | boolean },
+    @Body() updateFieldObject: { [key: string]: string | boolean }, fieldName: string,
     @Param('id') id: string,
-  ): Promise<User> {
-    const user = await this.usersService.update(id, updateFieldObject)
-
-    return getUserWithoutPassword(user)
+  ): Promise<{ fieldName: string, value: string | boolean }> {
+    return await this.usersService.update(id, updateFieldObject, fieldName)
   }
 
 
@@ -215,15 +213,14 @@ export class UsersController {
   async uploadFile(
     @Body() id: string,
     @UploadedFile() file: Express.Multer.File,
-  ): Promise<{ photo: string }> {
+  ): Promise<{ fieldName: string, value: string | boolean }> {
     const fileName = file.filename
     const folder = fileName.substring(0, fileName.lastIndexOf('.'))
     const fieldForUpdate = {
       photo: `${process.env.AUTH_PATH}${folder}/${file.filename}`,
     }
 
-    const user = await this.usersService.update(id, fieldForUpdate)
-    return { photo: user.photo }
+    return await this.usersService.update(id, fieldForUpdate, 'photo')
   }
 
   @ApiOperation({ summary: 'Confirmation' })

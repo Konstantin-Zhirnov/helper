@@ -24,17 +24,20 @@ import {
   getAlertProfileMessage,
   getIsActivated,
   getIsNewAvatar,
-  getName,
-  getPhoto,
   getUser,
   getUserId,
+  getUserName,
+  getUserPhoto,
   setIsActivated,
   setIsNewAvatar,
   setUser,
 } from './Profile/model/slice'
 import { EditablePasswordInput } from './Profile/components/EditablePasswordInput'
 import { ProfileAvatar } from './Profile/components/ProfileAvatar'
-import { EditableInput } from './Profile/components/EditableInput'
+import { NameField } from './Profile/components/NameField'
+import { PhoneField } from './Profile/components/PhoneField'
+import { WhatsAppField } from './Profile/components/WhatsAppField'
+import { TelegramField } from './Profile/components/TelegramField'
 import { RemoveAccount } from './Profile/components/RemoveAccount'
 
 // Posts
@@ -101,9 +104,9 @@ export {
   setIsActivated,
   setUser,
   setIsNewAvatar,
-  getName, getPhoto,
+  getUserName, getUserPhoto,
 }
-export { ProfileAvatar, EditablePasswordInput, EditableInput, RemoveAccount }
+export { ProfileAvatar, EditablePasswordInput, NameField, PhoneField, WhatsAppField, TelegramField, RemoveAccount }
 
 // Posts
 export {

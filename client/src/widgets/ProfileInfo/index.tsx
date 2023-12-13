@@ -2,11 +2,19 @@ import React from 'react'
 import { Box, Card, CardBody, CardHeader, Heading, Text } from '@chakra-ui/react'
 import { FaSquareWhatsapp, FaTelegram } from 'react-icons/fa6'
 
-
-import { EditableInput, EditablePasswordInput, getUser, RemoveAccount } from '../../features'
-import { useAppSelector } from '../../shared'
+import {
+  EditablePasswordInput,
+  getUserId,
+  NameField,
+  PhoneField,
+  RemoveAccount,
+  TelegramField,
+  WhatsAppField,
+} from '../../features'
 
 import classes from './ProfileInfo.module.sass'
+import { useAppSelector } from '../../shared'
+import { getUserEmail } from '../../features/Profile/model/slice'
 
 
 interface IProps {
@@ -14,7 +22,9 @@ interface IProps {
 }
 
 const ProfileInfo: React.FC<IProps> = React.memo(({ canRemove }) => {
-  const user = useAppSelector(getUser)
+
+  const _id = useAppSelector(getUserId)
+  const email = useAppSelector(getUserEmail)
 
   return (
     <div className={classes.container}>
@@ -23,9 +33,7 @@ const ProfileInfo: React.FC<IProps> = React.memo(({ canRemove }) => {
           <Heading size='md'>Name:</Heading>
         </CardHeader>
         <CardBody className={classes.cardBody}>
-          <Box>
-            <EditableInput _id={user._id} defaultValue={user.name} field='name' />
-          </Box>
+          <NameField _id={_id} />
         </CardBody>
       </Card>
 
@@ -35,7 +43,7 @@ const ProfileInfo: React.FC<IProps> = React.memo(({ canRemove }) => {
         </CardHeader>
         <CardBody className={classes.cardBody_email}>
           <Box>
-            <Text fontSize='lg'>{user.email}</Text>
+            <Text fontSize='lg'>{email}</Text>
           </Box>
         </CardBody>
       </Card>
@@ -46,7 +54,7 @@ const ProfileInfo: React.FC<IProps> = React.memo(({ canRemove }) => {
         </CardHeader>
         <CardBody className={classes.cardBody}>
           <Box>
-            <EditablePasswordInput _id={user._id} />
+            <EditablePasswordInput _id={_id} />
           </Box>
         </CardBody>
       </Card>
@@ -56,9 +64,7 @@ const ProfileInfo: React.FC<IProps> = React.memo(({ canRemove }) => {
           <Heading size='md'>Phone:</Heading>
         </CardHeader>
         <CardBody className={classes.cardBody}>
-          <Box>
-            <EditableInput _id={user._id} defaultValue={user.phone} field='phone' />
-          </Box>
+          <PhoneField _id={_id} />
         </CardBody>
       </Card>
 
@@ -68,9 +74,7 @@ const ProfileInfo: React.FC<IProps> = React.memo(({ canRemove }) => {
             className={classes.whatsapp} />WhatsApp:</Heading>
         </CardHeader>
         <CardBody className={classes.cardBody}>
-          <Box>
-            <EditableInput _id={user._id} defaultValue={user.whatsapp} field='whatsapp' />
-          </Box>
+          <WhatsAppField _id={_id} />
         </CardBody>
       </Card>
 
@@ -79,13 +83,11 @@ const ProfileInfo: React.FC<IProps> = React.memo(({ canRemove }) => {
           <Heading size='md' className={classes.heading}><FaTelegram className={classes.telegram} /> Telegram:</Heading>
         </CardHeader>
         <CardBody className={classes.cardBody}>
-          <Box>
-            <EditableInput _id={user._id} defaultValue={user.telegram} field='telegram' />
-          </Box>
+          <TelegramField _id={_id} />
         </CardBody>
       </Card>
 
-      <RemoveAccount _id={user._id} canRemove={canRemove} />
+      <RemoveAccount _id={_id} canRemove={canRemove} />
     </div>
   )
 })

@@ -3,8 +3,8 @@ import { AxiosError } from 'axios'
 
 import { setIsAuth } from '../../Authorization/model/slice'
 
-import { ProfileAPI } from '../api/index'
-import { NewPasswordType, UpdateUserType } from '../types'
+import { ProfileAPI } from '../api'
+import type { NewPasswordType, UpdateUserType } from '../types'
 
 
 export const fetchChangeAvatar = createAsyncThunk(
