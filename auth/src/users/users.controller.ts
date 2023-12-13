@@ -33,6 +33,7 @@ import { SendEmailDto } from './dto/send-email.dto'
 import { ConfirmDto } from './dto/confirm.dto'
 import { ChangePasswordDto } from './dto/change-password.dto'
 import { NewPasswordDto } from './dto/new-password.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 const getUserWithoutPassword = (user: User) => {
   return {
@@ -119,13 +120,12 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Update user' })
   @ApiResponse({ status: 201, type: User })
-  @Put('users/:id')
+  @Put('update-user')
   async update(
-    @Body() updateFieldObject: { [key: string]: string | boolean }, fieldName: string,
-    @Param('id') id: string,
-  ): Promise<{ fieldName: string, value: string | boolean }> {
-    const user = await this.usersService.update(id, updateFieldObject)
-    return { fieldName, value: user[fieldName] }
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<UpdateUserDto> {
+    const user = await this.usersService.update(updateUserDto.userId, { [`${updateUserDto.fieldName}`]: updateUserDto.value })
+    return { fieldName: updateUserDto.fieldName, value: user[`${updateUserDto.fieldName}`] }
   }
 
 

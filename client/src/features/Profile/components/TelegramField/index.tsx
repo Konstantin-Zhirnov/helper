@@ -19,8 +19,8 @@ const TelegramField: React.FC<IProps> = React.memo(({ _id }) => {
   const memoizedCB = React.useCallback((value) => {
     const body = {
       _id,
-      field: { telegram: value },
       fieldName: 'telegram',
+      value,
     }
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])

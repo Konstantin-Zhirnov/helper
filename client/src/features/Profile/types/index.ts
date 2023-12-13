@@ -9,7 +9,7 @@ export type ProfileStateType = {
 
 export type NewPasswordType = Record<'password' | '_id', string>
 
-export type UpdateUserType = { _id: string, field: { [key: string]: any }, fieldName: string }
+export type UpdateUserType = { _id: string, fieldName: string, value: string | boolean }
 
 export type UpdateUserResponseType = {
   fieldName: string

@@ -19,8 +19,8 @@ const NameField: React.FC<IProps> = React.memo(({ _id }) => {
   const memoizedCB = React.useCallback((value) => {
     const body = {
       _id,
-      field: { name: value },
       fieldName: 'name',
+      value,
     }
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])

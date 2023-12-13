@@ -8,9 +8,10 @@ export const ProfileAPI = {
   },
 
   updateUser(body: UpdateUserType): Promise<UpdateUserResponseType> {
-    return $api.put(`${URL.users}/${body._id}`, {
-      updateFieldObject: body.field,
+    return $api.put(URL.updateUser, {
+      userId: body._id,
       fieldName: body.fieldName,
+      value: body.value,
     }).then(({ data }) => data)
   },
 

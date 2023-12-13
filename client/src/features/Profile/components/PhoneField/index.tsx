@@ -18,8 +18,8 @@ const PhoneField: React.FC<IProps> = React.memo(({ _id }) => {
   const memoizedCB = React.useCallback((value) => {
     const body = {
       _id,
-      field: { phone: value },
       fieldName: 'phone',
+      value,
     }
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])

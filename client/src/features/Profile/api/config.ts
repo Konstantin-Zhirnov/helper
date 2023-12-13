@@ -6,6 +6,7 @@ const BaseURL = 'https://helper.plus:5000/api'
 export const URL = {
   users: BaseURL + '/users',
   changeAvatar: BaseURL + '/file',
+  updateUser: BaseURL + '/update-user',
   newPassword: BaseURL + '/new-password',
   removeUser: BaseURL + '/remove-user',
 }

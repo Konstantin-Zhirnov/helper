@@ -19,8 +19,8 @@ const WhatsAppField: React.FC<IProps> = React.memo(({ _id }) => {
   const memoizedCB = React.useCallback((value) => {
     const body = {
       _id,
-      field: { whatsapp: value },
       fieldName: 'whatsapp',
+      value,
     }
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])
