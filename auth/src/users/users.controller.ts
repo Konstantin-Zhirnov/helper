@@ -124,7 +124,8 @@ export class UsersController {
     @Body() updateFieldObject: { [key: string]: string | boolean }, fieldName: string,
     @Param('id') id: string,
   ): Promise<{ fieldName: string, value: string | boolean }> {
-    return await this.usersService.update(id, updateFieldObject, fieldName)
+    const user = await this.usersService.update(id, updateFieldObject)
+    return { fieldName, value: user[fieldName] }
   }
 
 
@@ -220,7 +221,8 @@ export class UsersController {
       photo: `${process.env.AUTH_PATH}${folder}/${file.filename}`,
     }
 
-    return await this.usersService.update(id, fieldForUpdate, 'photo')
+    const user = await this.usersService.update(id, fieldForUpdate)
+    return { fieldName: 'photo', value: user.photo }
   }
 
   @ApiOperation({ summary: 'Confirmation' })

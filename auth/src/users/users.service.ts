@@ -42,9 +42,8 @@ export class UsersService {
     return this.userModel.findByIdAndRemove(id)
   }
 
-  async update(id: string, updateFieldObject: { [key: string]: string | boolean }, fieldName: string): Promise<{ fieldName: string, value: string | boolean }> {
-    const user = await this.userModel.findByIdAndUpdate(id, updateFieldObject, { new: true })
-    return { fieldName, value: user[fieldName] }
+  async update(id: string, updateFieldObject: { [key: string]: string | boolean }): Promise<User> {
+    return this.userModel.findByIdAndUpdate(id, updateFieldObject, { new: true })
   }
 
   async findOne(loginDto: LoginDto): Promise<User> {
