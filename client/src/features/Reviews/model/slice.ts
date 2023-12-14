@@ -119,6 +119,7 @@ export const getReviewsPage = (state: RootState): number => state.reviews.page
 export const getReviewsPages = (state: RootState): number => state.reviews.pages
 export const getReviews = (state: RootState): ReviewType[] => state.reviews.reviews
 export const getReviewsByAuthor = (state: RootState): ReviewType[] => state.reviews.reviewsByAuthor
+export const getIsReviewsByAuthor = (state: RootState): boolean => Boolean(state.reviews.reviewsByAuthor.length)
 
 
 export default reviews.reducer

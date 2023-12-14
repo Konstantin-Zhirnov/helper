@@ -4,6 +4,8 @@ import { FaSquareWhatsapp, FaTelegram } from 'react-icons/fa6'
 
 import {
   EditablePasswordInput,
+  getIsPostsByUser,
+  getIsReviewsByAuthor,
   getUserId,
   NameField,
   PhoneField,
@@ -11,20 +13,21 @@ import {
   TelegramField,
   WhatsAppField,
 } from '../../features'
-
-import classes from './ProfileInfo.module.sass'
 import { useAppSelector } from '../../shared'
+
 import { getUserEmail } from '../../features/Profile/model/slice'
 
+import classes from './ProfileInfo.module.sass'
 
 interface IProps {
   canRemove: boolean
 }
 
-const ProfileInfo: React.FC<IProps> = React.memo(({ canRemove }) => {
+const ProfileInfo: React.FC<IProps> = React.memo(({canRemove}) => {
 
   const _id = useAppSelector(getUserId)
   const email = useAppSelector(getUserEmail)
+
 
   return (
     <div className={classes.container}>

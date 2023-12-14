@@ -185,6 +185,7 @@ export const getLocations = (state: RootState): LocationsType => state.posts.loc
 export const getModal = (state: RootState): boolean => state.posts.isModal
 export const getMessage = (state: RootState): string => state.posts.message
 export const getAlertPostsMessage = (state: RootState): string => state.posts.alertMessage
+export const getIsPostsByUser = (state: RootState): boolean => Boolean(state.posts.postsByUser.length)
 
 
 export default posts.reducer

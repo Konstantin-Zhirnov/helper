@@ -1,15 +1,20 @@
 import React from 'react'
-import { Post, PostType, ReasonType } from '../../features'
+import {getPosts, getPostsByUser, Post, PostType, ReasonType} from '../../features'
 
 import classes from './Posts.module.sass'
+import {useAppSelector} from "../../shared";
+import {PostSkeletons} from "../../entities";
 
 
 interface IProps {
-  posts: PostType[]
   reason: ReasonType
 }
 
-const Posts: React.FC<IProps> = React.memo(({ posts, reason }) => {
+const Posts: React.FC<IProps> = React.memo(({ reason }) => {
+
+  const posts = useAppSelector(getPosts)
+  const postsByUser = useAppSelector(getPostsByUser)
+
 
   const renderItem = (post: PostType) => (
     <Post
@@ -33,9 +38,13 @@ const Posts: React.FC<IProps> = React.memo(({ posts, reason }) => {
     />
   )
 
+  if (reason === 'all' && !posts.length) {
+    return <PostSkeletons />
+  }
+
   return (
     <ul className={classes.cards}>
-      {posts.map(renderItem)}
+      {(reason === 'all' ? posts : postsByUser).map(renderItem)}
     </ul>
   )
 })

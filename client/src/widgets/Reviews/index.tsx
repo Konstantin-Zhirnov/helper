@@ -1,15 +1,19 @@
 import React from 'react'
-import { ReasonReviewType, Review, ReviewType } from '../../features'
+
+import {getReviews, getReviewsByAuthor, ReasonReviewType, Review, ReviewType} from '../../features'
+import {ReviewSkeletons} from "../../entities";
+import {useAppSelector} from "../../shared";
 
 import classes from './Reviews.module.sass'
 
 
 interface IProps {
-  reviews: ReviewType[]
   reason: ReasonReviewType
 }
 
-const Reviews: React.FC<IProps> = React.memo(({ reviews, reason }) => {
+const Reviews: React.FC<IProps> = React.memo(({ reason }) => {
+  const reviews = useAppSelector(getReviews)
+  const reviewsByAuthor = useAppSelector(getReviewsByAuthor)
 
   const renderItem = (review: ReviewType) => (
     <Review
@@ -30,9 +34,13 @@ const Reviews: React.FC<IProps> = React.memo(({ reviews, reason }) => {
     />
   )
 
+  if (reason === 'all' && !reviews.length) {
+    return <ReviewSkeletons />
+  }
+
   return (
     <ul className={classes.cards}>
-      {reviews.map(renderItem)}
+      {(reason === 'all' ? reviews : reviewsByAuthor).map(renderItem)}
     </ul>
   )
 })

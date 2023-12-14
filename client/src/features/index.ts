@@ -49,6 +49,7 @@ import {
   getPages,
   getPosts,
   getPostsByUser,
+  getIsPostsByUser,
   getSearch,
   setAlertPostsMessage,
   setLocation,
@@ -66,6 +67,7 @@ import {
   clearReviews,
   getReviews,
   getReviewsByAuthor,
+  getIsReviewsByAuthor,
   getReviewsPage,
   getReviewsPages,
   setReviewsPage,
@@ -116,6 +118,7 @@ export {
   getLocation,
   getPosts,
   getPostsByUser,
+  getIsPostsByUser,
   getPage,
   getPages,
   setAlertPostsMessage,
@@ -134,6 +137,7 @@ export {
   setReviewsPage,
   getReviews,
   getReviewsByAuthor,
+  getIsReviewsByAuthor,
   clearReviews,
 }
 export { UserInfo, AddReview, Review }

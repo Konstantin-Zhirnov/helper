@@ -1,14 +1,11 @@
 import React from 'react'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 
-
 import { Posts, ProfileInfo, Reviews } from '../../widgets'
 import {
   fetchPostsByUser,
   fetchReviewsByAuthor,
-  getAuth,
-  getPostsByUser,
-  getReviewsByAuthor,
+  getAuth, getIsPostsByUser, getIsReviewsByAuthor,
   getUser,
   ProfileAvatar,
 } from '../../features'
@@ -21,12 +18,8 @@ const ProfilePage: React.FC = React.memo(() => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(getUser)
   const isAuth = useAppSelector(getAuth)
-  const posts = useAppSelector(getPostsByUser)
-  const reviews = useAppSelector(getReviewsByAuthor)
-
-
-  const memoizedPosts = React.useMemo(() => posts, [posts])
-  const memoizedReviews = React.useMemo(() => reviews, [reviews])
+  const isPosts = useAppSelector(getIsPostsByUser)
+  const isReviews = useAppSelector(getIsReviewsByAuthor)
 
   React.useEffect(() => {
     if (user._id) {
@@ -42,21 +35,21 @@ const ProfilePage: React.FC = React.memo(() => {
     <Wrapper>
       <ProfileAvatar />
 
-      <ProfileInfo canRemove={posts.length === 0 && reviews.length === 0} />
+      <ProfileInfo canRemove={isPosts || isReviews}/>
 
       {
-        (posts.length > 0 || reviews.length > 0) && (
+        (isPosts || isReviews) && (
           <Tabs isFitted variant='enclosed'>
             <TabList className={classes.tab_list}>
-              <Tab isDisabled={posts.length < 1} className={classes.tab}>Posts</Tab>
-              <Tab isDisabled={reviews.length < 1} className={classes.tab}>Reviews</Tab>
+              <Tab isDisabled={!isPosts} className={classes.tab}>Posts</Tab>
+              <Tab isDisabled={!isReviews} className={classes.tab}>Reviews</Tab>
             </TabList>
             <TabPanels>
               <TabPanel className={classes.tab_panel}>
-                {!!posts.length && <Posts posts={memoizedPosts} reason='profile' />}
+                {isPosts && <Posts reason='profile' />}
               </TabPanel>
               <TabPanel className={classes.tab_panel}>
-                <Reviews reviews={memoizedReviews} reason='user' />
+                <Reviews reason='user' />
               </TabPanel>
             </TabPanels>
           </Tabs>
