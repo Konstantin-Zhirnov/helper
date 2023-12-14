@@ -2,7 +2,7 @@ import { UserType } from '../../../shared'
 
 export type ProfileStateType = {
   user: UserType
-  isNewAvatar: boolean
+  isReload: boolean
   message: string
   alertMessage: string
 }

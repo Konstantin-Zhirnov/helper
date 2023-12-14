@@ -13,18 +13,18 @@ import classes from './Authorization.module.sass'
 interface IProps {
   photo: string
   name: string
-  isNewAvatar: boolean
+  isReload: boolean
 }
 
-const Authorization: React.FC<IProps> = React.memo(({ photo, name, isNewAvatar }) => {
+const Authorization: React.FC<IProps> = React.memo(({ photo, name, isReload }) => {
 
   const isAuth = useAppSelector(getAuth)
 
   const [_, setReload] = React.useState(false)
 
   React.useEffect(() => {
-    setReload(isNewAvatar)
-  }, [isNewAvatar])
+    setReload(isReload)
+  }, [isReload])
 
   return !isAuth
     ? <Login isAuth={isAuth} />

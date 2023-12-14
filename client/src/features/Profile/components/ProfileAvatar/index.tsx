@@ -5,14 +5,14 @@ import { Avatar } from '@chakra-ui/react'
 import { getExtension, reduceImage, useAppDispatch, useAppSelector } from '../../../../shared'
 
 import { fetchChangeAvatar } from '../../model/asyncActions'
-import { getIsNewAvatar, getUserId, getUserName, getUserPhoto, setAlertProfileMessage } from '../../model/slice'
+import { getIsReload, getUserId, getUserName, getUserPhoto, setAlertProfileMessage } from '../../model/slice'
 
 import classes from './ProfileAvatar.module.sass'
 
 
 const ProfileAvatar: React.FC = React.memo(() => {
   const dispatch = useAppDispatch()
-  const isNewAvatar = useAppSelector(getIsNewAvatar)
+  const isReload = useAppSelector(getIsReload)
   const name = useAppSelector(getUserName)
   const photo = useAppSelector(getUserPhoto)
   const id = useAppSelector(getUserId)
@@ -20,12 +20,12 @@ const ProfileAvatar: React.FC = React.memo(() => {
   const [_, setReload] = React.useState(false)
 
   React.useEffect(() => {
-    setReload(isNewAvatar)
-  }, [isNewAvatar])
+    setReload(isReload)
+  }, [isReload])
 
   const handleChange = (event) => {
     const file = event.target.files[0]
-    const maxSize = 120
+    const maxSize = 200
 
     if (file.type === 'image/jpeg' || file.type === 'image/png') {
 

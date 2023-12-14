@@ -24,7 +24,7 @@ const initialState: ProfileStateType = {
     paid: false,
     paidTime: '',
   },
-  isNewAvatar: false,
+  isReload: false,
   alertMessage: '',
   message: '',
 }
@@ -42,8 +42,8 @@ export const profile = createSlice({
     setAlertProfileMessage: (state, action: PayloadAction<string>) => {
       state.alertMessage = action.payload
     },
-    setIsNewAvatar: (state, action: PayloadAction<boolean>) => {
-      state.isNewAvatar = action.payload
+    setIsReload: (state, action: PayloadAction<boolean>) => {
+      state.isReload = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -51,7 +51,7 @@ export const profile = createSlice({
       .addCase(fetchChangeAvatar.pending, pending)
       .addCase(fetchChangeAvatar.fulfilled, (state, action) => {
         state.user[`${action.payload.fieldName}`] = action.payload.value
-        state.isNewAvatar = true
+        state.isReload = true
       })
       .addCase(fetchChangeAvatar.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -60,6 +60,7 @@ export const profile = createSlice({
       .addCase(fetchUpdateUser.pending, pending)
       .addCase(fetchUpdateUser.fulfilled, (state, action) => {
         state.user[`${action.payload.fieldName}`] = action.payload.value
+        state.isReload = true
       })
       .addCase(fetchUpdateUser.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -96,7 +97,7 @@ export const {
   setUser,
   setIsActivated,
   setAlertProfileMessage,
-  setIsNewAvatar,
+  setIsReload,
 } = profile.actions
 
 
@@ -109,7 +110,7 @@ export const getUserEmail = (state: RootState): string => state.profile.user.ema
 export const getUserId = (state: RootState): string => state.profile.user._id
 export const getUserWhatsApp = (state: RootState): string => state.profile.user.whatsapp
 export const getAlertProfileMessage = (state: RootState): string => state.profile.alertMessage
-export const getIsNewAvatar = (state: RootState): boolean => state.profile.isNewAvatar
+export const getIsReload = (state: RootState): boolean => state.profile.isReload
 
 
 export default profile.reducer

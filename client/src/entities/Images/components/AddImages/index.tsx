@@ -57,7 +57,7 @@ const AddImages: React.FC<IProps> = React.memo(({
     for (const file of files) {
       const index = files.indexOf(file)
       if (file.type === 'image/jpeg' || file.type === 'image/png') {
-        const maxSize = 600
+        const maxSize = 900
         imagesName.push(file.name)
 
         await reduceImage(file, maxSize, function(reducedImage) {

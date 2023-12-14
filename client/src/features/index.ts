@@ -23,13 +23,13 @@ import { EmailType } from './Authorization/types'
 import {
   getAlertProfileMessage,
   getIsActivated,
-  getIsNewAvatar,
+  getIsReload,
   getUser,
   getUserId,
   getUserName,
   getUserPhoto,
   setIsActivated,
-  setIsNewAvatar,
+  setIsReload,
   setUser,
 } from './Profile/model/slice'
 import { EditablePasswordInput } from './Profile/components/EditablePasswordInput'
@@ -98,12 +98,12 @@ export type { EmailType }
 export {
   getAlertProfileMessage,
   getIsActivated,
-  getIsNewAvatar,
+  getIsReload,
   getUser,
   getUserId,
   setIsActivated,
   setUser,
-  setIsNewAvatar,
+  setIsReload,
   getUserName, getUserPhoto,
 }
 export { ProfileAvatar, EditablePasswordInput, NameField, PhoneField, WhatsAppField, TelegramField, RemoveAccount }
