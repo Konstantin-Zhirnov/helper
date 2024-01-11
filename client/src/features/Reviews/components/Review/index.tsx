@@ -1,5 +1,4 @@
 import React from 'react'
-import { Avatar, Divider, IconButton, Text, Tooltip } from '@chakra-ui/react'
 import { MdDelete } from 'react-icons/md'
 
 import { Li, Stars, useAppDispatch } from '../../../../shared'
@@ -62,14 +61,12 @@ const Review: React.FC<IProps> = React.memo(({
             ? (
               <>
                 <div className={classes.user_container}>
-                  <Avatar size='sm' name={userName} src={`${userPhoto}?${new Date().getTime()}`} />
+                  <img src={`${userPhoto}?${new Date().getTime()}`} alt='user'/>
                   <p>{userName}</p>
                 </div>
-                <Tooltip hasArrow label='View all reviews'>
                   <NavLink to={`/reviews/${userId}`} className={classes.stars} aria-label='link to review page'>
                     <Stars stars={stars} countReviews={1} />
                   </NavLink>
-                </Tooltip>
               </>
             )
             : <Stars stars={stars} countReviews={1} />
@@ -79,27 +76,22 @@ const Review: React.FC<IProps> = React.memo(({
       <div className={classes.info}>
         {
           reason === 'user' && (
-            <IconButton
-              isRound={true}
-              variant='solid'
+            <button
               aria-label='Remove review button'
-              fontSize='20px'
               className={classes.remove}
-              icon={<MdDelete />}
               onClick={removePost}
-            />
+            ><MdDelete /></button>
           )
         }
 
-        <Text fontSize='lg' className={classes.title}>{title}</Text>
+        <p className={classes.title}>{title}</p>
 
-        <Divider className={classes.divider} />
 
         <p className={classes.description}>{description}</p>
 
         <div className={classes.footer}>
           <div className={classes.avatar_container}>
-            <Avatar size='sm' name={name} src={`${photo}?${new Date().getTime()}`} />
+            <img src={`${photo}?${new Date().getTime()}`} alt='user'/>
             <p className={classes.name}>{name}</p>
           </div>
 

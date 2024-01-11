@@ -1,6 +1,7 @@
 import { $api, URL } from './config'
-import type { NewPasswordType, UpdateUserResponseType, UpdateUserType } from '../types'
+import type { NewPasswordType, UpdateUserResponseType, UpdateUserType, CreatePaymentResponseType, CreatePaymentType } from '../types'
 import type { MessageResponseType } from '../../../shared'
+import {ChangePasswordType} from "../../Authorization/types";
 
 export const ProfileAPI = {
   changeAvatar(data: FormData): Promise<UpdateUserResponseType> {
@@ -21,5 +22,13 @@ export const ProfileAPI = {
 
   removeUser(_id: string): Promise<MessageResponseType> {
     return $api.delete(`${URL.removeUser}/${_id}`).then(({ data }) => data)
+  },
+
+  createPayment(body: CreatePaymentType): Promise<CreatePaymentResponseType> {
+    return $api.post(URL.createPayment, body).then(({ data }) => data)
+  },
+
+  changePassword(body: ChangePasswordType): Promise<MessageResponseType> {
+    return $api.put(URL.changePassword, body).then(({ data }) => data)
   },
 }

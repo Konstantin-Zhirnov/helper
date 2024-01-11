@@ -1,0 +1,50 @@
+@import "../../../../../shared/constants/vars"
+
+.text
+  text-align: center
+
+.error
+  color: $red
+  margin-top: 1.5rem
+  text-align: center
+
+.btn
+  height: 30px
+  border-radius: 12px
+  background: $primary-text
+  display: inline-flex
+  padding: 2px 22px
+  justify-content: center
+  align-items: center
+  color: $white
+  text-decoration: none
+  font-weight: 600
+  line-height: normal
+  letter-spacing: -0.14px
+  margin-left: 1rem
+  font-size: 0.74rem
+  border: none
+  cursor: pointer
+  transition: background 400ms
+  &:hover
+    background: $primary-dark-color
+    transition: background 400ms
+  &.mobile
+    background: transparent
+    color: $primary-dark-color
+    letter-spacing: -0.14px
+    font-weight: 600
+    font-size: 1rem
+    padding: 0
+    margin: 0
+    height: initial
+  &.final
+    height: 80px
+    padding: 0 33px
+    margin-left: 0
+    text-align: center
+    font-size: 1rem
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+    letter-spacing: -0.16px

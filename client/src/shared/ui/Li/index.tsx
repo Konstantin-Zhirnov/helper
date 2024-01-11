@@ -9,8 +9,8 @@ interface IProps {
 }
 
 
-const Li: React.FC<IProps> = ({ classes, children }) => {
+const Li: React.FC<IProps> = React.memo(({ classes, children }) => {
   return <li className={`${styles.container} ${classes}`}>{children}</li>
-}
+})
 
 export { Li }

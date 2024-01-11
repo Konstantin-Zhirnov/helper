@@ -1,7 +1,5 @@
 import React from 'react'
 import cn from 'classnames'
-import { Heading } from '@chakra-ui/react'
-
 
 import { clearSendEmail, getSendEmailMessage, getSendEmailReason, SendToEmail } from '../../features'
 import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
@@ -37,9 +35,9 @@ const SendEmailPage: React.FC = () => {
 
   return (
     <Wrapper>
-      <Heading as='h1' size='lg' className={classes.title}>
+      <h1 className={classes.title}>
         Request a link
-      </Heading>
+      </h1>
       {
         !sendEmailReason && (
           <>
@@ -49,7 +47,7 @@ const SendEmailPage: React.FC = () => {
           </>
         )
       }
-      <p className={cn(classes.text, { [`${classes.red}`]: getClass() })}>{sendEmailMessage}</p>
+      <p className={cn(classes.text, { [classes.red]: getClass() })}>{sendEmailMessage}</p>
     </Wrapper>
   )
 }

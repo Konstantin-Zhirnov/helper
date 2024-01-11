@@ -2,7 +2,6 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Input } from '@chakra-ui/react'
 import * as yup from 'yup'
 
 
@@ -66,7 +65,7 @@ const SendToEmail: React.FC<IProps> = React.memo(({ sendEmailReason }) => {
     <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
             <span className={classes.input_container}>
                 <label htmlFor='email'>Email:</label>
-                <Input id='email' size='sm' {...register('email')} autoComplete='off' />
+                <input id='email' {...register('email')} autoComplete='off' />
                 <ErrorMessage
                   errors={errors as any}
                   name='email'

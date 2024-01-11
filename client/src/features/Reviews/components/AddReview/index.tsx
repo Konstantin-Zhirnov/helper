@@ -5,18 +5,6 @@ import { ErrorMessage } from '@hookform/error-message'
 import cn from 'classnames'
 import * as yup from 'yup'
 import ReactStars from 'react-rating-stars-component'
-import {
-  Button,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Textarea,
-} from '@chakra-ui/react'
 import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md'
 
 import { AddImages } from '../../../../entities'
@@ -118,17 +106,17 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
     <>
       <AddButton onOpen={onOpen} />
 
-      <Modal isOpen={isModal} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
+      <div>
+
+        <div>
           <form onSubmit={handleSubmit(onSubmit)} id='myForm'>
-            <ModalHeader className={classes.header}>Add a post</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody className={classes.container}>
+            <p className={classes.header}>Add a post</p>
+
+            <div className={classes.container}>
 
               <span className={classes.input_container}>
                 <label htmlFor='title'>Title:</label>
-                <Input id='title' size='sm' {...register('title')} autoComplete='off' />
+                <input id='title' {...register('title')} autoComplete='off' />
                 <ErrorMessage
                   errors={errors as any}
                   name='title'
@@ -138,7 +126,7 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
 
               <span className={classes.input_container}>
                 <label htmlFor='description'>Description:</label>
-                <Textarea id='description' {...register('description')} />
+                <textarea id='description' {...register('description')} />
                 <ErrorMessage
                   errors={errors as any}
                   name='description'
@@ -169,17 +157,17 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
                 setAlertMessage={onAlertMessage}
               />
 
-            </ModalBody>
+            </div>
 
-            <ModalFooter>
-              <Button type='submit'
+            <div>
+              <button type='submit'
                       className={cn(classes.submit, { [classes.disabled]: currentImages.length !== images.length })}>
                 Submit
-              </Button>
-            </ModalFooter>
+              </button>
+            </div>
           </form>
-        </ModalContent>
-      </Modal>
+        </div>
+      </div>
     </>
   )
 })

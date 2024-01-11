@@ -3,10 +3,17 @@
 .images_label
   display: flex
   align-items: center
+  gap: 1rem
 
   svg
     font-size: 50px
     cursor: pointer
+    circle:last-of-type
+      fill: $primary-text
+      transition: background 400ms
+      &:hover
+        fill: $primary-dark-color
+        transition: background 400ms
 
 .images_input
   display: none

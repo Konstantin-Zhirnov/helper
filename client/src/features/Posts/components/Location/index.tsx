@@ -1,55 +1,25 @@
 import React from 'react'
-import cn from 'classnames'
-import {
-  Button,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-} from '@chakra-ui/react'
-import { BsGeoAltFill } from 'react-icons/bs'
+
+import {Select, useAppDispatch, useAppSelector} from '../../../../shared'
+
+import {getLocation, getLocations, setLocation} from "../../model/slice";
 
 
-import { useAppDispatch, useAppSelector } from '../../../../shared'
-
-import { fetchLocations } from '../../model/asyncActions'
-import { getLocation } from '../../model/slice'
-import { LocationSelect } from './LocationSelect'
-
-import classes from './Location.module.sass'
-
-
-interface IProps {
-  isMobile?: boolean
-}
-
-const Location: React.FC<IProps> = React.memo(({ isMobile }) => {
+const Location: React.FC = React.memo(() => {
 
   const dispatch = useAppDispatch()
+  const locations = useAppSelector(getLocations)
   const location = useAppSelector(getLocation)
 
+  const handleChange = (value) => {
+    localStorage.setItem('location', value)
+    dispatch(setLocation(value))
+  }
 
-  React.useEffect(() => {
-    dispatch(fetchLocations())
-  }, [])
+  if (!locations.length) return null
 
   return (
-    <Popover>
-      <PopoverTrigger>
-        <Button className={cn(classes.btn, { [`${classes.mobile}`]: isMobile })}><BsGeoAltFill />&nbsp;{location}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent>
-        <PopoverArrow />
-        <PopoverCloseButton className={classes.close} />
-        <PopoverHeader className={classes.header}>Select a location</PopoverHeader>
-        <PopoverBody><LocationSelect /></PopoverBody>
-      </PopoverContent>
-    </Popover>
-
+      <Select options={locations} defaultValue={location} cb={handleChange}/>
   )
 })
 

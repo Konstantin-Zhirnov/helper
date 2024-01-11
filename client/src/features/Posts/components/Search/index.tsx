@@ -1,11 +1,10 @@
 import React from 'react'
 import cn from 'classnames'
-import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
-import { MdClose } from 'react-icons/md'
+import { MdSearch } from 'react-icons/md'
 
 import { useAppDispatch, useAppSelector, useDebounce } from '../../../../shared'
 
-import { getSearch, setPage, setSearch } from '../../model/slice'
+import {getMainSearch, getSearch, setMainSearch, setPage, setSearch} from '../../model/slice'
 
 import classes from './Search.module.sass'
 
@@ -18,46 +17,53 @@ const Search: React.FC<IProps> = React.memo(({ isMobile }) => {
 
   const dispatch = useAppDispatch()
   const search = useAppSelector(getSearch)
+  const isMainSearch = useAppSelector(getMainSearch)
 
-  const [value, setValue] = React.useState('')
-  const debouncedValue = useDebounce(value, 500)
+  const [value, setValue] = React.useState(search)
+  const debouncedValue = useDebounce(value, !isMainSearch ? 500 : 0)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
   }
 
   React.useEffect(() => {
-    if (value) {
-      if (search !== debouncedValue) {
+    if (!isMainSearch) {
+      if (value) {
+        if (search !== debouncedValue) {
+          dispatch(setPage(1))
+          dispatch(setSearch(debouncedValue))
+        }
+      } else {
         dispatch(setPage(1))
-        dispatch(setSearch(debouncedValue))
+        dispatch(setSearch(value))
       }
-    } else {
-      dispatch(setPage(1))
-      dispatch(setSearch(value))
     }
   }, [debouncedValue, value])
 
-  const handleClick = () => {
-    setValue('')
-  }
+  React.useEffect(() => {
+  if(isMainSearch) {
+      if (search !== value) {
+          setValue(search)
+      } else if (value === debouncedValue) {
+        dispatch(setMainSearch(false))
+      }
+    }
+  }, [search, value, debouncedValue])
 
 
   return (
-    <InputGroup className={cn(classes.input_group, { [`${classes.mobile}`]: isMobile })}>
-      <Input
-        size='sm'
-        value={value}
-        onChange={handleChange}
-        placeholder='Search...'
-        className={classes.input}
-      />
-      <InputRightElement className={classes.input_right_el}>
-        <Button size='sm' onClick={handleClick} aria-label='button clear search'>
-          <MdClose />
-        </Button>
-      </InputRightElement>
-    </InputGroup>
+      <>
+        <div className={cn(classes.input_group, { [classes.mobile]: isMobile })}>
+          <MdSearch />
+          <input
+              value={value}
+              onChange={handleChange}
+              placeholder='Search...'
+              className={classes.input}
+          />
+        </div>
+        <div className={classes.divider}/>
+      </>
   )
 })
 

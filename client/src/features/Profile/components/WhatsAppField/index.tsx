@@ -1,5 +1,4 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react'
 
 import { EditableInput } from '../../../../entities'
 
@@ -25,10 +24,7 @@ const WhatsAppField: React.FC<IProps> = React.memo(({ _id }) => {
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])
 
-  return (
-    <Box>
-      <EditableInput defaultValue={whatsapp} cb={memoizedCB} />
-    </Box>)
+  return <EditableInput defaultValue={whatsapp} cb={memoizedCB} label='WhatsApp'/>
 })
 
 export { WhatsAppField }

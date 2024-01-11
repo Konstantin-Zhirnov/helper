@@ -1,0 +1,32 @@
+@import '../../constants/vars'
+
+.container
+  border-radius: 22px
+  background: $white
+
+  &.selected
+    background: $primary-color
+    box-shadow: 0 30px 90px 0 rgba(31, 36, 48, 0.1)
+
+  .btn
+    position: relative
+    padding: 17px
+    border: none
+    background: transparent
+    width: 100%
+    cursor: pointer
+
+    .category
+      width: 90px
+      text-align: left
+      color: $primary-dark-color
+      font-size: clamp(0.9rem, calc(0.5rem + 0.7vw), 1.1rem)
+      font-style: normal
+      font-weight: 500
+      line-height: 130%
+      letter-spacing: -0.4px
+
+    svg
+      position: absolute
+      top: 10px
+      right: 10px

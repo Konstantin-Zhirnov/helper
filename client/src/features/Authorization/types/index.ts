@@ -1,15 +1,17 @@
 export type AuthorizationStateType = {
   isAuth: boolean
-  isLoginModal: boolean
+  isModal: ModalType
   loginErrorMessage: string
   registrationErrorMessage: string
   isRegistered: boolean
   sendEmailMessage: string
   sendEmailReason: SendEmailReasonType
-  changePasswordMessage: string
   message: string
   alertMessage: string
+  isMobileMenu: boolean
 }
+
+export type ModalType = 'login' | 'registration' | 'registration-final' | ''
 
 export type SendEmailReasonType = 'password' | 'activation' | ''
 

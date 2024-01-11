@@ -1,46 +1,39 @@
 import React from 'react'
-import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
+import cn from "classnames";
 
-import { LoginButton, useAppDispatch, useAppSelector } from '../../../../../shared'
+import { Modal, useAppDispatch, useAppSelector } from '../../../../../shared'
 
-import { getLoginModal, setLoginModal } from '../../../model/slice'
+import { getModal, setModal} from '../../../model/slice'
 import { LoginForm } from './LoginForm'
 
+import classes from './Login.module.sass'
+
 interface IProps {
-  isAuth: boolean
+  isMobile?: boolean
 }
 
-const Login: React.FC<IProps> = React.memo(({ isAuth }) => {
+const Login: React.FC<IProps> = React.memo((isMobile) => {
 
-  const finalRef = React.useRef(null)
   const dispatch = useAppDispatch()
-  const isOpen = useAppSelector(getLoginModal)
+  const isModal = useAppSelector(getModal)
 
   const onOpen = React.useCallback(() => {
-    dispatch(setLoginModal(true))
+    dispatch(setModal('login'))
+    document.body.style.overflow = 'hidden';
   }, [])
 
   const onClose = () => {
-    dispatch(setLoginModal(false))
+    dispatch(setModal(''))
+    document.body.style.overflow = 'auto';
   }
 
   return (
-    <>
-      <LoginButton onClick={onOpen} isAuth={isAuth} />
-
-      <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Log In</ModalHeader>
-          <ModalCloseButton />
-
-          <ModalBody>
-            <LoginForm />
-          </ModalBody>
-
-        </ModalContent>
-      </Modal>
-    </>
+      <>
+        <button onClick={onOpen} className={cn(classes.btn, {[classes.mobile]: isMobile})}>Log In</button>
+        {
+            isModal === 'login' && <Modal onClose={onClose} title="Log in"><LoginForm /></Modal>
+        }
+      </>
   )
 })
 

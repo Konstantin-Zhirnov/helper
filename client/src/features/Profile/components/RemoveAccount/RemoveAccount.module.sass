@@ -1,6 +1,8 @@
+@import "../../../../shared/constants/vars"
+
 .card
   width: 100%
-  margin: 0 1rem
+  padding-top: 2rem
 
   .cardHeader
     padding: 0.8rem 1.25rem 0
@@ -8,6 +10,12 @@
     .heading
       display: flex
       align-items: center
+      color: $primary-text
+      font-size: 1.62rem
+      font-style: normal
+      font-weight: 700
+      line-height: 130%
+      letter-spacing: -0.52px
 
       svg
         font-size: 32px
@@ -20,20 +28,44 @@
     align-items: center
     padding: 0.5rem 0.5rem 0.5rem 1.25rem
 
-    .remove
+    .text
+      color: $primary-text-color
+      font-size: 0.9rem
+      font-style: normal
+      font-weight: 500
+      letter-spacing: 0.16px
+
+
+    .btn
       cursor: inherit
-
+      height: 30px
+      border-radius: 12px
+      background: $primary-dark-color
+      display: inline-flex
+      padding: 2px 22px
+      justify-content: center
+      align-items: center
+      color: $white
+      text-decoration: none
+      font-weight: 600
+      line-height: normal
+      letter-spacing: -0.14px
+      margin-left: 1rem
+      font-size: 0.74rem
+      border: none
+      transition: background 400ms
       &:hover
-        background-color: #edf2f7
+        background: $primary-dark-color
+        transition: background 400ms
 
-      &.red
+      &.can
         cursor: pointer
-
-        svg
-          fill: red
-
+        background: $primary-text
+        color: $red
         &:hover
-          background-color: #E2E8F0
+          background: $primary-dark-color
+          transition: background 400ms
+
 
 @media only screen and (max-width: 640px)
   .card

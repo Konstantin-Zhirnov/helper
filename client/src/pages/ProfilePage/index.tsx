@@ -1,13 +1,12 @@
 import React from 'react'
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 
-import { Posts, ProfileInfo, Reviews } from '../../widgets'
+import { ProfileInfo, ProfileMenu } from '../../widgets'
 import {
   fetchPostsByUser,
   fetchReviewsByAuthor,
-  getAuth, getIsPostsByUser, getIsReviewsByAuthor,
-  getUser,
-  ProfileAvatar,
+  getActiveScreen,
+  getAuth,
+  getUser
 } from '../../features'
 import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
@@ -18,8 +17,8 @@ const ProfilePage: React.FC = React.memo(() => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(getUser)
   const isAuth = useAppSelector(getAuth)
-  const isPosts = useAppSelector(getIsPostsByUser)
-  const isReviews = useAppSelector(getIsReviewsByAuthor)
+
+  const activeItem = useAppSelector(getActiveScreen)
 
   React.useEffect(() => {
     if (user._id) {
@@ -32,31 +31,18 @@ const ProfilePage: React.FC = React.memo(() => {
   if (!isAuth) return <p className={classes.text}>You need to log in</p>
 
   return (
-    <Wrapper>
-      <ProfileAvatar />
+      <>
+        <Wrapper>
+          <h1 className={classes.title}>Settings</h1>
+          <div className={classes.divider}/>
+        </Wrapper>
+        <Wrapper classes={classes.wrapper}>
+          <ProfileMenu activeItem={activeItem}/>
 
-      <ProfileInfo canRemove={isPosts || isReviews}/>
+          <ProfileInfo activeItem={activeItem}/>
+        </Wrapper>
+      </>
 
-      {
-        (isPosts || isReviews) && (
-          <Tabs isFitted variant='enclosed'>
-            <TabList className={classes.tab_list}>
-              <Tab isDisabled={!isPosts} className={classes.tab}>Posts</Tab>
-              <Tab isDisabled={!isReviews} className={classes.tab}>Reviews</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel className={classes.tab_panel}>
-                {isPosts && <Posts reason='profile' />}
-              </TabPanel>
-              <TabPanel className={classes.tab_panel}>
-                <Reviews reason='user' />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        )
-      }
-
-    </Wrapper>
   )
 })
 

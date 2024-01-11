@@ -1,0 +1,44 @@
+@import "../../../../../shared/constants/vars"
+
+.container
+  position: relative
+  align-self: flex-end
+  margin: 2px 1.6rem
+
+  .view
+    display: flex
+    align-items: center
+    cursor: pointer
+    font-size: 0.84rem
+    color: $primary-dark-color
+    font-weight: 500
+    gap: 0.3rem
+
+    .arrow_icon
+      fill: $primary-dark-color
+      &.rotate
+        transform: rotate(180deg)
+
+  .ul
+    background: $white
+    margin: 0
+    padding: 0
+    overflow-y: auto
+    max-height: 0
+    list-style: none
+    position: absolute
+    top: 20px
+    right: 0
+    border-radius: 4px
+    &.open
+      max-height: 200px
+
+    .li
+      padding: 0.3rem 0.8rem
+      display: block
+      cursor: pointer
+      font-size: 0.8rem
+      transition: all 400ms
+      border-bottom: 1px solid $border-color
+      &:hover
+        background: $primary-color

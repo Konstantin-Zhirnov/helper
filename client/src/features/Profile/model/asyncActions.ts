@@ -5,6 +5,9 @@ import { setIsAuth } from '../../Authorization/model/slice'
 
 import { ProfileAPI } from '../api'
 import type { NewPasswordType, UpdateUserType } from '../types'
+import {CreatePaymentType} from "../types";
+import {ChangePasswordType} from "../../Authorization/types";
+import {AuthAPI} from "../../Authorization/api";
 
 
 export const fetchChangeAvatar = createAsyncThunk(
@@ -66,4 +69,34 @@ export const fetchRemoveUser = createAsyncThunk(
       }
     }
   },
+)
+
+export const fetchCreatePayment = createAsyncThunk(
+    'profile/fetchCreatePayment',
+    async function(body: CreatePaymentType, { rejectWithValue }) {
+        try {
+            return await ProfileAPI.createPayment(body)
+        } catch (error: unknown) {
+            if (error instanceof AxiosError) {
+                return rejectWithValue(error.response?.data.message)
+            } else {
+                return rejectWithValue(error)
+            }
+        }
+    },
+)
+
+export const fetchChangePassword = createAsyncThunk(
+    'profile/fetchChangePassword',
+    async function(body: ChangePasswordType, { rejectWithValue }) {
+        try {
+            return await ProfileAPI.changePassword(body)
+        } catch (error: unknown) {
+            if (error instanceof AxiosError) {
+                return rejectWithValue(error.response?.data.message)
+            } else {
+                return rejectWithValue(error)
+            }
+        }
+    },
 )

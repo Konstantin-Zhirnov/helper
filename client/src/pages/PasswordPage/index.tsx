@@ -1,7 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Heading } from '@chakra-ui/react'
 
 
 import { fetchUser, getChangePasswordMessage, PasswordChanging } from '../../features'
@@ -32,14 +31,14 @@ const PasswordPage: React.FC = () => {
 
   return (
     <Wrapper>
-      <Heading as='h1' size='lg' className={classes.title}>
+      <h1 className={classes.title}>
         Password changing
-      </Heading>
+      </h1>
 
       <PasswordChanging link={link} />
 
       {
-        changePasswordMessage && <p className={cn(classes.text, { [`${classes.red}`]: getClass() })}>
+        changePasswordMessage && <p className={cn(classes.text, {[classes.red]: getClass()})}>
           {changePasswordMessage}
         </p>
       }

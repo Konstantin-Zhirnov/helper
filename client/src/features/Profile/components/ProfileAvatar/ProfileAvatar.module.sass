@@ -3,20 +3,43 @@
 .container
   display: flex
   align-items: flex-end
-  padding: 3rem 1rem
+  width: 100%
+  gap: 2rem
+  margin-bottom: 2rem
+
+  .title
+    color: $primary-text
+    font-size: 1.62rem
+    font-style: normal
+    font-weight: 700
+    line-height: 130%
+    letter-spacing: -0.52px
+
+  .text
+    color: #7084A8
+    font-size: 0.8rem
+    margin-bottom: 1rem
 
   .input
     display: none
 
   label
-    margin-left: -20px
-    z-index: 1
+    height: 30px
+    border-radius: 12px
+    background: $primary-text
+    display: inline-flex
+    padding: 2px 22px
+    justify-content: center
+    align-items: center
+    color: $white
+    text-decoration: none
+    font-weight: 600
+    line-height: normal
+    letter-spacing: -0.14px
+    font-size: 0.74rem
+    border: none
     cursor: pointer
-
+    transition: background 400ms
     &:hover
-      .icon
-        fill: #343333
-
-  .icon
-    font-size: 32px
-    fill: black
+      background: $primary-dark-color
+      transition: background 400ms

@@ -1,6 +1,5 @@
 import React from 'react'
 import cn from 'classnames'
-import { Card, CardBody, CardHeader, Heading, IconButton } from '@chakra-ui/react'
 import { MdDelete, MdWarningAmber } from 'react-icons/md'
 
 
@@ -28,24 +27,21 @@ const RemoveAccount: React.FC<IProps> = React.memo(({ _id, canRemove }) => {
   }
 
   return (
-    <Card className={classes.card}>
-      <CardHeader className={classes.cardHeader}>
-        <Heading size='md' className={classes.heading}><MdWarningAmber /> Delete account:</Heading>
-      </CardHeader>
+    <div className={classes.card}>
+      <div className={classes.cardHeader}>
+        <h1 className={classes.heading}><MdWarningAmber /> Delete account:</h1>
+      </div>
 
-      <CardBody className={classes.cardBody}>
-        <p>You can delete your account if you have no active posts and reviews</p>
-        <IconButton
-          isRound={true}
-          variant='solid'
+      <div className={classes.cardBody}>
+        <p className={classes.text}>You can delete your account if you have no active posts and reviews</p>
+
+        <button
           aria-label='Remove post button'
-          fontSize='20px'
-          className={cn(classes.remove, { [`${classes.red}`]: canRemove })}
-          icon={<MdDelete />}
+          className={cn(classes.btn, {[classes.can]: canRemove})}
           onClick={removeAccount}
-        />
-      </CardBody>
-    </Card>)
+        ><MdDelete /></button>
+      </div>
+    </div>)
 })
 
 export { RemoveAccount }

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import {
-  fetchChangePassword,
   fetchConfirmation,
   fetchLogin,
   fetchLogout,
@@ -9,28 +8,28 @@ import {
   fetchSendEmail,
   fetchUser,
 } from './asyncActions'
-import { AuthorizationStateType, SendEmailReasonType } from '../types'
+import {AuthorizationStateType, ModalType, SendEmailReasonType} from '../types'
 import type { MessageResponseType, RootState, UserType } from '../../../shared'
 
 const initialState: AuthorizationStateType = {
   isAuth: false,
-  isLoginModal: false,
+  isModal: '',
   loginErrorMessage: '',
   registrationErrorMessage: '',
   isRegistered: false,
   sendEmailMessage: '',
   sendEmailReason: '',
-  changePasswordMessage: '',
   message: '',
   alertMessage: '',
+  isMobileMenu: false
 }
 
 export const authorization = createSlice({
   name: 'authorization',
   initialState,
   reducers: {
-    setLoginModal: (state, action: PayloadAction<boolean>) => {
-      state.isLoginModal = action.payload
+    setModal: (state, action: PayloadAction<ModalType>) => {
+      state.isModal = action.payload
     },
     clearSendEmail: (state) => {
       state.sendEmailReason = ''
@@ -38,7 +37,7 @@ export const authorization = createSlice({
     },
     goToSendEmailPage: (state, action: PayloadAction<SendEmailReasonType>) => {
       state.sendEmailReason = action.payload
-      state.isLoginModal = false
+      state.isModal = ''
     },
     setAlertAuthorizationMessage: (state, action: PayloadAction<string>) => {
       state.alertMessage = action.payload
@@ -46,14 +45,21 @@ export const authorization = createSlice({
     setIsAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload
     },
+    setMobileMenu: (state, action: PayloadAction<boolean>) => {
+      state.isMobileMenu = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchLogin.pending, pendingLogin)
       .addCase(fetchLogin.fulfilled, (state) => {
         state.loginErrorMessage = ''
-        state.isLoginModal = false
+        state.isModal = ''
+        document.body.style.overflow = 'auto'
         state.isAuth = true
+        if (state.isMobileMenu) {
+          state.isMobileMenu = false
+        }
       })
       .addCase(fetchLogin.rejected, (state, action) => {
         state.loginErrorMessage = (action.payload as string) ?? ''
@@ -62,6 +68,9 @@ export const authorization = createSlice({
       .addCase(fetchRegistration.pending, pendingRegistration)
       .addCase(fetchRegistration.fulfilled, (state) => {
         state.isRegistered = true
+        if (state.isMobileMenu) {
+          state.isMobileMenu = false
+        }
       })
       .addCase(fetchRegistration.rejected, (state, action) => {
         state.registrationErrorMessage = (action.payload as string) ?? ''
@@ -89,6 +98,9 @@ export const authorization = createSlice({
       .addCase(fetchLogout.pending, pending)
       .addCase(fetchLogout.fulfilled, (state) => {
         state.isAuth = false
+        if (state.isMobileMenu) {
+          state.isMobileMenu = false
+        }
       })
       .addCase(fetchLogout.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -101,14 +113,6 @@ export const authorization = createSlice({
       })
       .addCase(fetchSendEmail.rejected, (state, action) => {
         state.sendEmailMessage = (action.payload as string) ?? ''
-      })
-
-      .addCase(fetchChangePassword.pending, pendingChangePassword)
-      .addCase(fetchChangePassword.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
-        state.changePasswordMessage = action.payload.message
-      })
-      .addCase(fetchChangePassword.rejected, (state, action) => {
-        state.changePasswordMessage = (action.payload as string) ?? ''
       })
   },
 })
@@ -130,31 +134,28 @@ function pendingSendEmail(state: AuthorizationStateType) {
   state.sendEmailMessage = ''
 }
 
-function pendingChangePassword(state: AuthorizationStateType) {
-  state.changePasswordMessage = ''
-}
 
 
 export const {
-  setLoginModal,
+  setModal,
   clearSendEmail,
   goToSendEmailPage,
   setAlertAuthorizationMessage,
   setIsAuth,
+  setMobileMenu
 } = authorization.actions
 
 export const getAuth = (state: RootState): boolean => state.authorization.isAuth
 export const getLoginErrorMessage = (state: RootState): string => state.authorization.loginErrorMessage
-export const getLoginModal = (state: RootState): boolean => state.authorization.isLoginModal
+export const getModal = (state: RootState): ModalType => state.authorization.isModal
 export const getRegistered = (state: RootState): boolean => state.authorization.isRegistered
 export const getSendEmailReason = (state: RootState): SendEmailReasonType => state.authorization.sendEmailReason
 export const getSendEmailMessage = (state: RootState): string =>
   state.authorization.sendEmailMessage
-export const getChangePasswordMessage = (state: RootState): string =>
-  state.authorization.changePasswordMessage
 export const getRegistrationErrorMessage = (state: RootState): string =>
   state.authorization.registrationErrorMessage
 export const getAlertAuthorizationMessage = (state: RootState): string => state.authorization.alertMessage
+export const getMobileMenu = (state: RootState): boolean => state.authorization.isMobileMenu
 
 
 export default authorization.reducer

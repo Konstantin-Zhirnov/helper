@@ -10,6 +10,7 @@ import { useMessage } from '../lib/hooks/useMessage'
 import { useReload } from '../lib/hooks/useReload'
 
 import classes from './Footer.module.sass'
+import {NavLink} from "react-router-dom";
 
 
 const Footer: React.FC = React.memo(() => {
@@ -30,9 +31,11 @@ const Footer: React.FC = React.memo(() => {
   return (
     <footer className={classes.footer} ref={ref}>
       <Wrapper classes={classes.footer_height}>
-        <p>You can support the project using the email:
-          <span className={classes.email}> kostya.zhirnov@gmail.com</span>
-        </p>
+        <div className={classes.contact}>
+          <p>Development by <a href="https://kostya-zhirnov.vercel.app/" target="_blank">Kostya Zhirnov</a></p>
+          <p>Design by <a href="https://vovavindar.com/" target="_blank">Vova Vindar</a></p>
+        </div>
+        <p>Privacy Policy</p>
       </Wrapper>
     </footer>
   )

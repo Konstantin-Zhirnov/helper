@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Heading } from '@chakra-ui/react'
 
 import { fetchConfirmation, fetchUser, getIsActivated } from '../../features'
 import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
@@ -31,9 +30,9 @@ const ConfirmationPage: React.FC = () => {
 
   return (
     <Wrapper>
-      <Heading as='h1' size='lg' className={classes.title}>
+      <h1 className={classes.title}>
         Email Confirmation
-      </Heading>
+      </h1>
       {
         isActivated && <p className={classes.text}>Your account has been successfully activated!</p>
       }

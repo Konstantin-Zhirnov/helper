@@ -11,7 +11,6 @@ export const URL = {
   user: BaseURL + '/user',
   sendEmailForPassword: BaseURL + '/password',
   sendEmailForActivation: BaseURL + '/activation',
-  changePassword: BaseURL + '/change-password',
 }
 
 const $api = axios.create({ withCredentials: true })

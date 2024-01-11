@@ -1,0 +1,29 @@
+@import "../../../../../shared/constants/vars"
+
+.btn
+  display: flex
+  width: 150px
+  height: 70px
+  padding: 0 55px
+  justify-content: center
+  align-items: center
+  border-radius: 20px
+  background: $primary-text
+  border: none
+  cursor: pointer
+
+  color: $white
+  text-align: center
+  font-size: 1rem
+  font-style: normal
+  font-weight: 600
+  line-height: normal
+  letter-spacing: -0.16px
+  transition: background 400ms
+  &:hover
+    background: $primary-dark-color
+    transition: background 400ms
+
+  &.mobile
+    width: 100%
+    border-radius: 0 0 26px 26px

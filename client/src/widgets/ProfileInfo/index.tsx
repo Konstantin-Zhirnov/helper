@@ -1,96 +1,45 @@
 import React from 'react'
-import { Box, Card, CardBody, CardHeader, Heading, Text } from '@chakra-ui/react'
-import { FaSquareWhatsapp, FaTelegram } from 'react-icons/fa6'
 
-import {
-  EditablePasswordInput,
-  getIsPostsByUser,
-  getIsReviewsByAuthor,
-  getUserId,
-  NameField,
-  PhoneField,
-  RemoveAccount,
-  TelegramField,
-  WhatsAppField,
-} from '../../features'
+import {PasswordChanging, getIsPostsByUser, getIsReviewsByAuthor, getUserId, ProfileMenuType} from '../../features'
 import { useAppSelector } from '../../shared'
 
-import { getUserEmail } from '../../features/Profile/model/slice'
+import { AccountDetails } from "./AccountDetails";
+
+import {Reviews} from "../Reviews";
 
 import classes from './ProfileInfo.module.sass'
+import {ProfilePosts} from "./ProfilePosts";
 
 interface IProps {
-  canRemove: boolean
+    activeItem: ProfileMenuType
 }
 
-const ProfileInfo: React.FC<IProps> = React.memo(({canRemove}) => {
+const ProfileInfo: React.FC<IProps> = React.memo(({ activeItem }) => {
 
-  const _id = useAppSelector(getUserId)
-  const email = useAppSelector(getUserEmail)
+    const isPosts = useAppSelector(getIsPostsByUser)
+    const isReviews = useAppSelector(getIsReviewsByAuthor)
+    const _id = useAppSelector(getUserId)
 
+    const getTitle = () => {
+        if (activeItem === 'Profile') return 'Account details'
+        if (activeItem === 'Password') return 'Password changing'
+        if (activeItem === 'Posts') return 'The posts you have published'
+        if (activeItem === 'Reviews') return 'The reviews that you have published'
+    }
+
+    const getContent = () => {
+        if (activeItem === 'Profile') return <AccountDetails canRemove={!isPosts && !isReviews} />
+        if (activeItem === 'Password') return <PasswordChanging _id={_id} />
+        if (activeItem === 'Posts') return <ProfilePosts />
+        if (activeItem === 'Reviews') return <Reviews reason='user' />
+    }
 
   return (
-    <div className={classes.container}>
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <Heading size='md'>Name:</Heading>
-        </CardHeader>
-        <CardBody className={classes.cardBody}>
-          <NameField _id={_id} />
-        </CardBody>
-      </Card>
-
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <Heading size='md'>Email:</Heading>
-        </CardHeader>
-        <CardBody className={classes.cardBody_email}>
-          <Box>
-            <Text fontSize='lg'>{email}</Text>
-          </Box>
-        </CardBody>
-      </Card>
-
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <Heading size='md'>Password:</Heading>
-        </CardHeader>
-        <CardBody className={classes.cardBody}>
-          <Box>
-            <EditablePasswordInput _id={_id} />
-          </Box>
-        </CardBody>
-      </Card>
-
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <Heading size='md'>Phone:</Heading>
-        </CardHeader>
-        <CardBody className={classes.cardBody}>
-          <PhoneField _id={_id} />
-        </CardBody>
-      </Card>
-
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <Heading size='md' className={classes.heading}><FaSquareWhatsapp
-            className={classes.whatsapp} />WhatsApp:</Heading>
-        </CardHeader>
-        <CardBody className={classes.cardBody}>
-          <WhatsAppField _id={_id} />
-        </CardBody>
-      </Card>
-
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <Heading size='md' className={classes.heading}><FaTelegram className={classes.telegram} /> Telegram:</Heading>
-        </CardHeader>
-        <CardBody className={classes.cardBody}>
-          <TelegramField _id={_id} />
-        </CardBody>
-      </Card>
-
-      <RemoveAccount _id={_id} canRemove={canRemove} />
+    <div className={classes.wrapper}>
+      <h2 className={classes.title}>{getTitle()}</h2>
+        <div className={classes.container}>
+            {getContent()}
+        </div>
     </div>
   )
 })

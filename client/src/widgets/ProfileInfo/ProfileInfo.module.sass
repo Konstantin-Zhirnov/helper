@@ -1,43 +1,20 @@
-.container
-  display: flex
-  flex-wrap: wrap
-  justify-content: space-evenly
-  gap: 1rem
-  margin-bottom: 5rem
+@import "../../shared/constants/vars"
 
-  .card
-    width: 47%
+.wrapper
+  flex: 1
+  .title
+    height: 30px
+    margin-bottom: 1rem
+    color: $primary-text
+    font-size: 1.4rem
+    font-style: normal
+    font-weight: 700
+    line-height: 130%
+    letter-spacing: -0.45px
+  .container
+    background: $white
+    border-radius: 4px
+    padding: 2rem
 
-    .cardHeader
-      padding: 0.8rem 1.25rem 0
-
-    .heading
-      display: flex
-      align-items: center
-
-      svg
-        font-size: 32px
-        margin-right: 0.7rem
-
-      .telegram
-        fill: #328fec
-
-      .whatsapp
-        fill: #25d366
-
-      .viber
-        font-size: 30px
-        background: #593ebc
-        fill: white
-        padding: 4px
-        border-radius: 4px
-
-    .cardBody
-      padding: 0.6rem 1.25rem
-
-    .cardBody_email
-      padding: 1.5rem 1.25rem 0.6rem
-
-@media only screen and (max-width: 640px)
-  .container .card
-    width: 100%
+    input[type="password"]
+      width: 50%!important

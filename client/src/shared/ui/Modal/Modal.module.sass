@@ -1,0 +1,51 @@
+@import '../../constants/vars'
+
+.container
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  background-color: #d8e2f1db
+  display: flex
+  z-index: 200
+  
+  .content
+    max-width: 90%
+    margin: auto
+    position: relative
+    box-shadow: $box-shadow
+    background: transparent
+    border-radius: 22px
+
+    .header
+      background: $primary-color
+      border-radius: 22px 22px 0 0
+      padding: 14px 24px
+      color: $primary-text
+      font-size: 1rem
+      font-style: normal
+      font-weight: 600
+      line-height: normal
+      letter-spacing: -0.16px
+
+    .btn
+      position: absolute
+      top: 8px
+      right: 8px
+      border-radius: 50%
+      border: 0
+      cursor: pointer
+      width: 20px
+      height: 20px
+      background-color: $primary-text
+      display: flex
+      justify-content: center
+      align-items: center
+      color: $white
+      transition: color 0.4s
+      padding: 0
+      z-index: 100
+      &:hover
+        background-color: $primary-dark-color
+        transition: color 0.4s

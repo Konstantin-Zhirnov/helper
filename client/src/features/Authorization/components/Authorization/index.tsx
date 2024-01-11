@@ -1,12 +1,13 @@
 import React from 'react'
 
-import { useAppSelector } from '../../../../shared'
+import {Avatar, useAppSelector} from '../../../../shared'
 
 import { getAuth } from '../../model/slice'
-import { AvatarButton } from './AvatarButton'
-import { Logout } from './Logout'
-import { Login } from './Login'
 
+import { Login } from './Login'
+import { SignUp } from './SignUp'
+import { User } from "./User";
+import { UserMobile } from "./UserMobile";
 
 import classes from './Authorization.module.sass'
 
@@ -14,26 +15,35 @@ interface IProps {
   photo: string
   name: string
   isReload: boolean
+  isMobile?: boolean
 }
 
-const Authorization: React.FC<IProps> = React.memo(({ photo, name, isReload }) => {
+const Authorization: React.FC<IProps> = React.memo(({photo, name, isReload, isMobile}) => {
 
   const isAuth = useAppSelector(getAuth)
 
-  const [_, setReload] = React.useState(false)
+  const getDesktopVersion = () => {
+    return !isAuth
+        ? <><Login /><SignUp/></>
+        : <><Avatar photo={photo} isReload={isReload} size='sm'/><User name={name} /></>
+  }
 
-  React.useEffect(() => {
-    setReload(isReload)
-  }, [isReload])
+  const getMobileVersion = () => {
+    return !isAuth
+        ? <div className={classes.container}><Login isMobile={isMobile}/><SignUp isMobile={isMobile}/></div>
+        : (
+            <div className={classes.container}>
+              <div className={classes.avatar}>
+                <Avatar photo={photo} isReload={isReload} size='sm'/>{name}
+              </div>
 
-  return !isAuth
-    ? <Login isAuth={isAuth} />
-    : (
-      <div className={classes.container}>
-        <AvatarButton link='profile' src={`${photo}?${new Date().getTime()}`} name={name} />
-        <Logout isAuth={isAuth} />
-      </div>
-    )
+              <UserMobile/>
+            </div>
+        )
+  }
+
+
+  return isMobile ? getMobileVersion() : getDesktopVersion()
 })
 
 export { Authorization }

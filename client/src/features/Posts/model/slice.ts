@@ -21,12 +21,16 @@ const initialState: PostsStateType = {
   location: '',
   locations: [],
   search: '',
+  category: '',
   page: 1,
   count: 0,
   pages: 0,
-  isModal: false,
+  isModal: '',
   message: '',
   alertMessage: '',
+  searchComponentLocation: '',
+  searchComponentSearch: '',
+  isMainSearch: false,
 }
 
 export const posts = createSlice({
@@ -37,7 +41,7 @@ export const posts = createSlice({
       state.location = action.payload
       state.page = 1
     },
-    setModal: (state, action: PayloadAction<boolean>) => {
+    setModal: (state, action: PayloadAction<string>) => {
       state.isModal = action.payload
     },
     setAlertPostsMessage: (state, action: PayloadAction<string>) => {
@@ -52,9 +56,36 @@ export const posts = createSlice({
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload
     },
+    setCategory: (state, action: PayloadAction<string>) => {
+      if (state.category === action.payload) {
+        state.category = ''
+      } else {
+        state.category = action.payload
+      }
+    },
     clearPages: (state) => {
       state.posts = []
       state.page = 1
+    },
+    setSearchComponentLocation: (state, action: PayloadAction<string>) => {
+      state.searchComponentLocation = action.payload
+    },
+    setSearchComponentSearch: (state, action: PayloadAction<string>) => {
+      state.searchComponentSearch = action.payload
+    },
+    setDataForSearch: (state) => {
+      if (state.search !== state.searchComponentSearch) {
+        state.search = state.searchComponentSearch
+      }
+      if (state.searchComponentLocation && state.location !== state.searchComponentLocation) {
+        state.location = state.searchComponentLocation
+        localStorage.setItem('location', state.searchComponentLocation)
+      }
+      state.page = 1
+      state.isMainSearch = true
+    },
+    setMainSearch: (state, action: PayloadAction<boolean>) => {
+      state.isMainSearch = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -86,7 +117,7 @@ export const posts = createSlice({
         if (action.payload.location === state.location) {
           state.posts.unshift(action.payload)
         }
-        state.isModal = false
+        state.isModal = ''
       })
       .addCase(fetchAddPost.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -173,7 +204,20 @@ function pending(state: PostsStateType) {
 }
 
 
-export const { setLocation, setModal, setAlertPostsMessage, setMessage, setPage, setSearch, clearPages } = posts.actions
+export const {
+  setLocation,
+  setModal,
+  setAlertPostsMessage,
+  setMessage,
+  setPage,
+  setSearch,
+  clearPages,
+  setDataForSearch,
+  setSearchComponentLocation,
+  setSearchComponentSearch,
+  setMainSearch,
+  setCategory
+} = posts.actions
 
 export const getPosts = (state: RootState): PostType[] => state.posts.posts
 export const getPostsByUser = (state: RootState): PostType[] => state.posts.postsByUser
@@ -182,10 +226,13 @@ export const getPages = (state: RootState): number => state.posts.pages
 export const getSearch = (state: RootState): string => state.posts.search
 export const getLocation = (state: RootState): string => state.posts.location
 export const getLocations = (state: RootState): LocationsType => state.posts.locations
-export const getModal = (state: RootState): boolean => state.posts.isModal
+export const getModal = (state: RootState): string => state.posts.isModal
 export const getMessage = (state: RootState): string => state.posts.message
 export const getAlertPostsMessage = (state: RootState): string => state.posts.alertMessage
 export const getIsPostsByUser = (state: RootState): boolean => Boolean(state.posts.postsByUser.length)
+export const getSearchComponentSearch = (state: RootState): string => state.posts.searchComponentSearch
+export const getMainSearch = (state: RootState): boolean => state.posts.isMainSearch
+export const getCategory = (state: RootState): string => state.posts.category
 
 
 export default posts.reducer

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Avatar } from '@chakra-ui/react'
 
 import { Stars, useAppDispatch, useAppSelector } from '../../../../shared'
 
@@ -25,7 +24,7 @@ const UserInfo: React.FC<IProps> = React.memo(({ id }) => {
   return (
     <div className={classes.container}>
         <span>
-           <Avatar size='lg' name={user.name} src={user.photo} />
+           <img src={user.photo} alt='user'/>
           <p>{user.name}</p>
           <Stars stars={user.stars} countReviews={user.countReviews} />
         </span>

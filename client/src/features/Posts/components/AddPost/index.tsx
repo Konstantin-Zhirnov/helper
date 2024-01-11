@@ -4,22 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import { ErrorMessage } from '@hookform/error-message'
 import cn from 'classnames'
 import * as yup from 'yup'
-import {
-  Button,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Textarea,
-} from '@chakra-ui/react'
-
 
 import { AddImages } from '../../../../entities'
-import { AddButton, useAppDispatch, useAppSelector } from '../../../../shared'
+import {AddButton, Modal, useAppDispatch, useAppSelector, categories, Select} from '../../../../shared'
 
 import { getMessage, getModal, setAlertPostsMessage, setMessage, setModal } from '../../model/slice'
 import { fetchAddPost } from '../../model/asyncActions'
@@ -42,14 +29,23 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
 
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
+  const [category, setCategory] = React.useState(categories[0])
+
+  const handleChange = (value) => {
+    if (value !== category) {
+      setCategory(value)
+    }
+  }
 
 
   const onOpen = React.useCallback(() => {
-    dispatch(setModal(true))
+    dispatch(setModal('post'))
+    document.body.style.overflow = 'hidden';
   }, [])
 
   const onClose = () => {
-    dispatch(setModal(false))
+    dispatch(setModal(''))
+    document.body.style.overflow = 'auto';
   }
 
   const schema = yup
@@ -78,6 +74,7 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
       formData.append('description', data.description)
       formData.append('location', data.location)
       formData.append('authorId', authorId)
+      formData.append('category', category)
       await images.forEach(image => {
         formData.append('images', image.image, image.name)
       })
@@ -99,43 +96,44 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   return (
     <>
       <AddButton onOpen={onOpen} />
-
-      <Modal isOpen={isModal} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <form onSubmit={handleSubmit(onSubmit)} id='myForm'>
-            <ModalHeader className={classes.header}>Add a post</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody className={classes.container}>
-              <span className={classes.input_container}>
-                <label htmlFor='location'>Location:</label>
-                <Input id='location' size='sm' {...register('location')} autoComplete='off' />
+      {
+        isModal === 'post' && (
+          <Modal onClose={onClose} title="Add a post">
+            <form onSubmit={handleSubmit(onSubmit)} id='myForm' className={classes.container}>
+              <div className={classes.input_container}>
+                <label htmlFor='location' className={classes.input_label}>Location:</label>
+                <input id='location' {...register('location')} autoComplete='off' className={classes.input}/>
                 <ErrorMessage
                   errors={errors as any}
                   name='location'
                   render={({ message }) => <p className={classes.error}>{message}</p>}
                 />
-              </span>
+              </div>
 
-              <span className={classes.input_container}>
-                <label htmlFor='title'>Title:</label>
-                <Input id='title' size='sm' {...register('title')} autoComplete='off' />
+              <div className={classes.input_container}>
+                <label className={classes.input_label}>Category:</label>
+                <Select options={categories} defaultValue={categories[0]} cb={handleChange} category/>
+              </div>
+
+              <div className={classes.input_container}>
+                <label htmlFor='title' className={classes.input_label}>Title:</label>
+                <input id='title' {...register('title')} autoComplete='off' className={classes.input}/>
                 <ErrorMessage
                   errors={errors as any}
                   name='title'
                   render={({ message }) => <p className={classes.error}>{message}</p>}
                 />
-              </span>
+              </div>
 
-              <span className={classes.input_container}>
-                <label htmlFor='description'>Description:</label>
-                <Textarea id='description' {...register('description')} />
+              <div className={classes.input_container}>
+                <label htmlFor='description' className={classes.input_label}>Description:</label>
+                <textarea id='description' {...register('description')} className={cn(classes.input, classes.text)}/>
                 <ErrorMessage
                   errors={errors as any}
                   name='description'
                   render={({ message }) => <p className={classes.error}>{message}</p>}
                 />
-              </span>
+              </div>
 
               <AddImages
                 currentImages={currentImages}
@@ -148,17 +146,15 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
                 setAlertMessage={onAlertMessage}
               />
 
-            </ModalBody>
-
-            <ModalFooter>
-              <Button type='submit'
+              <button type='submit'
                       className={cn(classes.submit, { [classes.disabled]: currentImages.length !== images.length })}>
                 Submit
-              </Button>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
+              </button>
+
+            </form>
+          </Modal>
+        )
+      }
     </>
   )
 })

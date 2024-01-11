@@ -4,12 +4,16 @@ export type PostsStateType = {
   location: string
   locations: LocationsType
   search: string
+  category: string
   page: number
   count: number
   pages: number
-  isModal: boolean
+  isModal: string
   alertMessage: string
   message: string
+  searchComponentLocation: string
+  searchComponentSearch: string
+  isMainSearch: boolean
 }
 
 

@@ -2,22 +2,18 @@
 @import "../../../../../../shared/constants/vars"
 
 .container
+  max-width: 100%
+  width: 300px
+  background: $white
   display: flex
   flex-direction: column
-  max-width: 400px
-  margin: auto
-
-  .input_container
-    position: relative
-    padding-bottom: 1.6rem
-
-    .error
-      position: absolute
-      color: $red
+  padding: 1rem
+  border-radius: 0 0 22px 22px
 
   .link
-    color: $primary-color
+    color: $primary-dark-color
     text-decoration: underline
+    font-size: 0.7rem
 
   .serverError
     color: $red
@@ -32,12 +28,6 @@
 
   .visible
     visibility: visible
-
-  button.btn
-    @include link-btn
-    margin: 1.5rem 0
-    &:hover
-      @include link-btn-hover
 
   .mb05
     margin-bottom: 0.5rem

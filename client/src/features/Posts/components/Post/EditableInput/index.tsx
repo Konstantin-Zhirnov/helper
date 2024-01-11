@@ -1,6 +1,5 @@
 import React from 'react'
 import cn from 'classnames'
-import { ButtonGroup, IconButton, Input, Text, Textarea } from '@chakra-ui/react'
 import { MdClear, MdCreate, MdDone } from 'react-icons/md'
 import { BsGeoAltFill } from 'react-icons/bs'
 
@@ -52,33 +51,33 @@ const EditableInput: React.FC<IProps> = ({ _id, defaultValue, field }) => {
 
         {
           field === 'description'
-            ? <Textarea onChange={handleChange} value={value} autoFocus />
-            : <Input onChange={handleChange} size='sm' value={value} autoComplete='off' autoFocus />
+            ? <textarea onChange={handleChange} value={value} autoFocus />
+            : <input onChange={handleChange} value={value} autoComplete='off' autoFocus />
         }
 
-        <ButtonGroup justifyContent='center' size='sm'>
-          <IconButton size='sm' icon={<MdDone />} onClick={handleDoneClick} aria-label='button done'
-                      className={classes.blue} />
-          <IconButton size='sm' icon={<MdClear />} onClick={close} aria-label='button close' className={classes.red} />
-        </ButtonGroup>
+        <div>
+          <button onClick={handleDoneClick} aria-label='button done'
+                  className={classes.blue} ><MdDone /></button>
+          <button onClick={close} aria-label='button close' className={classes.red} ><MdClear /></button>
+        </div>
       </div>
     )
   }
 
   const getText = () => {
     return (
-      <div className={cn(classes.textContainer, { [`${classes.textContainer_location}`]: field === 'location' })}>
+      <div className={cn(classes.textContainer, { [classes.textContainer_location]: field === 'location' })}>
         {
-          field === 'title' && <Text fontSize='lg' className={classes.title}>{value}</Text>
+          field === 'title' && <p className={classes.title}>{value}</p>
         }
         {
-          field === 'description' && <Text fontSize='md'>{value}</Text>
+          field === 'description' && <p>{value}</p>
         }
         {
-          field === 'location' && <Text className={classes.location}><BsGeoAltFill />{value}</Text>
+          field === 'location' && <p className={classes.location}><BsGeoAltFill />{value}</p>
         }
 
-        <IconButton size='sm' icon={<MdCreate />} onClick={open} aria-label='button create' className={classes.blue} />
+        <button onClick={open} aria-label='button create' className={classes.blue} ><MdCreate /></button>
       </div>
     )
   }

@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { fetchChangeAvatar, fetchNewPassword, fetchRemoveUser, fetchUpdateUser } from './asyncActions'
-import { ProfileStateType } from '../types'
+import {fetchChangeAvatar, fetchCreatePayment, fetchNewPassword, fetchRemoveUser, fetchUpdateUser, fetchChangePassword} from './asyncActions'
+import {ProfileMenuType, ProfileStateType} from '../types'
 
 import type { RootState, UserType } from '../../../shared'
+import {MessageResponseType} from "../../../shared";
+
 
 const initialState: ProfileStateType = {
   user: {
@@ -24,7 +26,9 @@ const initialState: ProfileStateType = {
     paid: false,
     paidTime: '',
   },
+  activeScreen: 'Profile',
   isReload: false,
+  changePasswordMessage: '',
   alertMessage: '',
   message: '',
 }
@@ -44,6 +48,9 @@ export const profile = createSlice({
     },
     setIsReload: (state, action: PayloadAction<boolean>) => {
       state.isReload = action.payload
+    },
+    setActiveScreen: (state, action: PayloadAction<ProfileMenuType>) => {
+      state.activeScreen = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -81,6 +88,22 @@ export const profile = createSlice({
       .addCase(fetchRemoveUser.rejected, (state, action) => {
         state.alertMessage = (action.payload as string) ?? ''
       })
+
+      .addCase(fetchCreatePayment.pending, pendingNewPassword)
+      .addCase(fetchCreatePayment.fulfilled, (state, action) => {
+        state.message = action.payload.client_secret
+      })
+      .addCase(fetchCreatePayment.rejected, (state, action) => {
+        state.message = (action.payload as string) ?? ''
+      })
+
+      .addCase(fetchChangePassword.pending, pendingChangePassword)
+      .addCase(fetchChangePassword.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
+        state.changePasswordMessage = action.payload.message
+      })
+      .addCase(fetchChangePassword.rejected, (state, action) => {
+        state.changePasswordMessage = (action.payload as string) ?? ''
+      })
   },
 })
 
@@ -92,12 +115,17 @@ function pendingNewPassword(state: ProfileStateType) {
   state.alertMessage = ''
 }
 
+function pendingChangePassword(state: ProfileStateType) {
+  state.changePasswordMessage = ''
+}
+
 
 export const {
   setUser,
   setIsActivated,
   setAlertProfileMessage,
   setIsReload,
+  setActiveScreen
 } = profile.actions
 
 
@@ -111,6 +139,10 @@ export const getUserId = (state: RootState): string => state.profile.user._id
 export const getUserWhatsApp = (state: RootState): string => state.profile.user.whatsapp
 export const getAlertProfileMessage = (state: RootState): string => state.profile.alertMessage
 export const getIsReload = (state: RootState): boolean => state.profile.isReload
+export const getActiveScreen = (state: RootState): ProfileMenuType => state.profile.activeScreen
+export const getChangePasswordMessage = (state: RootState): string =>
+    state.profile.changePasswordMessage
+
 
 
 export default profile.reducer

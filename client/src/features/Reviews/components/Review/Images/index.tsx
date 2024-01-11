@@ -1,6 +1,5 @@
 import React from 'react'
 import cn from 'classnames'
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box } from '@chakra-ui/react'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import { MdOutlineRotate90DegreesCw, MdZoomIn, MdZoomOut } from 'react-icons/md'
 import { ImImages } from 'react-icons/im'
@@ -17,15 +16,14 @@ interface IProps {
 const Images: React.FC<IProps> = React.memo(({ imagesSrcArray }) => {
 
   return (
-    <Accordion allowMultiple>
-      <AccordionItem>
-        <AccordionButton>
-          <Box as='span' className={classes.accordionButton}>
+    <div>
+      <div>
+        <div>
+
             <ImImages />Images
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-        <AccordionPanel pb={4} className={classes.container}>
+
+        </div>
+        <div className={classes.container}>
           <PhotoProvider
             speed={() => 800}
             easing={(type) => (type === 2 ? 'cubic-bezier(0.36, 0, 0.66, -0.56)' : 'cubic-bezier(0.34, 1.56, 0.64, 1)')}
@@ -54,9 +52,9 @@ const Images: React.FC<IProps> = React.memo(({ imagesSrcArray }) => {
             ))}
 
           </PhotoProvider>
-        </AccordionPanel>
-      </AccordionItem>
-    </Accordion>
+        </div>
+      </div>
+    </div>
   )
 })
 

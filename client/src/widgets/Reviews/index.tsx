@@ -1,7 +1,6 @@
 import React from 'react'
 
 import {getReviews, getReviewsByAuthor, ReasonReviewType, Review, ReviewType} from '../../features'
-import {ReviewSkeletons} from "../../entities";
 import {useAppSelector} from "../../shared";
 
 import classes from './Reviews.module.sass'
@@ -33,10 +32,6 @@ const Reviews: React.FC<IProps> = React.memo(({ reason }) => {
       reason={reason}
     />
   )
-
-  if (reason === 'all' && !reviews.length) {
-    return <ReviewSkeletons />
-  }
 
   return (
     <ul className={classes.cards}>

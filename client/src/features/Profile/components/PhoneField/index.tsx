@@ -1,5 +1,4 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react'
 
 import { EditableInput } from '../../../../entities'
 import { useAppDispatch, useAppSelector } from '../../../../shared'
@@ -24,10 +23,7 @@ const PhoneField: React.FC<IProps> = React.memo(({ _id }) => {
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])
 
-  return (
-    <Box>
-      <EditableInput defaultValue={phone} cb={memoizedCB} isPhone />
-    </Box>)
+  return <EditableInput defaultValue={phone} cb={memoizedCB} isPhone label='Phone'/>
 })
 
 export { PhoneField }

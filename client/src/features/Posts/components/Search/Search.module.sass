@@ -1,30 +1,30 @@
 @import "../../../../shared/constants/vars"
 
-div.input_group
-  width: 30%
-  margin: auto
+.divider
+  width: 2px
+  height: 18px
+  background: $white
+  margin: 0 1.6rem
 
-  &.mobile
-    width: 100%
+div.input_group
+  background: white
+  border-radius: 12px
+  display: flex
+  align-items: center
+  padding: 4px 10px
+  margin-left: auto
+  height: 30px
+  gap: 6px
+
+  svg
+    fill: #7084A8
 
   input.input
-    color: initial
-    background-color: $white
+    border: none
+    width: 100px
+    &:focus-visible
+      outline: none
+    &::placeholder
+      color: #7084A8
+      font-size: 0.64rem
 
-  .input_right_el
-    width: 32px
-    height: 32px
-    padding: 2px
-
-    button
-      display: flex
-      justify-content: center
-      align-items: center
-      padding: 0
-      width: 30px
-      height: 30px
-      border-radius: 0
-
-      svg
-        font-size: 17px
-        fill: darkslategray

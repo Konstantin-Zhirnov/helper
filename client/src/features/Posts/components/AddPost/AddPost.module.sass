@@ -1,35 +1,56 @@
 @import "../../../../shared/constants/mixins"
 @import "../../../../shared/constants/vars"
 
-.header
-  text-align: center
-  font-size: 1.6rem
-
 .container
+  max-width: 100%
+  width: 300px
+  background: $white
   display: flex
   flex-direction: column
+  padding: 1rem
+  border-radius: 0 0 22px 22px
+  overflow-y: auto
+  max-height: 85vh
+
+  .header
+    text-align: center
+    font-size: 1.6rem
 
   .input_container
     position: relative
-    padding-bottom: 1.6rem
+    padding-bottom: 1.2rem
+
+    .input_label
+      font-size: 0.8rem
+      color: $primary-dark-color
+      display: block
+
+    .input
+      width: 100%
+      border: 1px solid $primary-color
+      border-radius: 4px
+      margin-top: 2px
+      height: 36px
+      padding: 2px 4px
+      &:focus-visible
+        outline: 1px solid $primary-color
+      &.text
+        height: 50px
 
     .error
       position: absolute
       color: $red
-
-    circle
-      fill: $primary-color
-
-    &:hover
-      filter: drop-shadow(0 0 2px silver)
+      font-size: 0.7rem
 
 button.submit
   @include link-btn
+  margin-top: 1rem
+  transition: background 400ms
+  &:hover
+    background: #cfd7e5
+    transition: background 400ms
 
   &.disabled, &.disabled:hover
     cursor: initial
     background-color: #7fb4e8
     box-shadow: none
-
-  &:hover
-    @include link-btn-hover

@@ -1,0 +1,30 @@
+@import "../../constants/mixins"
+@import "../../constants/vars"
+
+
+.input_container
+  position: relative
+  padding-bottom: 1.2rem
+
+  .input_label
+    font-size: 0.8rem
+    color: $primary-dark-color
+    display: block
+
+  .input
+    width: 100%
+    border: 1px solid $primary-color
+    border-radius: 4px
+    margin-top: 2px
+    height: 36px
+    padding: 2px 4px
+    &:focus-visible
+      outline: 1px solid $primary-color
+
+  .error
+    position: absolute
+    color: $red
+    font-size: 0.7rem
+
+
+

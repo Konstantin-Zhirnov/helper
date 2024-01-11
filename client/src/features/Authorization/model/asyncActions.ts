@@ -102,18 +102,3 @@ export const fetchSendEmail = createAsyncThunk(
     }
   },
 )
-
-export const fetchChangePassword = createAsyncThunk(
-  'authorization/fetchChangePassword',
-  async function(body: ChangePasswordType, { rejectWithValue }) {
-    try {
-      return await AuthAPI.changePassword(body)
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data.message)
-      } else {
-        return rejectWithValue(error)
-      }
-    }
-  },
-)

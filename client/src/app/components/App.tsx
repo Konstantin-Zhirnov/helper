@@ -4,12 +4,12 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Layout from './Layout'
 
 const PostsPage = lazy(() => import('../../pages/PostsPage'))
-const RegistrationPage = lazy(() => import('../../pages/RegistrationPage'))
 const ConfirmationPage = lazy(() => import('../../pages/ConfirmationPage'))
 const SendEmailPage = lazy(() => import('../../pages/SendEmailPage'))
 const PasswordPage = lazy(() => import('../../pages/PasswordPage'))
 const ProfilePage = lazy(() => import('../../pages/ProfilePage'))
 const ReviewsPage = lazy(() => import('../../pages/ReviewsPage'))
+const PaymentPage = lazy(() => import('../../pages/PaymentPage'))
 
 
 const App = () => {
@@ -17,12 +17,12 @@ const App = () => {
     createRoutesFromElements(
       <Route path='/' element={<Layout />}>
         <Route index element={<PostsPage />} />
-        <Route path='/registration' element={<RegistrationPage />} />
         <Route path='/confirmation/:link' element={<ConfirmationPage />} />
         <Route path='/password/:link' element={<PasswordPage />} />
         <Route path='/send-email' element={<SendEmailPage />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/reviews/:id' element={<ReviewsPage />} />
+        <Route path='/payment' element={<PaymentPage />} />
       </Route>,
     ),
   )

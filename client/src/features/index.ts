@@ -1,22 +1,27 @@
+import { renderPostItem } from './lib/helpers'
+export { renderPostItem }
+
 // Authorization
 import {
   clearSendEmail,
   getAlertAuthorizationMessage,
   getAuth,
-  getChangePasswordMessage,
   getRegistered,
   getRegistrationErrorMessage,
   getSendEmailMessage,
   getSendEmailReason,
   setAlertAuthorizationMessage,
   setIsAuth,
+  getMobileMenu,
+  setMobileMenu,
 } from './Authorization/model/slice'
 import { fetchConfirmation, fetchSendEmail, fetchUser } from './Authorization/model/asyncActions'
 import { LoginForm } from './Authorization/components/Authorization/Login/LoginForm'
-import { RegistrationForm } from './Authorization/components/RegistrationForm'
-import { PasswordChanging } from './Authorization/components/PasswordChanging'
+import { RegistrationForm } from './Authorization/components/Authorization/SignUp/RegistrationForm'
 import { Authorization } from './Authorization/components/Authorization'
 import { SendToEmail } from './Authorization/components/SendToEmail'
+import { MobileMenuButton } from './Authorization/components/MobileMenuButton'
+import { SignUp } from './Authorization/components/Authorization/SignUp'
 import { EmailType } from './Authorization/types'
 
 // Profile
@@ -31,14 +36,20 @@ import {
   setIsActivated,
   setIsReload,
   setUser,
+  getActiveScreen,
+  setActiveScreen,
+  getChangePasswordMessage,
 } from './Profile/model/slice'
-import { EditablePasswordInput } from './Profile/components/EditablePasswordInput'
+import { PasswordChanging } from './Profile/components/PasswordChanging'
 import { ProfileAvatar } from './Profile/components/ProfileAvatar'
 import { NameField } from './Profile/components/NameField'
 import { PhoneField } from './Profile/components/PhoneField'
 import { WhatsAppField } from './Profile/components/WhatsAppField'
 import { TelegramField } from './Profile/components/TelegramField'
 import { RemoveAccount } from './Profile/components/RemoveAccount'
+import { PaymentForm } from './Profile/components/PaymentForm'
+import { ProfileMenuItem } from './Profile/components/ProfileMenuItem'
+import { ProfileMenuType } from './Profile/types'
 
 // Posts
 import {
@@ -60,6 +71,8 @@ import { Location } from './Posts/components/Location'
 import { AddPost } from './Posts/components/AddPost'
 import { Post } from './Posts/components/Post'
 import { Search } from './Posts/components/Search'
+import { SearchComponent } from './Posts/components/SearchComponent'
+import { Category } from './Posts/components/Category'
 import { PostType, ReasonType } from './Posts/types'
 
 // Reviews
@@ -84,16 +97,17 @@ export {
   clearSendEmail,
   getAlertAuthorizationMessage,
   getAuth,
-  getChangePasswordMessage,
   getRegistered,
   getRegistrationErrorMessage,
   getSendEmailMessage,
   getSendEmailReason,
   setAlertAuthorizationMessage,
   setIsAuth,
+  getMobileMenu,
+  setMobileMenu,
 }
 export { fetchConfirmation, fetchSendEmail, fetchUser }
-export { Authorization, LoginForm, RegistrationForm, SendToEmail, PasswordChanging }
+export { Authorization, LoginForm, RegistrationForm, SendToEmail, MobileMenuButton, SignUp }
 export type { EmailType }
 
 // Profile
@@ -106,9 +120,24 @@ export {
   setIsActivated,
   setUser,
   setIsReload,
-  getUserName, getUserPhoto,
+  getUserName,
+  getUserPhoto,
+  getActiveScreen,
+  setActiveScreen,
+  getChangePasswordMessage,
 }
-export { ProfileAvatar, EditablePasswordInput, NameField, PhoneField, WhatsAppField, TelegramField, RemoveAccount }
+export {
+  ProfileAvatar,
+  PasswordChanging,
+  NameField,
+  PhoneField,
+  WhatsAppField,
+  TelegramField,
+  RemoveAccount,
+  PaymentForm,
+  ProfileMenuItem
+}
+export type { ProfileMenuType }
 
 // Posts
 export {
@@ -126,7 +155,7 @@ export {
   setLocation,
 }
 export { fetchPosts, fetchPostsByUser }
-export { Location, AddPost, Post, Search }
+export { Location, AddPost, Post, Search, SearchComponent, Category }
 export type { PostType, ReasonType }
 
 // Reviews

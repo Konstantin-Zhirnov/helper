@@ -2,29 +2,27 @@
 @import "../../shared/constants/mixins"
 
 .title
-  @include title
+  color: $primary-dark-color
+  font-size: clamp(2rem, calc(1rem + 2.8vw), 2.8rem)
+  font-style: normal
+  font-weight: 700
+  line-height: normal
+  letter-spacing: -1.35px
+  margin-top: 2rem
+  margin-bottom: 2rem
 
-.text
-  text-align: center
-  margin-top: 1.5rem
+.divider
+  height: 2px
+  width: 100%
+  background: $border-color
+  margin-bottom: 2rem
 
-.error
-  color: $red
-  margin-top: 1.5rem
-  text-align: center
+.wrapper
+  display: flex
+  gap: 2rem
+  align-items: flex-start
+  flex-wrap: wrap
+  margin-bottom: 3rem
 
-.divider_text
-  font-size: 1.6rem
-  color: $primary-color
 
-.tab_list
-  margin: 0 1rem
 
-  .tab[aria-selected="true"]
-    color: $primary-color
-
-@media only screen and (max-width: 640px)
-  .tab_list
-    margin: 0
-  div.tab_panel
-    padding: 1rem 0

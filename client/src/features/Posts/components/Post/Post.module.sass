@@ -1,11 +1,11 @@
 @import "../../../../shared/constants/vars"
 
 .container
-  position: relative
-  padding: 1rem 1rem 0.4rem
   display: flex
-  flex-wrap: wrap
-  gap: 1rem
+  flex-direction: column
+  border-radius: 22px
+  background: $white
+  position: relative
 
   .remove
     position: absolute
@@ -20,53 +20,84 @@
       fill: $red
 
   .user
-    text-align: center
-    width: 200px
-    overflow: hidden
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 20px 24px
+    border-radius: 22px 22px 0 0
+    background: #D8E2F1
 
     .name
-      margin-top: 0.3rem
+      color: #090F34
+      font-size: 16px
+      font-style: normal
+      font-weight: 600
+      line-height: normal
+      letter-spacing: -0.16px
 
     .stars
       height: 20px
       color: darkgoldenrod
 
-  .info
-    flex: 1
+  .location
+    color: $primary-color
     display: flex
-    flex-direction: column
+    align-items: center
+    gap: 6px
+    padding: 20px 24px
 
-    .title
+    .text
+      color: #6E82A8
+      font-style: normal
+      font-weight: 500
+      font-size: 0.9rem
+      line-height: 0.9rem
+
+  .title
+    padding: 0 24px
+
+    .text
+      color: #090F34
+      font-size: 26px
+      font-style: normal
+      font-weight: 700
+      line-height: 130%
+      letter-spacing: -0.52px
+
+  .category
+    padding: 20px 24px
+    display: inline-flex
+
+    .sign
+      padding: 6px 12px
+      border-radius: 60px
+      background: #F6F7F9
+      color: #75818E
+      font-size: 0.8rem
+      font-style: normal
       font-weight: 600
+      line-height: 1rem
 
-    .divider
-      margin: 0.7rem 0
+  .description
+    padding: 10px 24px
 
-    .footer
-      margin-top: auto
-      display: flex
-      justify-content: space-between
-      align-items: center
+    .text
+      color: #75818E
+      font-size: 1rem
+      font-style: normal
+      font-weight: 500
+      line-height: 135%
+      letter-spacing: 0.16px
 
-      .location
-        color: $primary-color
-        display: flex
-        align-items: baseline
-        gap: 6px
-        font-weight: 600
+  .footer
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 10px 24px 20px
 
-        svg
-          fill: $red
-
-      .time
-        color: $primary-color
-        font-size: 0.86rem
-
-
-@media only screen and (max-width: 640px)
-  .container
-    .user
-      width: 100%
-
-    .info .footer
-      margin-top: 1rem
+    .time
+      color: #6E82A8
+      font-size: 1rem
+      font-style: normal
+      font-weight: 500
+      line-height: 1rem

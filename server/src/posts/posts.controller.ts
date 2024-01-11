@@ -60,7 +60,7 @@ export class PostsController {
     location,
     search,
     page,
-  }): Promise<{ posts: PostModel[], count: number, pages: number }> {
+  }) {
     return await this.postsService.getAll(location, search, page, 'authorId', chosenFields)
   }
 
