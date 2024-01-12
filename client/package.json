@@ -19,6 +19,7 @@
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "node-sass": "^7.0.1",
+    "prettier": "^3.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.32.2",
@@ -54,7 +55,6 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react": "^13.3.0",
-    "prettier": "^3.1.1"
+    "@testing-library/react": "^13.3.0"
   }
 }

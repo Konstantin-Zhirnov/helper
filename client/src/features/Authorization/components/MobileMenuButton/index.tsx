@@ -20,7 +20,7 @@ const MobileMenuButton: React.FC = React.memo(() => {
 
   return (
     <button onClick={handleClick} className={classes.btn}>
-      {isMobileMenu ? <MdClose size={20}/> : <MdMenu size={20}/>}
+      {isMobileMenu ? <MdClose size={20}/> : <MdMenu size={24}/>}
     </button>
   )
 })

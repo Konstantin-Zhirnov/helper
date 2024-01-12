@@ -27,7 +27,7 @@ const RemoveAccount: React.FC<IProps> = React.memo(({ _id, canRemove }) => {
   }
 
   return (
-    <div className={classes.card}>
+    <div className={classes.card}   >
       <div className={classes.cardHeader}>
         <h1 className={classes.heading}><MdWarningAmber /> Delete account:</h1>
       </div>
