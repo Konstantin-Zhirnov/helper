@@ -39,7 +39,11 @@ const ProfilePage: React.FC = React.memo(() => {
   }, [isAuth])
 
 
-  // if (!isAuth) return <p className={classes.text}>You need to log in</p>
+  if (!isAuth) return (
+      <Wrapper>
+        <h1 className={classes.title}>You need to log in</h1>
+      </Wrapper>
+  )
 
 
   return (
