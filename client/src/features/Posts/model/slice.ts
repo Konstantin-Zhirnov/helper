@@ -31,6 +31,7 @@ const initialState: PostsStateType = {
   searchComponentLocation: '',
   searchComponentSearch: '',
   isMainSearch: false,
+  isLoading: false
 }
 
 export const posts = createSlice({
@@ -90,7 +91,7 @@ export const posts = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPosts.pending, pending)
+      .addCase(fetchPosts.pending, pendingFetchPosts)
       .addCase(fetchPosts.fulfilled, (state, action: PayloadAction<PostsType>) => {
         if (action.payload.page === 1) {
           state.posts = action.payload.posts
@@ -99,9 +100,11 @@ export const posts = createSlice({
         }
         state.count = action.payload.count
         state.pages = action.payload.pages
+        state.isLoading = false
       })
-      .addCase(fetchPosts.rejected, (state, action) => {
+        .addCase(fetchPosts.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
+        state.isLoading = false
       })
 
       .addCase(fetchLocations.pending, pending)
@@ -203,6 +206,11 @@ function pending(state: PostsStateType) {
   state.message = ''
 }
 
+function pendingFetchPosts(state: PostsStateType) {
+  state.message = ''
+  state.isLoading = true
+}
+
 
 export const {
   setLocation,
@@ -233,6 +241,6 @@ export const getIsPostsByUser = (state: RootState): boolean => Boolean(state.pos
 export const getSearchComponentSearch = (state: RootState): string => state.posts.searchComponentSearch
 export const getMainSearch = (state: RootState): boolean => state.posts.isMainSearch
 export const getCategory = (state: RootState): string => state.posts.category
-
+export const getLoading = (state: RootState): boolean => state.posts.isLoading
 
 export default posts.reducer

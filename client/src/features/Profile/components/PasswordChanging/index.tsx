@@ -1,14 +1,15 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
+import cn from "classnames";
 import * as yup from 'yup'
 
-import {FormButton, FormItem, useAppDispatch, PasswordType} from '../../../../shared'
+import { FormButton, FormItem, useAppDispatch, PasswordType, useAppSelector } from '../../../../shared'
 
-import {fetchChangePassword, fetchNewPassword} from '../../model/asyncActions'
+import { fetchChangePassword, fetchNewPassword } from '../../model/asyncActions'
+import { getLoading } from "../../model/slice"
 
 import classes from './PasswordChanging.module.sass'
-import cn from "classnames";
 
 
 interface IProps {
@@ -18,6 +19,7 @@ interface IProps {
 
 const PasswordChanging: React.FC<IProps> = React.memo(({ _id, link }) => {
   const dispatch = useAppDispatch()
+    const isLoading = useAppSelector(getLoading)
 
   const schema = yup
     .object()
@@ -38,26 +40,26 @@ const PasswordChanging: React.FC<IProps> = React.memo(({ _id, link }) => {
   })
 
   const onSubmit: SubmitHandler<PasswordType> = async (data) => {
-      if (link) {
-          await dispatch(
-              fetchChangePassword({
-                  password: data.password,
-                  link,
-              }),
-          )
+      if (!isLoading) {
+          if (link) {
+              await dispatch(
+                  fetchChangePassword({
+                      password: data.password,
+                      link,
+                  }),
+              )
+          }
+          if (_id) {
+              await dispatch(
+                  fetchNewPassword({
+                      password: data.password,
+                      _id,
+                  }),
+              )
+          }
+          reset()
       }
-      if (_id) {
-          await dispatch(
-              fetchNewPassword({
-                  password: data.password,
-                  _id,
-              }),
-          )
-      }
-    reset()
   }
-
-
 
     return (
       <form onSubmit={handleSubmit(onSubmit)} className={cn(classes.container, {[classes.profile]: _id})}>
@@ -65,7 +67,7 @@ const PasswordChanging: React.FC<IProps> = React.memo(({ _id, link }) => {
 
           <FormItem register={register} errors={errors} name="passwordConfirmation" label="Confirmation password" />
 
-          <FormButton />
+          <FormButton disabled={isLoading}/>
       </form>
 
     )

@@ -7,6 +7,7 @@ export type ProfileStateType = {
   changePasswordMessage: string
   message: string
   alertMessage: string
+  isLoading: boolean
 }
 
 export type ProfileMenuType = typeof profileMenu[number];

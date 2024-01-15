@@ -11,13 +11,14 @@ import {
 import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
 import classes from './ProfilePage.module.sass'
+import {useNavigate} from "react-router-dom";
 
 
 const ProfilePage: React.FC = React.memo(() => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(getUser)
   const isAuth = useAppSelector(getAuth)
-
+  const navigate = useNavigate()
   const activeItem = useAppSelector(getActiveScreen)
 
   React.useEffect(() => {
@@ -27,8 +28,19 @@ const ProfilePage: React.FC = React.memo(() => {
     }
   }, [user?._id])
 
+  React.useEffect(() => {
+    if (user._id) {
+      dispatch(fetchPostsByUser(user._id))
+      dispatch(fetchReviewsByAuthor(user._id))
+    }
+    if (!isAuth) {
+      navigate('/')
+    }
+  }, [isAuth])
 
-  if (!isAuth) return <p className={classes.text}>You need to log in</p>
+
+  // if (!isAuth) return <p className={classes.text}>You need to log in</p>
+
 
   return (
       <>

@@ -19,7 +19,7 @@
       &.rotate
         transform: rotate(180deg)
 
-  .ul
+  .btn_container
     background: $white
     margin: 0
     padding: 0
@@ -30,15 +30,25 @@
     top: 20px
     right: 0
     border-radius: 4px
+
     &.open
       max-height: 200px
+      width: 100%
+      box-shadow: 0 30px 90px 0 rgba(31, 36, 48, 0.1)
 
-    .li
-      padding: 0.3rem 0.8rem
-      display: block
+    .btn
       cursor: pointer
-      font-size: 0.8rem
-      transition: all 400ms
+      border: none
+      background: transparent
+      color: $primary-dark-color
+      letter-spacing: -0.14px
+      font-weight: 600
+      width: 100%
+      font-size: 0.9rem
+      height: 34px
       border-bottom: 1px solid $border-color
+      transition: background 400ms
       &:hover
         background: $primary-color
+        transition: background 400ms
+

@@ -27,31 +27,33 @@ const AccountDetails: React.FC<IProps> = React.memo(({canRemove}) => {
 
 
   return (
-    <div className={classes.container}>
+    <>
       <ProfileAvatar />
 
-      <div className={classes.card}>
-          <NameField _id={_id} />
-      </div>
+      <div className={classes.card_container}>
+          <div className={classes.card}>
+              <NameField _id={_id} />
+          </div>
 
-      <div className={classes.card}>
-          <EditableInput defaultValue={email} label='Email'/>
-      </div>
+          <div className={classes.card}>
+              <EditableInput defaultValue={email} label='Email'/>
+          </div>
 
-      <div className={classes.card}>
-          <PhoneField _id={_id} />
-      </div>
+          <div className={classes.card}>
+              <PhoneField _id={_id} />
+          </div>
 
-      <div className={classes.card}>
-          <WhatsAppField _id={_id} />
-      </div>
+          <div className={classes.card}>
+              <WhatsAppField _id={_id} />
+          </div>
 
-      <div className={classes.card}>
-          <TelegramField _id={_id} />
+          <div className={classes.card}>
+              <TelegramField _id={_id} />
+          </div>
       </div>
 
       <RemoveAccount _id={_id} canRemove={canRemove} />
-    </div>
+    </>
   )
 })
 

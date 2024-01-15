@@ -8,7 +8,7 @@ import type { UserType } from '../../../../../../shared'
 import {FormButton, FormItem, useAppDispatch, useAppSelector} from '../../../../../../shared'
 
 import { fetchRegistration } from '../../../../model/asyncActions'
-import {getRegistrationErrorMessage} from "../../../../model/slice";
+import {getLoading, getRegistrationErrorMessage} from "../../../../model/slice";
 
 import classes from './RegistrationForm.module.sass'
 
@@ -16,6 +16,7 @@ import classes from './RegistrationForm.module.sass'
 const RegistrationForm: React.FC = () => {
   const dispatch = useAppDispatch()
   const registrationErrorMessage = useAppSelector(getRegistrationErrorMessage)
+  const isLoading = useAppSelector(getLoading)
 
   const schema = yup
     .object()
@@ -37,27 +38,29 @@ const RegistrationForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<UserType> = async (data) => {
 
-    await dispatch(
-      fetchRegistration({
-        _id: '',
-        name: data.name,
-        email: data.email.toLowerCase(),
-        password: data.password,
-        phone: '',
-        photo: '',
-        whatsapp: '',
-        telegram: '',
-        viber: '',
-        isActivated: false,
-        linkForActivated: '',
-        changePasswordLink: '',
-        stars: 0,
-        countReviews: 0,
-        paid: true,
-        paidTime: '',
-      }),
-    )
-    reset()
+      if (!isLoading) {
+          await dispatch(
+              fetchRegistration({
+                  _id: '',
+                  name: data.name,
+                  email: data.email.toLowerCase(),
+                  password: data.password,
+                  phone: '',
+                  photo: '',
+                  whatsapp: '',
+                  telegram: '',
+                  viber: '',
+                  isActivated: false,
+                  linkForActivated: '',
+                  changePasswordLink: '',
+                  stars: 0,
+                  countReviews: 0,
+                  paid: true,
+                  paidTime: '',
+              }),
+          )
+          reset()
+      }
   }
 
   return (
@@ -75,7 +78,7 @@ const RegistrationForm: React.FC = () => {
             {registrationErrorMessage}
         </p>
 
-        <FormButton/>
+        <FormButton disabled={isLoading}/>
     </form>
   )
 }

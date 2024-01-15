@@ -42,10 +42,10 @@ const User: React.FC<IProps> = React.memo(({ name}) => {
           <BiChevronDown size={20} className={cn(classes.arrow_icon, {[classes.rotate]: open})}/>
         </div>
 
-        <ul className={cn(classes.ul, {[classes.open]: open})}>
-          <li onClick={handleSettingsClick} className={classes.li}>Settings</li>
-          <li onClick={handleLogoutClick} className={classes.li}>Log Out</li>
-        </ul>
+        <div className={cn(classes.btn_container, {[classes.open]: open})}>
+          <button onClick={handleSettingsClick} className={classes.btn}>Settings</button>
+          <button onClick={handleLogoutClick} className={classes.btn}>Log Out</button>
+        </div>
     </div>
   )
 })

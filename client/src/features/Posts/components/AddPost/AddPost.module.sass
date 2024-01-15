@@ -43,12 +43,11 @@
       font-size: 0.7rem
 
 button.submit
-  @include link-btn
+  @include btn
   margin-top: 1rem
   transition: background 400ms
   &:hover
-    background: #cfd7e5
-    transition: background 400ms
+    @include btn-hover
 
   &.disabled, &.disabled:hover
     cursor: initial

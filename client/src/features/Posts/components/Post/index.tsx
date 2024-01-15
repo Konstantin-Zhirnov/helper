@@ -62,7 +62,6 @@ const Post: React.FC<IProps> = React.memo(({
 
   const { pathname } = useLocation()
   const dispatch = useAppDispatch()
-    console.log('pathname', pathname)
 
   const removePost = () => {
     dispatch(fetchRemovePost({ _id, folder: postAuthorId }))

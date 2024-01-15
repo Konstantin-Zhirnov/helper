@@ -14,6 +14,7 @@ export type PostsStateType = {
   searchComponentLocation: string
   searchComponentSearch: string
   isMainSearch: boolean
+  isLoading: boolean
 }
 
 

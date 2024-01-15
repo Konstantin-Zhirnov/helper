@@ -1,10 +1,22 @@
 @import "../../constants/mixins"
 @import "../../constants/vars"
 
-button.btn
-  @include link-btn
+.btn
+  @include btn
   margin-top: 0.4rem
   transition: background 400ms
   &:hover
-    background: #cfd7e5
-    transition: background 400ms
+    @include btn-hover
+  &.disabled
+    background: $primary-dark-color
+    cursor: initial
+    svg
+      animation: rotating 2s linear infinite
+
+
+
+@keyframes rotating
+  from
+    transform: rotate(0deg)
+  to
+    transform: rotate(360deg)

@@ -6,7 +6,6 @@ import { Circular } from './ui/Circular'
 import { Li } from './ui/Li'
 import { Link } from './ui/Link'
 import { Loader } from './ui/Loader'
-import { LoginButton } from './ui/LoginButton'
 import { Logo } from './ui/Logo'
 import { Stars } from './ui/Stars'
 import { Wrapper } from './ui/Wrapper'
@@ -35,7 +34,6 @@ export { AddButton,
     Li,
     Link,
     Loader,
-    LoginButton,
     Logo,
     Stars,
     Wrapper,

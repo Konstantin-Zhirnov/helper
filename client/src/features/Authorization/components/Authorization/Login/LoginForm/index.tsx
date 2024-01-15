@@ -9,16 +9,16 @@ import * as yup from 'yup'
 import {FormButton, FormItem, useAppDispatch, useAppSelector} from '../../../../../../shared'
 
 import { fetchLogin } from '../../../../model/asyncActions'
-import { getLoginErrorMessage, goToSendEmailPage } from '../../../../model/slice'
+import { getLoginErrorMessage, goToSendEmailPage, getLoading } from '../../../../model/slice'
 import { LoginType, SendEmailReasonType } from '../../../../types'
 
-import { PasswordInput } from '../../../../../../shared/ui/PasswordInput'
-
 import classes from './LoginForm.module.sass'
+
 
 const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch()
   const loginErrorMessage = useAppSelector(getLoginErrorMessage)
+    const isLoading = useAppSelector(getLoading)
 
   const schema = yup
     .object()
@@ -38,13 +38,15 @@ const LoginForm: React.FC = () => {
   })
 
   const onSubmit = async (data) => {
-    await dispatch(
-      fetchLogin({
-        email: data.email.toLowerCase(),
-        password: data.password,
-      }),
-    )
-    reset()
+      if (!isLoading) {
+          await dispatch(
+              fetchLogin({
+                  email: data.email.toLowerCase(),
+                  password: data.password,
+              }),
+          )
+          reset()
+      }
   }
 
   const handleClick = (key: SendEmailReasonType) => () => {
@@ -76,7 +78,7 @@ const LoginForm: React.FC = () => {
         {loginErrorMessage} <span>&nbsp;&nbsp;</span> {getLink()}
       </p>
 
-      <FormButton />
+      <FormButton disabled={isLoading}/>
     </form>
   )
 }

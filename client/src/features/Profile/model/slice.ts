@@ -31,6 +31,7 @@ const initialState: ProfileStateType = {
   changePasswordMessage: '',
   alertMessage: '',
   message: '',
+  isLoading: false
 }
 
 export const profile = createSlice({
@@ -76,9 +77,11 @@ export const profile = createSlice({
       .addCase(fetchNewPassword.pending, pendingNewPassword)
       .addCase(fetchNewPassword.fulfilled, (state, action) => {
         state.alertMessage = action.payload.message
+        state.isLoading = false
       })
       .addCase(fetchNewPassword.rejected, (state, action) => {
         state.alertMessage = (action.payload as string) ?? ''
+        state.isLoading = false
       })
 
       .addCase(fetchRemoveUser.pending, pendingNewPassword)
@@ -100,9 +103,11 @@ export const profile = createSlice({
       .addCase(fetchChangePassword.pending, pendingChangePassword)
       .addCase(fetchChangePassword.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
         state.changePasswordMessage = action.payload.message
+        state.isLoading = false
       })
       .addCase(fetchChangePassword.rejected, (state, action) => {
         state.changePasswordMessage = (action.payload as string) ?? ''
+        state.isLoading = false
       })
   },
 })
@@ -113,10 +118,12 @@ function pending(state: ProfileStateType) {
 
 function pendingNewPassword(state: ProfileStateType) {
   state.alertMessage = ''
+  state.isLoading = true
 }
 
 function pendingChangePassword(state: ProfileStateType) {
   state.changePasswordMessage = ''
+  state.isLoading = true
 }
 
 
@@ -142,7 +149,7 @@ export const getIsReload = (state: RootState): boolean => state.profile.isReload
 export const getActiveScreen = (state: RootState): ProfileMenuType => state.profile.activeScreen
 export const getChangePasswordMessage = (state: RootState): string =>
     state.profile.changePasswordMessage
-
+export const getLoading = (state: RootState): boolean => state.profile.isLoading
 
 
 export default profile.reducer

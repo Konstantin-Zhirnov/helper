@@ -21,7 +21,8 @@ const initialState: AuthorizationStateType = {
   sendEmailReason: '',
   message: '',
   alertMessage: '',
-  isMobileMenu: false
+  isMobileMenu: false,
+  isLoading: false
 }
 
 export const authorization = createSlice({
@@ -55,6 +56,7 @@ export const authorization = createSlice({
       .addCase(fetchLogin.fulfilled, (state) => {
         state.loginErrorMessage = ''
         state.isModal = ''
+        state.isLoading = false
         document.body.style.overflow = 'auto'
         state.isAuth = true
         if (state.isMobileMenu) {
@@ -63,17 +65,20 @@ export const authorization = createSlice({
       })
       .addCase(fetchLogin.rejected, (state, action) => {
         state.loginErrorMessage = (action.payload as string) ?? ''
+        state.isLoading = false
       })
 
       .addCase(fetchRegistration.pending, pendingRegistration)
       .addCase(fetchRegistration.fulfilled, (state) => {
         state.isRegistered = true
+        state.isLoading = false
         if (state.isMobileMenu) {
           state.isMobileMenu = false
         }
       })
       .addCase(fetchRegistration.rejected, (state, action) => {
         state.registrationErrorMessage = (action.payload as string) ?? ''
+        state.isLoading = false
       })
 
       .addCase(fetchConfirmation.pending, pending)
@@ -123,11 +128,13 @@ function pending(state: AuthorizationStateType) {
 
 function pendingLogin(state: AuthorizationStateType) {
   state.loginErrorMessage = ''
+  state.isLoading = true
 }
 
 function pendingRegistration(state: AuthorizationStateType) {
   state.isRegistered = false
   state.registrationErrorMessage = ''
+  state.isLoading = true
 }
 
 function pendingSendEmail(state: AuthorizationStateType) {
@@ -156,6 +163,9 @@ export const getRegistrationErrorMessage = (state: RootState): string =>
   state.authorization.registrationErrorMessage
 export const getAlertAuthorizationMessage = (state: RootState): string => state.authorization.alertMessage
 export const getMobileMenu = (state: RootState): boolean => state.authorization.isMobileMenu
+export const getLoading = (state: RootState): boolean => state.authorization.isLoading
+
+
 
 
 export default authorization.reducer

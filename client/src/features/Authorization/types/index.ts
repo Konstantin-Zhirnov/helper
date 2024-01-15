@@ -9,6 +9,7 @@ export type AuthorizationStateType = {
   message: string
   alertMessage: string
   isMobileMenu: boolean
+  isLoading: boolean
 }
 
 export type ModalType = 'login' | 'registration' | 'registration-final' | ''
