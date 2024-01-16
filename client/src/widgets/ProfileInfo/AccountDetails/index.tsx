@@ -36,7 +36,7 @@ const AccountDetails: React.FC<IProps> = React.memo(({canRemove}) => {
           </div>
 
           <div className={classes.card}>
-              <EditableInput defaultValue={email} label='Email'/>
+              <EditableInput defaultValue={email} label='Email:'/>
           </div>
 
           <div className={classes.card}>

@@ -8,7 +8,7 @@ export const fetchPosts = createAsyncThunk(
   'authorization/fetchPosts',
   async function(query: PostsQueryType, { rejectWithValue }) {
     try {
-      return await PostsAPI.getPosts(query)
+        return await PostsAPI.getPosts(query)
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.message)
@@ -36,9 +36,11 @@ export const fetchLocations = createAsyncThunk(
 
 export const fetchAddPost = createAsyncThunk(
   'authorization/fetchAddPost',
-  async function(body: FormData, { rejectWithValue }) {
+  async function(body: FormData, { rejectWithValue, dispatch }) {
     try {
-      return await PostsAPI.addPost(body)
+        const post = await PostsAPI.addPost(body)
+        dispatch(fetchLocations())
+        return post
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.message)

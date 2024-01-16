@@ -121,6 +121,7 @@ export const posts = createSlice({
           state.posts.unshift(action.payload)
         }
         state.isModal = ''
+        document.body.style.overflow = 'auto'
       })
       .addCase(fetchAddPost.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''

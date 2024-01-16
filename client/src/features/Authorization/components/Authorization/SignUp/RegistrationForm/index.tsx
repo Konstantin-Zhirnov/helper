@@ -65,11 +65,11 @@ const RegistrationForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
-        <FormItem register={register} errors={errors} name="name" label='Name'/>
+        <FormItem register={register} errors={errors} name="name" label='Name:'/>
 
-        <FormItem register={register} errors={errors} name="email" label='Email'/>
+        <FormItem register={register} errors={errors} name="email" label='Email:'/>
 
-        <FormItem register={register} errors={errors} name="password" label='Password' password/>
+        <FormItem register={register} errors={errors} name="password" label='Password:'/>
 
         <p className={cn(classes.serverError, {
             [classes.visible]: registrationErrorMessage,

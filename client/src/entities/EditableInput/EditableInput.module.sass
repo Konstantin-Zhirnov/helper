@@ -2,7 +2,7 @@
 
 
 .container
-
+  width: 100%
   .text_container
     display: flex
     justify-content: space-between
@@ -35,7 +35,7 @@
       &.red
         color: $red
 
-  .input, input[type="tel"]
+  .input, input[type="tel"], .textarea
     width: 100%
     border: 1px solid $primary-color
     height: 36px
@@ -43,10 +43,12 @@
     font-size: 1rem
     &:focus-visible
       outline: 1px solid $primary-color
-  .input
+  .input, .textarea
     border-radius: 4px
   input[type="tel"]
     border-radius: 0 4px 4px 0
+  .textarea
+    min-height: 100px
 
 
   .number

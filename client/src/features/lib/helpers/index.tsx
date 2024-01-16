@@ -14,7 +14,6 @@ export const renderPostItem = (post: PostType) => (
         time={post.time}
         postAuthorId={post.authorId._id}
         name={post.authorId.name}
-        photo={post.authorId.photo}
         email={post.authorId.email}
         phone={post.authorId.phone}
         whatsapp={post.authorId.whatsapp}

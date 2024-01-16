@@ -24,7 +24,7 @@ const NameField: React.FC<IProps> = React.memo(({ _id }) => {
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])
 
-  return <EditableInput defaultValue={name} cb={memoizedCB} label='Name'/>
+  return <EditableInput defaultValue={name} cb={memoizedCB} label='Name:'/>
 })
 
 export { NameField }

@@ -24,7 +24,7 @@ const WhatsAppField: React.FC<IProps> = React.memo(({ _id }) => {
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])
 
-  return <EditableInput defaultValue={whatsapp} cb={memoizedCB} label='WhatsApp'/>
+  return <EditableInput defaultValue={whatsapp} cb={memoizedCB} label='WhatsApp:'/>
 })
 
 export { WhatsAppField }

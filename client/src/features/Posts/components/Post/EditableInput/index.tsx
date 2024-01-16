@@ -1,8 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
 import { MdClear, MdCreate, MdDone } from 'react-icons/md'
-import { BsGeoAltFill } from 'react-icons/bs'
-
 
 import { useAppDispatch } from '../../../../../shared'
 import { fetchUpdatePost } from '../../../model/asyncActions'
@@ -74,7 +72,7 @@ const EditableInput: React.FC<IProps> = ({ _id, defaultValue, field }) => {
           field === 'description' && <p>{value}</p>
         }
         {
-          field === 'location' && <p className={classes.location}><BsGeoAltFill />{value}</p>
+          field === 'location' && <p className={classes.location}>{value}</p>
         }
 
         <button onClick={open} aria-label='button create' className={classes.blue} ><MdCreate /></button>

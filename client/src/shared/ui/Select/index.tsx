@@ -1,9 +1,11 @@
 import React from 'react'
 import cn from 'classnames'
-import {BiChevronDown} from "react-icons/bi";
-import {AiOutlineSearch} from "react-icons/ai";
+import { useLocation } from "react-router-dom"
+import { BiChevronDown } from "react-icons/bi"
+import { AiOutlineSearch } from "react-icons/ai"
 
 import classes from './Select.module.sass'
+
 
 interface IProps {
   options: string[]
@@ -15,6 +17,8 @@ interface IProps {
 }
 
 const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, mr0, category }) => {
+
+  const { pathname } = useLocation()
 
   const [selected, setSelected] = React.useState(defaultValue)
   const [inputValue, setInputValue] = React.useState('')
@@ -44,9 +48,10 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
   }, [defaultValue])
 
   return (
-      <div className={cn(classes.container, {[classes.ml_0]: ml0, [classes.mr_0]: mr0, [classes.category]: category})}>
+      <div
+          className={cn(classes.container, {[classes.ml_0]: ml0, [classes.mr_0]: mr0, [classes.category]: category})}>
         <div onClick={handleClick} className={classes.view}>
-          <p>
+          <p className={cn({[classes.profile]: pathname === '/profile'})}>
             {selected
                 ? selected.length > 12
                     ? !category

@@ -24,7 +24,7 @@ const TelegramField: React.FC<IProps> = React.memo(({ _id }) => {
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])
 
-  return <EditableInput defaultValue={name} cb={memoizedCB} label='Telegram'/>
+  return <EditableInput defaultValue={name} cb={memoizedCB} label='Telegram:'/>
 })
 
 export { TelegramField }

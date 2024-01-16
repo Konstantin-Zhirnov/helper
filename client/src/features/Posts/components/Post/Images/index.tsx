@@ -13,6 +13,7 @@ import { getMessage, setAlertPostsMessage, setMessage } from '../../../model/sli
 
 import 'react-photo-view/dist/react-photo-view.css'
 import classes from './Images.module.sass'
+import {RemoveImgButton} from "./RemoveImgButton";
 
 
 interface IProps {
@@ -125,15 +126,7 @@ const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, pathname, au
                   <div className={`image_container ${classes.image_container}`} style={{height: `${width}px`}}>
                     <img src={item} className={classes.image} alt='photo' />
                     {
-                        pathname === '/profile' && (
-                        <button
-                            className={classes.remove}
-                            aria-label='remove image button'
-                            onClick={(e) => removeImage(e, item)}
-                        >
-                          <TiDelete />
-                        </button>
-                      )
+                        pathname === '/profile' && <RemoveImgButton _id={_id} authorId={authorId} item={item}/>
                     }
                   </div>
                 </PhotoView>

@@ -63,9 +63,9 @@ const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
-      <FormItem register={register} errors={errors} name="email" label='Email'/>
+      <FormItem register={register} errors={errors} name="email" label='Email:'/>
 
-      <FormItem register={register} errors={errors} name="password" label='Password' password/>
+      <FormItem register={register} errors={errors} name="password" label='Password:'/>
 
       <NavLink to='/send-email' onClick={handleClick('password')} className={cn(classes.link, classes.mb05)}>
           Forgot password?

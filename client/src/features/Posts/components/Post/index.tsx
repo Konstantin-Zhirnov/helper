@@ -1,24 +1,25 @@
 import React from 'react'
-import {NavLink, useLocation} from 'react-router-dom'
-import {MdDelete} from 'react-icons/md'
+import cn from "classnames";
+import { NavLink, useLocation } from 'react-router-dom'
 
-import {Stars, useAppDispatch} from '../../../../shared'
+import { Stars } from '../../../../shared'
 
-import {fetchRemovePost} from '../../model/asyncActions'
-import {ReasonType} from '../../types'
-
-import {ContactInformation} from "./ContactInformation";
-import {EditableInput} from './EditableInput'
-import {Images} from "./Images";
+import { ContactInformation } from "./ContactInformation"
+import { EditableField } from "./EditableField"
+import { RemoveButton } from './RemoveButton'
+import { Images } from "./Images";
 
 import classes from './Post.module.sass'
 
 
+
+
+
+
 function daysAgo(milliseconds) {
-    const millisecondsInDay = 24 * 60 * 60 * 1000; // количество миллисекунд в дне
     const targetDate = new Date(milliseconds);
     const currentDate = new Date();
-    return Math.floor((currentDate.getTime() - targetDate.getTime()) / millisecondsInDay);
+    return Math.floor((currentDate.getTime() - targetDate.getTime()) / 86400000);
 }
 
 
@@ -31,7 +32,6 @@ interface IProps {
   time: number
   postAuthorId: string
   name: string
-  photo: string
   email: string
   phone: string
   whatsapp: string
@@ -50,7 +50,6 @@ const Post: React.FC<IProps> = React.memo(({
                                              time,
                                              postAuthorId,
                                              name,
-                                             photo,
                                              email,
                                              phone,
                                              whatsapp,
@@ -61,18 +60,13 @@ const Post: React.FC<IProps> = React.memo(({
                                            }) => {
 
   const { pathname } = useLocation()
-  const dispatch = useAppDispatch()
-
-  const removePost = () => {
-    dispatch(fetchRemovePost({ _id, folder: postAuthorId }))
-  }
 
   const memoizedImages = React.useMemo(() => images, [images])
 
 
   return (
     <li className={classes.container}>
-        <div className={classes.user}>
+        <div className={cn(classes.user, {[classes.pr_40]: pathname === '/profile'})}>
           <p className={classes.name}>{name}</p>
             <NavLink to={`/reviews/${postAuthorId}`} className={classes.stars} aria-label='link to review page'>
               <Stars stars={stars} countReviews={countReviews} />
@@ -81,7 +75,7 @@ const Post: React.FC<IProps> = React.memo(({
 
         </div>
 
-        <div className={classes.location}>
+        <div className={cn(classes.location, {[classes.profile]: pathname === '/profile'})}>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 29 29" fill="none">
                 <g clipPath="url(#clip0_16_1704)">
                     <path d="M14.5 16.3125C13.6038 16.3125 12.7277 16.0468 11.9826 15.5489C11.2374 15.0509 10.6566 14.3433 10.3137 13.5153C9.97071 12.6873 9.88098 11.7762 10.0558 10.8972C10.2307 10.0183 10.6622 9.21088 11.2959 8.57717C11.9296 7.94347 12.737 7.51191 13.616 7.33707C14.495 7.16223 15.4061 7.25196 16.234 7.59492C17.062 7.93788 17.7697 8.51866 18.2676 9.26382C18.7655 10.009 19.0313 10.8851 19.0313 11.7813C19.0299 12.9826 18.552 14.1343 17.7026 14.9838C16.8531 15.8333 15.7013 16.3111 14.5 16.3125ZM14.5 9.0625C13.9623 9.0625 13.4366 9.22195 12.9895 9.52069C12.5424 9.81943 12.194 10.244 11.9882 10.7408C11.7824 11.2376 11.7286 11.7843 11.8335 12.3117C11.9384 12.839 12.1973 13.3235 12.5776 13.7037C12.9578 14.0839 13.4422 14.3429 13.9696 14.4478C14.497 14.5527 15.0436 14.4988 15.5404 14.2931C16.0372 14.0873 16.4618 13.7388 16.7606 13.2917C17.0593 12.8446 17.2188 12.319 17.2188 11.7813C17.218 11.0604 16.9313 10.3694 16.4216 9.85968C15.9119 9.34999 15.2208 9.06329 14.5 9.0625Z" fill="#6E82A8"/>
@@ -95,7 +89,7 @@ const Post: React.FC<IProps> = React.memo(({
             </svg>
             {
                 pathname === '/profile'
-                    ? <EditableInput _id={_id} defaultValue={location} field='location' />
+                    ? <EditableField _id={_id} defaultValue={location} field="location" label="Location"/>
                     : <p className={classes.text}>{location}</p>
             }
         </div>
@@ -103,7 +97,7 @@ const Post: React.FC<IProps> = React.memo(({
         <div className={classes.title}>
             {
                 pathname === '/profile'
-                    ? <EditableInput _id={_id} defaultValue={title} field='title' />
+                    ? <EditableField _id={_id} defaultValue={title} field='title' label="Title:"/>
                     : <p className={classes.text}>{title}</p>
             }
         </div>
@@ -111,15 +105,15 @@ const Post: React.FC<IProps> = React.memo(({
         <div className={classes.category}>
             {
                 pathname === '/profile'
-                    ? <EditableInput _id={_id} defaultValue={category} field='category' />
+                    ? <EditableField _id={_id} defaultValue={'Gardening'} field='category' label="Category:"/>
                     : <p className={classes.sign}>Health & Wellness</p>
             }
         </div>
 
-        <div className={classes.description}>
+        <div className={cn(classes.description, {[classes.profile]: pathname === '/profile'})}>
             {
                 pathname === '/profile'
-                    ? <EditableInput _id={_id} defaultValue={description} field='description' />
+                    ? <EditableField _id={_id} defaultValue={description} field='description' label="Description:"/>
                     : <p className={classes.text}>{description}</p>
             }
         </div>
@@ -138,15 +132,7 @@ const Post: React.FC<IProps> = React.memo(({
         </div>
 
         {
-            pathname === '/profile' && (
-                <button
-                    aria-label='Remove post button'
-                    className={classes.remove}
-                    onClick={removePost}
-                >
-                    <MdDelete />
-                </button>
-            )
+            pathname === '/profile' && <RemoveButton _id={_id} postAuthorId={postAuthorId}/>
         }
     </li>
   )

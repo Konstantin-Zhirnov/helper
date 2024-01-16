@@ -23,7 +23,7 @@ const PhoneField: React.FC<IProps> = React.memo(({ _id }) => {
     dispatch(fetchUpdateUser(body))
   }, [fetchUpdateUser])
 
-  return <EditableInput defaultValue={phone} cb={memoizedCB} isPhone label='Phone'/>
+  return <EditableInput defaultValue={phone} cb={memoizedCB} label='Phone:'/>
 })
 
 export { PhoneField }

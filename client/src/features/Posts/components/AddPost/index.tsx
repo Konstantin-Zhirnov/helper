@@ -1,19 +1,19 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
-import { ErrorMessage } from '@hookform/error-message'
 import cn from 'classnames'
 import * as yup from 'yup'
 
-import { AddImages } from '../../../../entities'
-import {AddButton, Modal, useAppDispatch, useAppSelector, categories, Select} from '../../../../shared'
+import { AddImages, Categories } from '../../../../entities'
+import {AddButton, Modal, useAppDispatch, useAppSelector, categories, FormItem} from '../../../../shared'
 
 import { getMessage, getModal, setAlertPostsMessage, setMessage, setModal } from '../../model/slice'
 import { fetchAddPost } from '../../model/asyncActions'
 import { CreatePostType } from '../../types'
 
-
 import classes from './AddPost.module.sass'
+
+
 
 
 interface IProps {
@@ -31,7 +31,7 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   const [images, setImages] = React.useState([])
   const [category, setCategory] = React.useState(categories[0])
 
-  const handleChange = (value) => {
+  const handleChange = (value: string) => {
     if (value !== category) {
       setCategory(value)
     }
@@ -100,40 +100,13 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
         isModal === 'post' && (
           <Modal onClose={onClose} title="Add a post">
             <form onSubmit={handleSubmit(onSubmit)} id='myForm' className={classes.container}>
-              <div className={classes.input_container}>
-                <label htmlFor='location' className={classes.input_label}>Location:</label>
-                <input id='location' {...register('location')} autoComplete='off' className={classes.input}/>
-                <ErrorMessage
-                  errors={errors as any}
-                  name='location'
-                  render={({ message }) => <p className={classes.error}>{message}</p>}
-                />
-              </div>
+              <FormItem register={register} errors={errors} name="location" label='Location:'/>
 
-              <div className={classes.input_container}>
-                <label className={classes.input_label}>Category:</label>
-                <Select options={categories} defaultValue={categories[0]} cb={handleChange} category/>
-              </div>
+              <Categories cb={handleChange} label="Categories:"/>
 
-              <div className={classes.input_container}>
-                <label htmlFor='title' className={classes.input_label}>Title:</label>
-                <input id='title' {...register('title')} autoComplete='off' className={classes.input}/>
-                <ErrorMessage
-                  errors={errors as any}
-                  name='title'
-                  render={({ message }) => <p className={classes.error}>{message}</p>}
-                />
-              </div>
+              <FormItem register={register} errors={errors} name="title" label='Title:'/>
 
-              <div className={classes.input_container}>
-                <label htmlFor='description' className={classes.input_label}>Description:</label>
-                <textarea id='description' {...register('description')} className={cn(classes.input, classes.text)}/>
-                <ErrorMessage
-                  errors={errors as any}
-                  name='description'
-                  render={({ message }) => <p className={classes.error}>{message}</p>}
-                />
-              </div>
+              <FormItem register={register} errors={errors} name="description" label='Description:'/>
 
               <AddImages
                 currentImages={currentImages}
