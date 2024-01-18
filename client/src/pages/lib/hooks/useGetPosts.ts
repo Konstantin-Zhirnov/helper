@@ -11,12 +11,11 @@ const useGetPosts = () => {
   const location = useAppSelector(getLocation)
   const category = useAppSelector(getCategory)
 
-
   React.useEffect(() => {
     if (location) {
       dispatch(fetchPosts({ page, search, location, category }))
     }
-  }, [page, search, location])
+  }, [page, search, location, category])
 }
 
 export { useGetPosts }

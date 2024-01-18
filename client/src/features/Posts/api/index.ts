@@ -12,7 +12,7 @@ import {
 export const PostsAPI = {
   getPosts(query: PostsQueryType): Promise<PostsType> {
     const { location, category, search, page } = query
-    const url = `${URL.posts}?location=${location}&category=${category}&search=${search}&page=${page}`
+    const url = `${URL.posts}?location=${location}&category=${encodeURIComponent(category)}&search=${search}&page=${page}`
     return $api.get(url).then(({ data }) => data)
   },
 

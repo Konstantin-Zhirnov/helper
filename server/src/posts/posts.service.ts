@@ -47,18 +47,34 @@ export class PostsService {
     let options = {}
 
     if (search) {
-      options = {
-        location: capitalizeFirstLetter(location),
-        category,
-        $or: [
-          { title: new RegExp(search, 'i') },
-          { description: new RegExp(search, 'i') },
-        ],
+      if (category) {
+        options = {
+          location: capitalizeFirstLetter(location),
+          category,
+          $or: [
+            { title: new RegExp(search, 'i') },
+            { description: new RegExp(search, 'i') },
+          ],
+        }
+      } else {
+        options = {
+          location: capitalizeFirstLetter(location),
+          $or: [
+            { title: new RegExp(search, 'i') },
+            { description: new RegExp(search, 'i') },
+          ],
+        }
       }
     } else {
-      options = {
-        location: capitalizeFirstLetter(location),
-        category
+      if (category) {
+        options = {
+          location: capitalizeFirstLetter(location),
+          category
+        }
+      } else {
+        options = {
+          location: capitalizeFirstLetter(location),
+        }
       }
     }
 
