@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { fetchConfirmation, fetchUser, getIsActivated } from '../../features'
-import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
+import {Title, useAppDispatch, useAppSelector, Wrapper} from '../../shared'
 
 import classes from './ConfirmationPage.module.sass'
 
@@ -29,14 +29,14 @@ const ConfirmationPage: React.FC = () => {
   }, [isActivated])
 
   return (
-    <Wrapper>
-      <h1 className={classes.title}>
-        Email Confirmation
-      </h1>
-      {
-        isActivated && <p className={classes.text}>Your account has been successfully activated!</p>
-      }
-    </Wrapper>
+      <>
+        <Title text="Email Confirmation" divider/>
+        <Wrapper>
+        {
+            !isActivated && <p className={classes.text}>Your account has been successfully activated!</p>
+        }
+        </Wrapper>
+      </>
   )
 }
 

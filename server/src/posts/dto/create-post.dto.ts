@@ -7,6 +7,9 @@ export class CreatePostDto {
   @ApiProperty({ example: 'I wll help with the yard cleaning', description: 'Post`s name' })
   readonly title: string
 
+  @ApiProperty({ example: 'Health & Wellness', description: 'Post`s category' })
+  readonly category: string
+
   @ApiProperty({
     example: 'I have many years of experience in cleaning household plots',
     description: 'Post`s description',

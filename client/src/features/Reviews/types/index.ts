@@ -2,12 +2,14 @@ export type ReviewsStateType = {
   user: UserType
   reviews: ReviewType[]
   reviewsByAuthor: ReviewType[]
-  isModal: boolean
+  isModal: string
   page: number
   count: number
   pages: number
   message: string
   alertMessage: string
+  isLoading: boolean
+  isStarsErrorMessage: boolean
 }
 
 export type ReviewType = {

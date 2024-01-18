@@ -1,0 +1,22 @@
+@import "../../constants/mixins"
+
+.btn
+  @include btn
+  margin-top: 1rem
+  transition: background 400ms
+  &:hover
+    @include btn-hover
+
+  &.disabled, &.disabled:hover
+    background: $primary-dark-color
+    cursor: initial
+    svg
+      animation: rotating 2s linear infinite
+
+
+
+@keyframes rotating
+  from
+    transform: rotate(0deg)
+  to
+    transform: rotate(360deg)

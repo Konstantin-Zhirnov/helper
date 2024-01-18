@@ -1,12 +1,14 @@
 import React from 'react'
-import { MdLogin, MdLogout } from 'react-icons/md'
+import cn from "classnames";
+
+import { FaCircleUser } from "react-icons/fa6";
 
 import classes from './Avatar.module.sass'
-import cn from "classnames";
+
 
 interface IProps {
   photo: string
-  isReload: boolean
+  isReload?: boolean
   size: 'sm' | 'md'
 }
 
@@ -20,6 +22,7 @@ const Avatar: React.FC<IProps> = React.memo(({ photo, isReload, size }) => {
     }
   }, [isReload])
 
+  if (!photo) return <FaCircleUser size={size === 'sm' ? 30 : 90} className={classes.icon}/>
 
   return (
       <div className={cn(classes.container, classes[size])}>

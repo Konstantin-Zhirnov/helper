@@ -21,19 +21,21 @@ const initialState: ReviewsStateType = {
   },
   reviews: [],
   reviewsByAuthor: [],
-  isModal: false,
+  isModal: '',
   page: 1,
   count: 0,
   pages: 0,
   message: '',
   alertMessage: '',
+  isLoading: false,
+  isStarsErrorMessage: false
 }
 
 export const reviews = createSlice({
   name: 'reviews',
   initialState,
   reducers: {
-    setModal: (state, action: PayloadAction<boolean>) => {
+    setModal: (state, action: PayloadAction<string>) => {
       state.isModal = action.payload
     },
     setAlertReviewsMessage: (state, action: PayloadAction<string>) => {
@@ -49,6 +51,9 @@ export const reviews = createSlice({
       state.reviews = []
       state.page = 1
     },
+    setStarsErrorMessage: (state, action: PayloadAction<boolean>) => {
+      state.isStarsErrorMessage = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -63,7 +68,7 @@ export const reviews = createSlice({
       .addCase(fetchAddReview.pending, pending)
       .addCase(fetchAddReview.fulfilled, (state, action: PayloadAction<ReviewType>) => {
         state.reviews.unshift(action.payload)
-        state.isModal = false
+        state.isModal = ''
         state.user.stars = state.user.stars + action.payload.stars
         state.user.countReviews = state.user.countReviews + 1
       })
@@ -109,17 +114,19 @@ function pending(state: ReviewsStateType) {
 }
 
 
-export const { setModal, setMessage, setAlertReviewsMessage, setReviewsPage, clearReviews } = reviews.actions
+export const { setModal, setMessage, setAlertReviewsMessage, setReviewsPage, clearReviews, setStarsErrorMessage } = reviews.actions
 
 
 export const getUser = (state: RootState): UserType => state.reviews.user
-export const getModal = (state: RootState): boolean => state.reviews.isModal
+export const getModal = (state: RootState): string => state.reviews.isModal
 export const getMessage = (state: RootState): string => state.reviews.message
 export const getReviewsPage = (state: RootState): number => state.reviews.page
 export const getReviewsPages = (state: RootState): number => state.reviews.pages
 export const getReviews = (state: RootState): ReviewType[] => state.reviews.reviews
 export const getReviewsByAuthor = (state: RootState): ReviewType[] => state.reviews.reviewsByAuthor
 export const getIsReviewsByAuthor = (state: RootState): boolean => Boolean(state.reviews.reviewsByAuthor.length)
+export const getLoading = (state: RootState): boolean => state.reviews.isLoading
+export const getStarsErrorMessage = (state: RootState): boolean => state.reviews.isStarsErrorMessage
 
 
 export default reviews.reducer

@@ -65,6 +65,7 @@ import {
   setAlertPostsMessage,
   setLocation,
   setPage,
+  getCategory
 } from './Posts/model/slice'
 import { fetchPosts, fetchPostsByUser } from './Posts/model/asyncActions'
 import { Location } from './Posts/components/Location'
@@ -153,6 +154,7 @@ export {
   setAlertPostsMessage,
   setPage,
   setLocation,
+  getCategory
 }
 export { fetchPosts, fetchPostsByUser }
 export { Location, AddPost, Post, Search, SearchComponent, Category }

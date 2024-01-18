@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 
-import { useAppDispatch } from '../../../../shared'
+import {FormItem, useAppDispatch} from '../../../../shared'
 import { fetchSendEmail } from '../../model/asyncActions'
 import { EmailType, SendEmailReasonType } from '../../types'
 
@@ -63,15 +63,7 @@ const SendToEmail: React.FC<IProps> = React.memo(({ sendEmailReason }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
-            <span className={classes.input_container}>
-                <label htmlFor='email'>Email:</label>
-                <input id='email' {...register('email')} autoComplete='off' />
-                <ErrorMessage
-                  errors={errors as any}
-                  name='email'
-                  render={({ message }) => <p className={classes.error}>{message}</p>}
-                />
-            </span>
+       <FormItem register={register} errors={errors} name="email" label='Email:'/>
 
       <button type='submit' className={classes.btn} disabled={Boolean(seconds)}>
         {seconds || 'Submit'}

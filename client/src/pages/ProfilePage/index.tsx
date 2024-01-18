@@ -1,4 +1,5 @@
 import React from 'react'
+import {useNavigate} from "react-router-dom";
 
 import { ProfileInfo, ProfileMenu } from '../../widgets'
 import {
@@ -8,10 +9,9 @@ import {
   getAuth,
   getUser
 } from '../../features'
-import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
+import { useAppDispatch, useAppSelector, Wrapper, Title } from '../../shared'
 
 import classes from './ProfilePage.module.sass'
-import {useNavigate} from "react-router-dom";
 
 
 const ProfilePage: React.FC = React.memo(() => {
@@ -48,6 +48,7 @@ const ProfilePage: React.FC = React.memo(() => {
 
   return (
       <>
+        <Title text="Settings" divider/>
         <Wrapper>
           <h1 className={classes.title}>Settings</h1>
           <div className={classes.divider}/>

@@ -43,12 +43,13 @@ export class PostsService {
       .exec()
   }
 
-  async getAll(location: string = 'Nanaimo', search: string, page: number = 0, fieldName: string, chosenFields: Record<string, number>) {
+  async getAll(location: string = 'Nanaimo', category: string, search: string, page: number = 0, fieldName: string, chosenFields: Record<string, number>) {
     let options = {}
 
     if (search) {
       options = {
         location: capitalizeFirstLetter(location),
+        category,
         $or: [
           { title: new RegExp(search, 'i') },
           { description: new RegExp(search, 'i') },
@@ -57,6 +58,7 @@ export class PostsService {
     } else {
       options = {
         location: capitalizeFirstLetter(location),
+        category
       }
     }
 

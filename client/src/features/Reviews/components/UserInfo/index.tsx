@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Stars, useAppDispatch, useAppSelector } from '../../../../shared'
+import {Avatar, Stars, useAppDispatch, useAppSelector} from '../../../../shared'
 
 import { getUser } from '../../model/slice'
 import { fetchUser } from '../../model/asyncActions'
@@ -24,8 +24,8 @@ const UserInfo: React.FC<IProps> = React.memo(({ id }) => {
   return (
     <div className={classes.container}>
         <span>
-           <img src={user.photo} alt='user'/>
-          <p>{user.name}</p>
+          <Avatar photo={user.photo} size="md"/>
+          <p className={classes.name}>{user.name}</p>
           <Stars stars={user.stars} countReviews={user.countReviews} />
         </span>
     </div>

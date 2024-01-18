@@ -1,71 +1,68 @@
 @import "../../../../shared/constants/vars"
 
 .container
+  display: flex
+  flex-direction: column
+  border-radius: 22px
+  background: $white
   position: relative
-
-  .remove
-    position: absolute
-    top: 5px
-    right: 5px
-    background-color: transparent
-
-    &:hover
-      background-color: cornsilk
-
-    svg
-      fill: $red
 
   .user
     display: flex
-    padding: 1rem
-    overflow: hidden
-    flex-direction: column
-    align-items: flex-start
-    gap: 0.4rem
+    justify-content: space-between
+    align-items: center
+    padding: 20px 24px
+    border-radius: 22px 22px 0 0
+    background: $primary-color
+    height: 60px
+    color: $stars-color
+    &.pr_40
+      padding-right: 40px
 
-    .user_container
-      display: flex
-      align-items: center
-
-      p
-        margin-left: 0.7rem
-        font-size: 0.9rem
-
-    .stars
-      height: 20px
-      color: darkgoldenrod
-
-  .info
-    flex: 1
-    display: flex
-    flex-direction: column
-
-    .title
+    .name
+      color: $primary-text
+      font-size: 16px
+      font-style: normal
       font-weight: 600
-      padding: 0 1rem
+      line-height: normal
+      letter-spacing: -0.16px
 
-    .divider
-      margin: 0.7rem 0
+  .title
+    padding: 20px 24px 4px
 
-    .description
-      padding: 0 1rem 0.5rem
+    .text
+      color: $primary-text
+      font-size: 26px
+      font-style: normal
+      font-weight: 700
+      line-height: 130%
+      letter-spacing: -0.52px
 
-    .footer
-      padding: 1rem 1rem 0.5rem 0.7rem
-      display: flex
-      justify-content: space-between
-      align-items: flex-end
+  .description
+    padding: 10px 24px
+    &.profile
+      padding: 0 24px 10px
 
-      .avatar_container
-        display: flex
-        align-items: flex-end
+    .text
+      color: $gray-text
+      font-size: 1rem
+      font-style: normal
+      font-weight: 500
+      line-height: 135%
+      letter-spacing: 0.16px
 
-        p
-          margin-left: 0.7rem
-          color: $primary-color
-          font-size: 0.86rem
+  .footer
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 20px 24px
+    flex-wrap: wrap
 
-      .time
-        color: $primary-color
-        font-size: 0.86rem
+    .text
+      font-size: 1rem
+      font-style: normal
+      line-height: 1rem
+      color: $icon-color
+      font-weight: 500
+
 

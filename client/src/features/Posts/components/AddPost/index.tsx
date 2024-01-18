@@ -1,13 +1,20 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
-import cn from 'classnames'
 import * as yup from 'yup'
 
 import { AddImages, Categories } from '../../../../entities'
-import {AddButton, Modal, useAppDispatch, useAppSelector, categories, FormItem} from '../../../../shared'
+import {
+  AddButton,
+  Modal,
+  useAppDispatch,
+  useAppSelector,
+  categories,
+  FormItem,
+  SubmitWithImagesButton
+} from '../../../../shared'
 
-import { getMessage, getModal, setAlertPostsMessage, setMessage, setModal } from '../../model/slice'
+import {getLoading, getMessage, getModal, setAlertPostsMessage, setMessage, setModal} from '../../model/slice'
 import { fetchAddPost } from '../../model/asyncActions'
 import { CreatePostType } from '../../types'
 
@@ -25,7 +32,7 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   const dispatch = useAppDispatch()
   const isModal = useAppSelector(getModal)
   const message = useAppSelector(getMessage)
-
+  const isLoading = useAppSelector(getLoading)
 
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
@@ -115,15 +122,12 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
                 setImages={setImages}
                 authorId={authorId}
                 message={message}
+                isLoading={isLoading}
                 setMessage={onMessage}
                 setAlertMessage={onAlertMessage}
               />
 
-              <button type='submit'
-                      className={cn(classes.submit, { [classes.disabled]: currentImages.length !== images.length })}>
-                Submit
-              </button>
-
+              <SubmitWithImagesButton disabled={isLoading} currentImagesLength={currentImages.length} imagesLength={images.length}/>
             </form>
           </Modal>
         )

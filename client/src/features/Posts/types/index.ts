@@ -22,6 +22,7 @@ export type PostsQueryType = {
   location: string
   search: string
   page: number
+  category: string
 }
 
 type AuthorIdType = {
@@ -42,6 +43,7 @@ export type PostType = {
   title: string
   description: string
   location: string
+  category: string
   authorId: AuthorIdType
   time: number
   images: string[]

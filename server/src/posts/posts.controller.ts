@@ -58,10 +58,11 @@ export class PostsController {
   @Get('posts')
   async getAll(@Query() {
     location,
+    category,
     search,
     page,
   }) {
-    return await this.postsService.getAll(location, search, page, 'authorId', chosenFields)
+    return await this.postsService.getAll(location, category, search, page, 'authorId', chosenFields)
   }
 
 

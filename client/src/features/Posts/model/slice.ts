@@ -91,7 +91,7 @@ export const posts = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPosts.pending, pendingFetchPosts)
+      .addCase(fetchPosts.pending, pendingWithLoading)
       .addCase(fetchPosts.fulfilled, (state, action: PayloadAction<PostsType>) => {
         if (action.payload.page === 1) {
           state.posts = action.payload.posts
@@ -154,7 +154,7 @@ export const posts = createSlice({
         state.message = (action.payload as string) ?? ''
       })
 
-      .addCase(fetchAddImages.pending, pending)
+      .addCase(fetchAddImages.pending, pendingWithLoading)
       .addCase(fetchAddImages.fulfilled, (state, action: PayloadAction<UpdatePostType>) => {
         state.postsByUser = state.postsByUser.map(post => {
           if (post._id === action.payload._id) {
@@ -168,9 +168,11 @@ export const posts = createSlice({
           }
           return post
         })
+        state.isLoading = false
       })
       .addCase(fetchAddImages.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
+        state.isLoading = false
       })
 
       .addCase(fetchRemoveImage.pending, pending)
@@ -207,7 +209,7 @@ function pending(state: PostsStateType) {
   state.message = ''
 }
 
-function pendingFetchPosts(state: PostsStateType) {
+function pendingWithLoading(state: PostsStateType) {
   state.message = ''
   state.isLoading = true
 }

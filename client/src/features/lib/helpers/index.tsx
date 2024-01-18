@@ -11,6 +11,7 @@ export const renderPostItem = (post: PostType) => (
         title={post.title}
         description={post.description}
         location={post.location}
+        category={post.category}
         time={post.time}
         postAuthorId={post.authorId._id}
         name={post.authorId.name}

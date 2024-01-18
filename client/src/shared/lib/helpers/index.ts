@@ -44,3 +44,11 @@ export const reduceImage = async (file, maxSize, callback) => {
 
   reader.readAsDataURL(file)
 }
+
+export function daysAgo(milliseconds) {
+  const targetDate = new Date(milliseconds);
+  const currentDate = new Date();
+  const days = Math.floor((currentDate.getTime() - targetDate.getTime()) / 86400000)
+
+  return  days > 0 ? `${days} days ago` : 'Today'
+}

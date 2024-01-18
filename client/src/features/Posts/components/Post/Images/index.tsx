@@ -2,18 +2,19 @@ import React from 'react'
 import cn from 'classnames'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import { MdOutlineRotate90DegreesCw, MdZoomIn, MdZoomOut, MdOutlineHideImage } from 'react-icons/md'
-import { TiDelete } from 'react-icons/ti'
 
 
 import { AddImages } from '../../../../../entities'
-import { useAppDispatch, useAppSelector } from '../../../../../shared'
+import {useAppDispatch, useAppSelector, useGetWidth} from '../../../../../shared'
 
-import { fetchAddImages, fetchRemoveImage } from '../../../model/asyncActions'
-import { getMessage, setAlertPostsMessage, setMessage } from '../../../model/slice'
+import { fetchAddImages } from '../../../model/asyncActions'
+import {getLoading, getMessage, setAlertPostsMessage, setMessage} from '../../../model/slice'
+
+import { RemoveImgButton } from "./RemoveImgButton"
 
 import 'react-photo-view/dist/react-photo-view.css'
 import classes from './Images.module.sass'
-import {RemoveImgButton} from "./RemoveImgButton";
+
 
 
 interface IProps {
@@ -25,12 +26,14 @@ interface IProps {
 
 const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, pathname, authorId }) => {
 
+  const width = useGetWidth('.image_container')
+
   const dispatch = useAppDispatch()
   const message = useAppSelector(getMessage)
+  const isLoading = useAppSelector(getLoading)
 
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
-  const [width, setWidth] = React.useState(0);
   const [showAll, setShowAll] = React.useState(false);
 
   const onAlertMessage = (text) => {
@@ -41,30 +44,6 @@ const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, pathname, au
     dispatch(setMessage(text))
   }
 
-  const getAddImages = () => {
-    if (pathname === '/profile') {
-      if (images.length !== 0) {
-        return <div className={classes.snipper} />
-      } else {
-        return <AddImages
-          setCurrentImages={setCurrentImages}
-          images={images}
-          setImages={setImages}
-          authorId={authorId}
-          message={message}
-          setMessage={onMessage}
-          setAlertMessage={onAlertMessage}
-        />
-      }
-    }
-    return null
-  }
-
-  const removeImage = (e, image) => {
-    e.stopPropagation()
-    dispatch(fetchRemoveImage({ _id, image, folder: authorId }))
-  }
-
   const handleClick = () => {
     setShowAll(prevState => !prevState)
   }
@@ -72,34 +51,20 @@ const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, pathname, au
 
   React.useEffect(() => {
     if (images.length !== 0 && (currentImages.length === images.length)) {
+      const formData = new FormData()
+      formData.append('_id', _id)
       const sendImages = async () => {
-        const formData = new FormData()
-        formData.append('_id', _id)
         await images.forEach(image => {
           formData.append('images', image.image, image.name)
         })
-        await dispatch(fetchAddImages(formData))
+      }
+      sendImages().then(() => {
+        dispatch(fetchAddImages(formData))
         setCurrentImages([])
         setImages([])
-      }
-      sendImages()
+      })
     }
   }, [currentImages, images])
-
-  React.useEffect(() => {
-    const setCurrentWidth = () => {
-      const width = document.querySelectorAll('.image_container')[0].clientWidth
-      if (width) {
-        setWidth(width);
-      }
-    }
-    setCurrentWidth()
-
-    window.addEventListener("resize", setCurrentWidth)
-    return () => {
-      window.removeEventListener("resize", setCurrentWidth)
-    }
-  }, []);
 
 
   return (
@@ -134,13 +99,26 @@ const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, pathname, au
             }
 
             { imagesSrcArray.length > 3 && (
-                <button className={classes.add} onClick={handleClick} style={{height: width}}>
+                <button className={classes.add} onClick={handleClick} style={{height: `${width}px`}}>
                   {!showAll ? <>+{imagesSrcArray.length - 3}</> : <MdOutlineHideImage size={24}/>}
                 </button>
               )
             }
 
-            {getAddImages()}
+            {
+                pathname === '/profile' && (
+                    <AddImages
+                        setCurrentImages={setCurrentImages}
+                        images={images}
+                        setImages={setImages}
+                        authorId={authorId}
+                        message={message}
+                        isLoading={isLoading}
+                        setMessage={onMessage}
+                        setAlertMessage={onAlertMessage}
+                    />
+                )
+            }
 
           </PhotoProvider>
         </div>

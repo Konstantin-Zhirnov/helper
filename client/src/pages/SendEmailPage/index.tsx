@@ -2,7 +2,7 @@ import React from 'react'
 import cn from 'classnames'
 
 import { clearSendEmail, getSendEmailMessage, getSendEmailReason, SendToEmail } from '../../features'
-import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
+import { Title, useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
 import classes from './SendEmailPage.module.sass'
 
@@ -34,21 +34,22 @@ const SendEmailPage: React.FC = () => {
   }, [])
 
   return (
-    <Wrapper>
-      <h1 className={classes.title}>
-        Request a link
-      </h1>
-      {
-        !sendEmailReason && (
-          <>
-            <p className={classes.text}>{getText()}</p>
+      <>
+        <Title text="Request a link" divider/>
+        <Wrapper>
+          {
+              !sendEmailReason && (
+                  <>
+                    <p className={classes.text}>{getText()}</p>
 
-            <SendToEmail sendEmailReason={sendEmailReason} />
-          </>
-        )
-      }
-      <p className={cn(classes.text, { [classes.red]: getClass() })}>{sendEmailMessage}</p>
-    </Wrapper>
+                    <SendToEmail sendEmailReason={sendEmailReason} />
+                  </>
+              )
+          }
+
+          <p className={cn(classes.text, { [classes.red]: getClass() })}>{sendEmailMessage}</p>
+        </Wrapper>
+      </>
   )
 }
 

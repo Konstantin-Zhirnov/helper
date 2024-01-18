@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 
 import { fetchUser, getChangePasswordMessage, PasswordChanging } from '../../features'
-import { useAppDispatch, useAppSelector, Wrapper } from '../../shared'
+import {Title, useAppDispatch, useAppSelector, Wrapper} from '../../shared'
 
 import classes from './PasswordPage.module.sass'
 
@@ -30,19 +30,21 @@ const PasswordPage: React.FC = () => {
   }, [changePasswordMessage])
 
   return (
-    <Wrapper>
-      <h1 className={classes.title}>
-        Password changing
-      </h1>
+      <>
+        <Title text="Password Change" divider/>
+        <Wrapper>
+          <div className={classes.password}>
+            <PasswordChanging link={link} />
+            {
+                changePasswordMessage && <p className={cn(classes.text, {[classes.red]: getClass()})}>
+                  {changePasswordMessage}
+                </p>
+            }
+          </div>
 
-      <PasswordChanging link={link} />
+        </Wrapper>
+      </>
 
-      {
-        changePasswordMessage && <p className={cn(classes.text, {[classes.red]: getClass()})}>
-          {changePasswordMessage}
-        </p>
-      }
-    </Wrapper>
   )
 }
 

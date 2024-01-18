@@ -1,7 +1,9 @@
 import React from 'react'
-import { FcAddImage } from 'react-icons/fc'
 
-import { getExtension, reduceImage } from '../../../../shared'
+import { MdAddAPhoto } from "react-icons/md"
+import { ImSpinner9 } from "react-icons/im"
+
+import {getExtension, reduceImage, useGetWidth} from '../../../../shared'
 
 
 import classes from './AddImages.module.sass'
@@ -13,6 +15,7 @@ interface IProps {
   setImages: (value: (((prevState: any[]) => any[]) | any[])) => void
   authorId: string
   message: string
+  isLoading: boolean
 
   setMessage(text: string): void
 
@@ -27,12 +30,13 @@ const AddImages: React.FC<IProps> = React.memo(({
                                                   setImages,
                                                   authorId,
                                                   message,
+                                                  isLoading,
                                                   setMessage,
                                                   setAlertMessage,
                                                 }) => {
 
   const id = React.useId()
-
+  const width = useGetWidth('.images_label')
 
   const getImagesString = () => {
     if (!currentImages) return ''
@@ -72,15 +76,14 @@ const AddImages: React.FC<IProps> = React.memo(({
     event.target.value = ''
   }
 
-
   return (
     <>
-      <label htmlFor={id} className={classes.images_label}>
-        <FcAddImage />
-        <span>{getImagesString()}</span>
-      </label>
-      <input id={id} type='file' onChange={handleFileUpload} multiple className={classes.images_input} />
+        <label htmlFor={id} className={`images_label ${classes.images_label}`} style={{height: `${width}px`}}>
+            { isLoading ? <ImSpinner9 size={26} className={classes.spinner}/> : <MdAddAPhoto size={26}/> }
+        </label>
 
+      <input id={id} type='file' onChange={handleFileUpload} multiple className={classes.images_input} />
+      <p className={classes.images_list}>{getImagesString()}</p>
       <p className={classes.error_message}>{message}</p>
     </>
   )

@@ -7,19 +7,14 @@
   flex-direction: column
   max-width: 400px
   margin: 2rem auto 0
-  .input_container
-    position: relative
-    padding-bottom: 1.6rem
 
-    .error
-      position: absolute
-      color: $red
-
-button.btn
+.btn
     @include btn
     margin: 1.5rem 0
     height: 40px
+    transition: background 400ms
     &:hover
       @include btn-hover
-    &:disabled
-        background-color: #72a2d2  
+    &.disabled
+      background: $primary-dark-color
+      cursor: initial

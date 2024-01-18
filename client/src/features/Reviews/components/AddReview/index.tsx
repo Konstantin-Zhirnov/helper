@@ -1,20 +1,27 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
-import { ErrorMessage } from '@hookform/error-message'
-import cn from 'classnames'
 import * as yup from 'yup'
-import ReactStars from 'react-rating-stars-component'
-import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md'
 
 import { AddImages } from '../../../../entities'
-import { AddButton, useAppDispatch, useAppSelector } from '../../../../shared'
+import {AddButton, FormItem, Modal, SubmitWithImagesButton, useAppDispatch, useAppSelector} from '../../../../shared'
 
 import { fetchAddReview } from '../../model/asyncActions'
-import { getMessage, getModal, setAlertReviewsMessage, setMessage, setModal } from '../../model/slice'
+import {
+  getLoading,
+  getMessage,
+  getModal,
+  setAlertReviewsMessage,
+  setMessage,
+  setModal,
+  setStarsErrorMessage
+} from '../../model/slice'
 import { CreateReviewType } from '../../types'
 
+import {Stars} from "./Stars";
+
 import classes from './AddReview.module.sass'
+
 
 
 interface IProps {
@@ -27,20 +34,20 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
   const dispatch = useAppDispatch()
   const isModal = useAppSelector(getModal)
   const message = useAppSelector(getMessage)
-
+  const isLoading = useAppSelector(getLoading)
 
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
   const [stars, setStars] = React.useState(0)
-  const [isMessage, setIsMessage] = React.useState(false)
+
 
 
   const onOpen = React.useCallback(() => {
-    dispatch(setModal(true))
+    dispatch(setModal('review'))
   }, [])
 
   const onClose = () => {
-    dispatch(setModal(false))
+    dispatch(setModal(''))
   }
 
   const schema = yup
@@ -62,24 +69,26 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
 
 
   const onSubmit: SubmitHandler<CreateReviewType> = async (data) => {
-    if (currentImages.length === images.length) {
-      const formData = new FormData()
-      formData.append('title', data.title)
-      formData.append('description', data.description)
-      formData.append('stars', stars.toString())
-      formData.append('authorId', authorId)
-      formData.append('userId', userId)
-      await images.forEach(image => {
-        formData.append('images', image.image, image.name)
-      })
-      if (stars) {
-        await dispatch(fetchAddReview(formData))
-        setCurrentImages([])
-        setImages([])
-        setStars(0)
-        reset()
-      } else {
-        setIsMessage(true)
+    if (!isLoading) {
+      if (currentImages.length === images.length) {
+        const formData = new FormData()
+        formData.append('title', data.title)
+        formData.append('description', data.description)
+        formData.append('stars', stars.toString())
+        formData.append('authorId', authorId)
+        formData.append('userId', userId)
+        await images.forEach(image => {
+          formData.append('images', image.image, image.name)
+        })
+        if (stars) {
+          await dispatch(fetchAddReview(formData))
+          setCurrentImages([])
+          setImages([])
+          setStars(0)
+          reset()
+        } else {
+          dispatch(setStarsErrorMessage(true))
+        }
       }
     }
   }
@@ -92,83 +101,38 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
     dispatch(setMessage(text))
   }
 
-  const ratingChanged = (newRating) => {
-    setStars(newRating)
-  }
-
-  React.useEffect(() => {
-    if (isMessage && stars) {
-      setIsMessage(false)
-    }
-  }, [isMessage, stars])
-
   return (
-    <>
-      <AddButton onOpen={onOpen} />
+      <>
+        <AddButton onOpen={onOpen} />
+        {
+            isModal === 'review' && (
+                <Modal onClose={onClose} title="Add a review">
+                    <form onSubmit={handleSubmit(onSubmit)} id='myForm' className={classes.container}>
 
-      <div>
+                        <FormItem register={register} errors={errors} name="title" label='Title:'/>
 
-        <div>
-          <form onSubmit={handleSubmit(onSubmit)} id='myForm'>
-            <p className={classes.header}>Add a post</p>
+                        <FormItem register={register} errors={errors} name="description" label='Description:'/>
 
-            <div className={classes.container}>
+                        <Stars stars={stars} setStars={setStars}/>
 
-              <span className={classes.input_container}>
-                <label htmlFor='title'>Title:</label>
-                <input id='title' {...register('title')} autoComplete='off' />
-                <ErrorMessage
-                  errors={errors as any}
-                  name='title'
-                  render={({ message }) => <p className={classes.error}>{message}</p>}
-                />
-              </span>
+                        <AddImages
+                          currentImages={currentImages}
+                          setCurrentImages={setCurrentImages}
+                          images={images}
+                          setImages={setImages}
+                          authorId={authorId}
+                          message={message}
+                          isLoading={isLoading}
+                          setMessage={onMessage}
+                          setAlertMessage={onAlertMessage}
+                        />
 
-              <span className={classes.input_container}>
-                <label htmlFor='description'>Description:</label>
-                <textarea id='description' {...register('description')} />
-                <ErrorMessage
-                  errors={errors as any}
-                  name='description'
-                  render={({ message }) => <p className={classes.error}>{message}</p>}
-                />
-              </span>
-
-              <ReactStars
-                count={5}
-                onChange={ratingChanged}
-                size={28}
-                emptyIcon={<MdOutlineStarBorder />}
-                fullIcon={<MdOutlineStar />}
-                activeColor='#ffd700'
-              />
-              <div className={classes.stars_error_container}>
-                {isMessage && <p className={classes.stars_error_text}>Select the number of stars</p>}
-              </div>
-
-              <AddImages
-                currentImages={currentImages}
-                setCurrentImages={setCurrentImages}
-                images={images}
-                setImages={setImages}
-                authorId={authorId}
-                message={message}
-                setMessage={onMessage}
-                setAlertMessage={onAlertMessage}
-              />
-
-            </div>
-
-            <div>
-              <button type='submit'
-                      className={cn(classes.submit, { [classes.disabled]: currentImages.length !== images.length })}>
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </>
+                      <SubmitWithImagesButton  disabled={isLoading} currentImagesLength={currentImages.length} imagesLength={images.length}/>
+                    </form>
+                </Modal>
+            )
+        }
+      </>
   )
 })
 

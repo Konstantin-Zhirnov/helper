@@ -1,25 +1,46 @@
 @import "../../../../shared/constants/vars"
 
-.images_label
-  display: flex
-  align-items: center
-  gap: 1rem
 
+.images_label
+  width: 22%
+  min-width: 22%
+  border-radius: 14px
+  background: $empty-image-background
+  border: none
+  cursor: pointer
+  font-style: normal
+  font-weight: 600
+  line-height: 1rem
+  transition: background 400ms
+  display: flex
+  justify-content: center
+  align-items: center
   svg
-    font-size: 50px
-    cursor: pointer
-    circle:last-of-type
-      fill: $primary-text
-      transition: background 400ms
-      &:hover
-        fill: $primary-dark-color
-        transition: background 400ms
+    fill: $icon-color
+    &.spinner
+      animation: rotating 2s linear infinite
+  &:hover
+    transition: background 400ms
+    background: $empty-image-background-hover
 
 .images_input
   display: none
+
+.images_list
+  font-size: 0.8rem
+  color: $primary-dark-color
+  display: flex
+  align-items: center
+
 
 .error_message
   color: $red
   font-weight: 500
   display: flex
   align-items: center
+
+@keyframes rotating
+  from
+    transform: rotate(0deg)
+  to
+    transform: rotate(360deg)

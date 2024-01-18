@@ -1,0 +1,23 @@
+@import "../../../shared/constants/vars"
+
+.wrapper
+  flex: 1
+  .title
+    height: 30px
+    margin-bottom: 1rem
+    color: $primary-text
+    font-size: 1.4rem
+    font-style: normal
+    font-weight: 700
+    line-height: 130%
+    letter-spacing: -0.45px
+  .container
+    background: $white
+    border-radius: 4px
+    padding: clamp(1rem, calc(0.5rem + 1.8vw), 2rem)
+    &.cards
+      padding: 0
+      background: transparent
+
+    input[type="password"]
+      width: 50%!important

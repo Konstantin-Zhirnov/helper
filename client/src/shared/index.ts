@@ -15,11 +15,14 @@ import { Avatar } from './ui/Avatar'
 import { CategoryItem } from './ui/CategoryItem'
 import { FormItem } from './ui/FormItem'
 import { FormButton } from './ui/FormButton'
+import { SubmitWithImagesButton } from './ui/SubmitWithImagesButton'
+import { Title } from './ui/Title'
 
 import { useMatchMedia } from './lib/hooks/useMatchMedia'
 import { useDebounce } from './lib/hooks/useDebounce'
+import { useGetWidth } from './lib/hooks/useGetWidth'
 
-import { getExtension, reduceImage } from './lib/helpers'
+import { getExtension, reduceImage, daysAgo } from './lib/helpers'
 
 import { categories, profileMenu } from './constants/constants'
 
@@ -42,13 +45,15 @@ export { AddButton,
     Avatar,
     CategoryItem,
     FormItem,
-    FormButton
+    FormButton,
+    SubmitWithImagesButton,
+    Title
 }
 
 
-export { useMatchMedia, useDebounce }
+export { useMatchMedia, useDebounce, useGetWidth }
 
-export { getExtension, reduceImage }
+export { getExtension, reduceImage, daysAgo }
 
 export { categories, profileMenu }
 

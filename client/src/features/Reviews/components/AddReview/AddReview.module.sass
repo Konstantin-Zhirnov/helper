@@ -1,43 +1,4 @@
 @import "../../../../shared/constants/mixins"
-@import "../../../../shared/constants/vars"
-
-.header
-  text-align: center
-  font-size: 1.6rem
 
 .container
-  display: flex
-  flex-direction: column
-
-  .input_container
-    position: relative
-    padding-bottom: 1.6rem
-
-    .error
-      position: absolute
-      color: $red
-
-    circle
-      fill: $primary-color
-
-    &:hover
-      filter: drop-shadow(0 0 2px silver)
-
-  .stars_error_container
-    min-height: 22px
-    margin-top: -8px
-
-    .stars_error_text
-      color: $red
-      font-size: 0.9rem
-
-button.submit
-  @include btn
-
-  &.disabled, &.disabled:hover
-    cursor: initial
-    background-color: #7fb4e8
-    box-shadow: none
-
-  &:hover
-    @include btn-hover
+  @include form-container

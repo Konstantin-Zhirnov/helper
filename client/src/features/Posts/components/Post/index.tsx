@@ -2,7 +2,7 @@ import React from 'react'
 import cn from "classnames";
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { Stars } from '../../../../shared'
+import {daysAgo, Stars} from '../../../../shared'
 
 import { ContactInformation } from "./ContactInformation"
 import { EditableField } from "./EditableField"
@@ -12,23 +12,12 @@ import { Images } from "./Images";
 import classes from './Post.module.sass'
 
 
-
-
-
-
-function daysAgo(milliseconds) {
-    const targetDate = new Date(milliseconds);
-    const currentDate = new Date();
-    return Math.floor((currentDate.getTime() - targetDate.getTime()) / 86400000);
-}
-
-
 interface IProps {
   _id?: string
   title: string
   description: string
   location: string
-  category?: string
+  category: string
   time: number
   postAuthorId: string
   name: string
@@ -105,8 +94,8 @@ const Post: React.FC<IProps> = React.memo(({
         <div className={classes.category}>
             {
                 pathname === '/profile'
-                    ? <EditableField _id={_id} defaultValue={'Gardening'} field='category' label="Category:"/>
-                    : <p className={classes.sign}>Health & Wellness</p>
+                    ? <EditableField _id={_id} defaultValue={category} field='category' label="Category:"/>
+                    : <p className={classes.sign}>{category}</p>
             }
         </div>
 
@@ -127,7 +116,7 @@ const Post: React.FC<IProps> = React.memo(({
         }
 
         <div className={classes.footer}>
-            <p className={classes.time}>{daysAgo(time)} days ago</p>
+            <p className={classes.time}>{daysAgo(time)}</p>
             <ContactInformation _id={_id} email={email} phone={phone} whatsapp={whatsapp} telegram={telegram} />
         </div>
 
