@@ -9,7 +9,13 @@ import * as yup from 'yup'
 import {FormButton, FormItem, useAppDispatch, useAppSelector} from '../../../../../../shared'
 
 import { fetchLogin } from '../../../../model/asyncActions'
-import { getLoginErrorMessage, goToSendEmailPage, getLoading } from '../../../../model/slice'
+import {
+    getLoginErrorMessage,
+    goToSendEmailPage,
+    getLoading,
+    getMobileMenu,
+    setMobileMenu
+} from '../../../../model/slice'
 import { LoginType, SendEmailReasonType } from '../../../../types'
 
 import classes from './LoginForm.module.sass'
@@ -18,7 +24,8 @@ import classes from './LoginForm.module.sass'
 const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch()
   const loginErrorMessage = useAppSelector(getLoginErrorMessage)
-    const isLoading = useAppSelector(getLoading)
+  const isMobileMenu = useAppSelector(getMobileMenu)
+  const isLoading = useAppSelector(getLoading)
 
   const schema = yup
     .object()
@@ -52,6 +59,9 @@ const LoginForm: React.FC = () => {
   const handleClick = (key: SendEmailReasonType) => () => {
     dispatch(goToSendEmailPage(key))
     document.body.style.overflow = 'auto'
+      if (isMobileMenu) {
+          dispatch(setMobileMenu(false))
+      }
   }
 
   const getLink = () => {
