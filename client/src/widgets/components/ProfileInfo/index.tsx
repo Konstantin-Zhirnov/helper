@@ -26,8 +26,8 @@ const ProfileInfo: React.FC<IProps> = React.memo(({ activeItem }) => {
     const getTitle = () => {
         if (activeItem === 'Profile') return 'Account details'
         if (activeItem === 'Password') return 'Password changing'
-        if (activeItem === 'Posts') return 'The posts you have published'
-        if (activeItem === 'Reviews') return 'The reviews that you have published'
+        if (activeItem === 'Posts') return 'Your posts'
+        if (activeItem === 'Reviews') return 'Your reviews'
     }
 
     const getContent = () => {
