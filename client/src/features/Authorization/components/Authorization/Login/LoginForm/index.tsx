@@ -51,6 +51,7 @@ const LoginForm: React.FC = () => {
 
   const handleClick = (key: SendEmailReasonType) => () => {
     dispatch(goToSendEmailPage(key))
+    document.body.style.overflow = 'auto'
   }
 
   const getLink = () => {
