@@ -5,6 +5,7 @@ import { BiChevronDown } from "react-icons/bi"
 import { AiOutlineSearch } from "react-icons/ai"
 
 import classes from './Select.module.sass'
+import {useMatchMedia} from "../../lib/hooks/useMatchMedia";
 
 
 interface IProps {
@@ -19,6 +20,7 @@ interface IProps {
 const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, mr0, category }) => {
 
   const { pathname } = useLocation()
+  const { isMobile } = useMatchMedia()
 
   const [selected, setSelected] = React.useState(defaultValue)
   const [inputValue, setInputValue] = React.useState('')
@@ -51,7 +53,7 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
       <div
           className={cn(classes.container, {[classes.ml_0]: ml0, [classes.mr_0]: mr0, [classes.category]: category})}>
         <div onClick={handleClick} className={classes.view}>
-          <p className={cn({[classes.profile]: pathname === '/profile'})}>
+          <p className={cn({[classes.profile]: pathname === '/profile', [classes.mobile]: isMobile})}>
             {selected
                 ? selected.length > 12
                     ? !category
@@ -61,7 +63,7 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
                 : ''
             }
           </p>
-          <BiChevronDown size={20} className={cn(classes.arrow_icon, {[classes.rotate]: open})}/>
+          <BiChevronDown size={isMobile ? 24 : 20} className={cn(classes.arrow_icon, {[classes.rotate]: open})}/>
         </div>
 
         <ul className={cn(classes.ul, {[classes.open]: open})}>
@@ -72,7 +74,7 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
                 value={inputValue}
                 onChange={handleChange}
                 placeholder='Enter location'
-                className={classes.input}
+                className={cn(classes.input, {[classes.mobile]: isMobile})}
             />
           </div>
 
@@ -83,7 +85,8 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
                     onClick={handleOptionClick(item)}
                     className={cn(classes.li, {
                       [classes.selected]: item.toLowerCase() === selected.toLowerCase(),
-                      [classes.hidden]: !item.toLowerCase().startsWith(inputValue)
+                      [classes.hidden]: !item.toLowerCase().startsWith(inputValue),
+                      [classes.mobile]: isMobile
                     })}
                 >
                   {item}

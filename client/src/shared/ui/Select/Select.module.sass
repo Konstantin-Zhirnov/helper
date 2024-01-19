@@ -34,6 +34,9 @@
     font-weight: 500
     gap: 0.3rem
 
+    .mobile
+      font-size: 1.1rem
+
     .arrow_icon
       fill: $primary-dark-color
       &.rotate
@@ -74,9 +77,13 @@
         font-size: 0.8rem
         color: $primary-text-color
         max-width: 100px
+        &.mobile
+          font-size: 0.9rem
         &::placeholder
           color: $primary-text-color
           font-size: 0.7rem
+        &.mobile::placeholder
+          font-size: 0.9rem
 
     .li
       padding: 0.3rem 0.8rem
@@ -91,3 +98,5 @@
         display: none
       &.selected
         background: $primary-color
+      &.mobile
+        font-size: 1rem
