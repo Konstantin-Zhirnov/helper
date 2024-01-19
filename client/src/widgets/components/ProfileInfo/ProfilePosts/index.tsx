@@ -12,7 +12,10 @@ const ProfilePosts: React.FC = React.memo(() => {
 
   return (
         <ul className={classes.container}>
-          {postsByUser.map(renderPostItem)}
+          { Boolean(postsByUser.length)
+              ? postsByUser.map(renderPostItem)
+              : <p>You haven't posted any posts yet</p>
+          }
         </ul>
   )
 })

@@ -5,8 +5,10 @@ import {Modal, useAppDispatch, useAppSelector} from "../../../../../shared";
 
 import {getModal, getRegistered, setModal} from "../../../model/slice";
 import {RegistrationForm} from "./RegistrationForm";
+import {SuccessMessage} from "./SuccessMessage";
 
 import classes from './SignUp.module.sass'
+
 
 
 interface IProps {
@@ -41,19 +43,7 @@ const SignUp: React.FC<IProps> = React.memo(({isMobile, final}) => {
         {
             ((!final && isModal === 'registration') || (final && (isModal === 'registration-final'))) && (
             <Modal onClose={onClose} title="Sign Up">
-              {
-                isRegistered
-                  ? <>
-                      <p className={classes.text}>
-                        Your user account has been successfully created. Please confirm your email.
-                      </p>
-                      <p className={classes.text}>
-                        If you haven`t received an email within 30 seconds, then check the Spam folder.
-                      </p>
-                    </>
-
-                  : <RegistrationForm />
-                }
+              { isRegistered ? <SuccessMessage/> : <RegistrationForm /> }
             </Modal>
           )
         }

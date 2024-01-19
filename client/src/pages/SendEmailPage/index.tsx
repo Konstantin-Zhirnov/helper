@@ -1,13 +1,16 @@
 import React from 'react'
 import cn from 'classnames'
 
-import { clearSendEmail, getSendEmailMessage, getSendEmailReason, SendToEmail } from '../../features'
+import {clearSendEmail, fetchUser, getSendEmailMessage, getSendEmailReason, SendToEmail} from '../../features'
 import { Title, useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
 import classes from './SendEmailPage.module.sass'
+import {useNavigate} from "react-router-dom";
 
 
 const SendEmailPage: React.FC = () => {
+
+  const navigate = useNavigate()
 
   const dispatch = useAppDispatch()
   const sendEmailMessage = useAppSelector(getSendEmailMessage)
@@ -28,17 +31,25 @@ const SendEmailPage: React.FC = () => {
   }
 
   React.useEffect(() => {
+    let timer
+    if (!sendEmailMessage && !sendEmailReason) {
+      timer = setTimeout(() => {
+        dispatch(fetchUser())
+        navigate('/')
+      }, 0)
+    }
     return () => {
       dispatch(clearSendEmail())
+      clearTimeout(timer)
     }
-  }, [])
+  }, [sendEmailMessage, sendEmailReason])
 
   return (
       <>
         <Title text="Request a link" divider/>
         <Wrapper>
           {
-              !sendEmailReason && (
+              sendEmailReason && (
                   <>
                     <p className={classes.text}>{getText()}</p>
 

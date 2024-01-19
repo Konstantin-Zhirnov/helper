@@ -144,6 +144,7 @@ export const getUserName = (state: RootState): string => state.profile.user.name
 export const getUserEmail = (state: RootState): string => state.profile.user.email
 export const getUserId = (state: RootState): string => state.profile.user._id
 export const getUserWhatsApp = (state: RootState): string => state.profile.user.whatsapp
+export const getUserTelegram = (state: RootState): string => state.profile.user.telegram
 export const getAlertProfileMessage = (state: RootState): string => state.profile.alertMessage
 export const getIsReload = (state: RootState): boolean => state.profile.isReload
 export const getActiveScreen = (state: RootState): ProfileMenuType => state.profile.activeScreen

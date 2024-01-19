@@ -55,7 +55,7 @@ const LoginForm: React.FC = () => {
 
   const getLink = () => {
     if (loginErrorMessage === 'You need to confirm your email') {
-      return <NavLink to='/send-email' className={classes.link} onClick={handleClick('activation')}>activation
+      return <NavLink to='/send-email' className={classes.link} onClick={handleClick('activation')}>Activation
         link</NavLink>
     }
     return ''

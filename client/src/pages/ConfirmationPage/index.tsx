@@ -19,13 +19,14 @@ const ConfirmationPage: React.FC = () => {
   }, [])
 
   React.useEffect(() => {
+    let timer
     if (isActivated) {
-      const timer = setTimeout(() => {
+      timer = setTimeout(() => {
         dispatch(fetchUser())
         navigate('/')
       }, 3000)
-      return () => clearTimeout(timer)
     }
+    return () => clearTimeout(timer)
   }, [isActivated])
 
   return (

@@ -1,6 +1,5 @@
 import React from 'react'
 import { useLocation } from "react-router-dom"
-import cn from "classnames"
 
 import { getReviews, getReviewsByAuthor, Review, ReviewType } from '../../../features'
 import { useAppSelector } from "../../../shared";
@@ -15,12 +14,6 @@ const Reviews: React.FC = React.memo(() => {
   const reviews = useAppSelector(getReviews)
   const reviewsByAuthor = useAppSelector(getReviewsByAuthor)
 
-  const styles = cn(
-      classes.cards,
-      {[classes.small]:
-        (pathname === '/profile' && reviewsByAuthor.length === 1) ||
-        (pathname !== '/profile' && reviews.length < 3)}
-  )
 
   const renderItem = (review: ReviewType) => (
     <Review
@@ -40,7 +33,8 @@ const Reviews: React.FC = React.memo(() => {
   )
 
   return (
-    <ul className={styles}>
+    <ul className={classes.cards}>
+      { pathname === '/profile' && !Boolean(reviewsByAuthor.length) && <p>You haven't posted any reviews yet</p>}
       {(pathname === '/profile' ? reviewsByAuthor : reviews).map(renderItem)}
     </ul>
   )
