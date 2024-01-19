@@ -3,7 +3,7 @@ import cn from "classnames";
 
 import {Modal, useAppDispatch, useAppSelector} from "../../../../../shared";
 
-import {getModal, getRegistered, setModal} from "../../../model/slice";
+import {getMobileMenu, getModal, getRegistered, setMobileMenu, setModal} from "../../../model/slice";
 import {RegistrationForm} from "./RegistrationForm";
 import {SuccessMessage} from "./SuccessMessage";
 
@@ -19,6 +19,7 @@ interface IProps {
 const SignUp: React.FC<IProps> = React.memo(({isMobile, final}) => {
   const dispatch = useAppDispatch()
   const isModal = useAppSelector(getModal)
+  const isMobileMenu = useAppSelector(getMobileMenu)
   const isRegistered = useAppSelector(getRegistered)
 
 
@@ -30,6 +31,9 @@ const SignUp: React.FC<IProps> = React.memo(({isMobile, final}) => {
   const onClose = () => {
     dispatch(setModal(''))
     document.body.style.overflow = 'auto';
+      if (isMobileMenu) {
+          dispatch(setMobileMenu(false))
+      }
   }
 
   return (

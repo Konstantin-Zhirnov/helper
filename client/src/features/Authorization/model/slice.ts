@@ -72,9 +72,6 @@ export const authorization = createSlice({
       .addCase(fetchRegistration.fulfilled, (state) => {
         state.isRegistered = true
         state.isLoading = false
-        if (state.isMobileMenu) {
-          state.isMobileMenu = false
-        }
       })
       .addCase(fetchRegistration.rejected, (state, action) => {
         state.registrationErrorMessage = (action.payload as string) ?? ''
