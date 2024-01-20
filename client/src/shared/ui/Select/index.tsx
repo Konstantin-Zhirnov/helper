@@ -67,7 +67,7 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
         </div>
 
         <ul className={cn(classes.ul, {[classes.open]: open, [classes.mobile]: isMobile})}>
-          <div className={classes.search_container}>
+          <div className={cn(classes.search_container, {[classes.mobile]: isMobile})}>
             <AiOutlineSearch size={16} className={classes.search_icon}/>
             <input
                 type='text'

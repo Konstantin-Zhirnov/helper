@@ -70,6 +70,8 @@
       gap: 0.4rem
       background: $white
       border-bottom: 1px solid #7084a833
+      &.mobile
+        padding: 0.3rem 0.4rem
       .search_icon
         fill: $primary-text-color
       .input
@@ -80,10 +82,10 @@
         color: $primary-text-color
         max-width: 100px
         &.mobile
-          font-size: 1rem
-          min-width: 130px
+          font-size: 1.1rem
+          min-width: 150px
           &::placeholder
-            font-size: 1rem
+            font-size: 1.1rem
         &::placeholder
           color: $primary-text-color
           font-size: 0.7rem
@@ -103,4 +105,5 @@
       &.selected
         background: $primary-color
       &.mobile
-        font-size: 1rem
+        font-size: 1.1rem
+        padding: 0.4rem 0.8rem
