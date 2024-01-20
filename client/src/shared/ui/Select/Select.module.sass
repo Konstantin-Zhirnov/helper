@@ -57,6 +57,8 @@
     min-width: 100%
     &.open
       max-height: 200px
+    &.mobile
+      margin-top: 3px
 
     .search_container
       position: sticky
@@ -78,12 +80,14 @@
         color: $primary-text-color
         max-width: 100px
         &.mobile
-          font-size: 0.9rem
+          font-size: 1rem
+          min-width: 130px
+          &::placeholder
+            font-size: 1rem
         &::placeholder
           color: $primary-text-color
           font-size: 0.7rem
-        &.mobile::placeholder
-          font-size: 0.9rem
+
 
     .li
       padding: 0.3rem 0.8rem

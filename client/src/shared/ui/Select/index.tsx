@@ -66,7 +66,7 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
           <BiChevronDown size={isMobile ? 24 : 20} className={cn(classes.arrow_icon, {[classes.rotate]: open})}/>
         </div>
 
-        <ul className={cn(classes.ul, {[classes.open]: open})}>
+        <ul className={cn(classes.ul, {[classes.open]: open, [classes.mobile]: isMobile})}>
           <div className={classes.search_container}>
             <AiOutlineSearch size={16} className={classes.search_icon}/>
             <input
@@ -85,7 +85,7 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
                     onClick={handleOptionClick(item)}
                     className={cn(classes.li, {
                       [classes.selected]: item.toLowerCase() === selected.toLowerCase(),
-                      [classes.hidden]: !item.toLowerCase().startsWith(inputValue),
+                      [classes.hidden]: !item.toLowerCase().startsWith(inputValue.toLowerCase()),
                       [classes.mobile]: isMobile
                     })}
                 >

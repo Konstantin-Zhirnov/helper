@@ -49,10 +49,6 @@ const ProfilePage: React.FC = React.memo(() => {
   return (
       <>
         <Title text="Settings" divider/>
-        <Wrapper>
-          <h1 className={classes.title}>Settings</h1>
-          <div className={classes.divider}/>
-        </Wrapper>
         <Wrapper classes={classes.wrapper}>
           <ProfileMenu activeItem={activeItem}/>
 
