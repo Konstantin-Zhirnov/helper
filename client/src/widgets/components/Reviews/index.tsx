@@ -32,9 +32,16 @@ const Reviews: React.FC = React.memo(() => {
     />
   )
 
+  if (pathname === '/profile' && !Boolean(reviewsByAuthor.length)) {
+    return <p className={classes.text}>You haven't posted any reviews yet</p>
+  }
+
+  if (pathname !== '/profile' && !Boolean(reviews.length)) {
+    return <p className={classes.text}>There are no reviews about this user yet</p>
+  }
+
   return (
     <ul className={classes.cards}>
-      { pathname === '/profile' && !Boolean(reviewsByAuthor.length) && <p>You haven't posted any reviews yet</p>}
       {(pathname === '/profile' ? reviewsByAuthor : reviews).map(renderItem)}
     </ul>
   )

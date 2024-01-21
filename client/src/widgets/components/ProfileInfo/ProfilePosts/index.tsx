@@ -9,13 +9,13 @@ import classes from './ProfilePosts.module.sass'
 const ProfilePosts: React.FC = React.memo(() => {
   const postsByUser = useAppSelector(getPostsByUser)
 
+    if (!Boolean(postsByUser.length)) {
+        return <p className={classes.text}>You haven't posted any posts yet</p>
+    }
 
   return (
         <ul className={classes.container}>
-          { Boolean(postsByUser.length)
-              ? postsByUser.map(renderPostItem)
-              : <p>You haven't posted any posts yet</p>
-          }
+          { postsByUser.map(renderPostItem) }
         </ul>
   )
 })
