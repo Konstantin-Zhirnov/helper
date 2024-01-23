@@ -45,6 +45,7 @@ const Header: React.FC = React.memo(() => {
           }
 
         </div>
+
         {isMobileMenu && <Authorization photo={photo} name={name} isReload={isReload} isMobile={isMobile} />}
       </Wrapper>
     </header>

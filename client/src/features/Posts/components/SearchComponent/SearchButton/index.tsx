@@ -39,7 +39,7 @@ const SearchButton: React.FC<IProps> = React.memo(({ isMobile }) => {
           onClick={handleClick}
           className={cn(classes.btn, {[classes.mobile]: isMobile, [classes.disabled]: isLoading})}
       >
-        { loader ? <ImSpinner9/> : 'Submit' }
+        { loader ? <ImSpinner9/> : 'Search' }
       </button>
   )
 })

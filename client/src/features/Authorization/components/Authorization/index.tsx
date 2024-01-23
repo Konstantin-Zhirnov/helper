@@ -24,7 +24,7 @@ const Authorization: React.FC<IProps> = React.memo(({photo, name, isReload, isMo
 
   const getDesktopVersion = () => {
     return !isAuth
-        ? <><Login /><SignUp/></>
+        ? <><Login /><SignUp /></>
         : <><Avatar photo={photo} isReload={isReload} size='sm'/><User name={name} /></>
   }
 
