@@ -13,7 +13,7 @@ interface IProps {
 }
 
 const Login: React.FC<IProps> = React.memo(({isMobile}) => {
-  console.log('isMobile', isMobile)
+
   const dispatch = useAppDispatch()
   const isModal = useAppSelector(getModal)
 
