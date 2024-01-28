@@ -20,7 +20,6 @@ import { Title } from './ui/Title'
 
 import { useMatchMedia } from './lib/hooks/useMatchMedia'
 import { useDebounce } from './lib/hooks/useDebounce'
-import { useGetWidth } from './lib/hooks/useGetWidth'
 
 import { getExtension, reduceImage, daysAgo } from './lib/helpers'
 
@@ -51,7 +50,7 @@ export { AddButton,
 }
 
 
-export { useMatchMedia, useDebounce, useGetWidth }
+export { useMatchMedia, useDebounce }
 
 export { getExtension, reduceImage, daysAgo }
 

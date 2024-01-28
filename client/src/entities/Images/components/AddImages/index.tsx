@@ -3,7 +3,7 @@ import React from 'react'
 import { MdAddAPhoto } from "react-icons/md"
 import { ImSpinner9 } from "react-icons/im"
 
-import {getExtension, reduceImage, useGetWidth} from '../../../../shared'
+import { getExtension, reduceImage } from '../../../../shared'
 
 
 import classes from './AddImages.module.sass'
@@ -36,7 +36,6 @@ const AddImages: React.FC<IProps> = React.memo(({
                                                 }) => {
 
   const id = React.useId()
-  const width = useGetWidth('.images_label')
 
   const getImagesString = () => {
     if (!currentImages) return ''
@@ -78,7 +77,7 @@ const AddImages: React.FC<IProps> = React.memo(({
 
   return (
     <>
-        <label htmlFor={id} className={`images_label ${classes.images_label}`} style={{height: `${width}px`}}>
+        <label htmlFor={id} className={classes.images_label}>
             { isLoading ? <ImSpinner9 size={26} className={classes.spinner}/> : <MdAddAPhoto size={26}/> }
         </label>
 

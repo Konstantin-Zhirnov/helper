@@ -5,7 +5,7 @@ import { MdOutlineRotate90DegreesCw, MdZoomIn, MdZoomOut, MdOutlineHideImage } f
 
 
 import { AddImages } from '../../../../../entities'
-import {useAppDispatch, useAppSelector, useGetWidth} from '../../../../../shared'
+import {useAppDispatch, useAppSelector} from '../../../../../shared'
 
 import { fetchAddImages } from '../../../model/asyncActions'
 import {getLoading, getMessage, setAlertPostsMessage, setMessage} from '../../../model/slice'
@@ -25,8 +25,6 @@ interface IProps {
 }
 
 const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, pathname, authorId }) => {
-
-  const width = useGetWidth('.image_container')
 
   const dispatch = useAppDispatch()
   const message = useAppSelector(getMessage)
@@ -88,7 +86,7 @@ const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, pathname, au
             {
               (showAll ? imagesSrcArray : imagesSrcArray.slice(0, 3)).map((item, index) => (
                 <PhotoView key={index} src={item} >
-                  <div className={`image_container ${classes.image_container}`} style={{height: `${width}px`}}>
+                  <div className={classes.image_container}>
                     <img src={item} className={classes.image} alt='photo' />
                     {
                         pathname === '/profile' && <RemoveImgButton _id={_id} authorId={authorId} item={item}/>
@@ -99,7 +97,7 @@ const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, pathname, au
             }
 
             { imagesSrcArray.length > 3 && (
-                <button className={classes.add} onClick={handleClick} style={{height: `${width}px`}}>
+                <button className={classes.add} onClick={handleClick}>
                   {!showAll ? <>+{imagesSrcArray.length - 3}</> : <MdOutlineHideImage size={24}/>}
                 </button>
               )
