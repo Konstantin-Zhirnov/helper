@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {fetchPosts, getCategory, getLocation, getPage, getSearch} from '../../../features'
+import { fetchPosts, getCategory, getLocation, getPage, getSearch } from '../../../features'
 import { useAppDispatch, useAppSelector } from '../../../shared'
 
 const useGetPosts = () => {

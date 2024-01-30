@@ -6,15 +6,14 @@ export const getExtension = (fileName: string): string => {
   return fileName.slice(i + 1).toLowerCase()
 }
 
-
 export const reduceImage = async (file, maxSize, callback) => {
   let reader = new FileReader()
 
-  reader.onload = function(event) {
+  reader.onload = function (event) {
     let image = new Image()
     image.src = event.target.result as string
 
-    image.onload = function() {
+    image.onload = function () {
       let width = image.width
       let height = image.height
 
@@ -36,7 +35,7 @@ export const reduceImage = async (file, maxSize, callback) => {
       let ctx = canvas.getContext('2d')
       ctx.drawImage(image, 0, 0, width, height)
 
-      canvas.toBlob(function(blob) {
+      canvas.toBlob(function (blob) {
         callback(blob)
       }, file.type)
     }
@@ -46,9 +45,9 @@ export const reduceImage = async (file, maxSize, callback) => {
 }
 
 export function daysAgo(milliseconds) {
-  const targetDate = new Date(milliseconds);
-  const currentDate = new Date();
+  const targetDate = new Date(milliseconds)
+  const currentDate = new Date()
   const days = Math.floor((currentDate.getTime() - targetDate.getTime()) / 86400000)
 
-  return  days > 0 ? `${days} days ago` : 'Today'
+  return days > 0 ? `${days} days ago` : 'Today'
 }

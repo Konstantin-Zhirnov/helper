@@ -6,7 +6,7 @@ import { AllReviewsByUserIdType, RemoveReviewType } from '../types'
 
 export const fetchUser = createAsyncThunk(
   'reviews/fetchUser',
-  async function(_id: string, { rejectWithValue }) {
+  async function (_id: string, { rejectWithValue }) {
     try {
       return await ReviewsAPI.getUser(_id)
     } catch (error: unknown) {
@@ -21,7 +21,7 @@ export const fetchUser = createAsyncThunk(
 
 export const fetchAddReview = createAsyncThunk(
   'reviews/fetchAddReview',
-  async function(body: FormData, { rejectWithValue }) {
+  async function (body: FormData, { rejectWithValue }) {
     try {
       return await ReviewsAPI.addReview(body)
     } catch (error: unknown) {
@@ -36,7 +36,7 @@ export const fetchAddReview = createAsyncThunk(
 
 export const fetchAllReviewsByUserId = createAsyncThunk(
   'reviews/fetchAllReviewsByUserId',
-  async function(query: AllReviewsByUserIdType, { rejectWithValue }) {
+  async function (query: AllReviewsByUserIdType, { rejectWithValue }) {
     try {
       return await ReviewsAPI.getAllReviewsByUserId(query)
     } catch (error: unknown) {
@@ -51,7 +51,7 @@ export const fetchAllReviewsByUserId = createAsyncThunk(
 
 export const fetchReviewsByAuthor = createAsyncThunk(
   'reviews/fetchReviewsByAuthor',
-  async function(id: string, { rejectWithValue }) {
+  async function (id: string, { rejectWithValue }) {
     try {
       return await ReviewsAPI.getReviewsByAuthor(id)
     } catch (error: unknown) {
@@ -66,7 +66,7 @@ export const fetchReviewsByAuthor = createAsyncThunk(
 
 export const fetchRemoveReview = createAsyncThunk(
   'reviews/fetchRemoveReview',
-  async function(body: RemoveReviewType, { rejectWithValue }) {
+  async function (body: RemoveReviewType, { rejectWithValue }) {
     try {
       return await ReviewsAPI.removeReview(body)
     } catch (error: unknown) {
@@ -78,5 +78,3 @@ export const fetchRemoveReview = createAsyncThunk(
     }
   },
 )
-
-

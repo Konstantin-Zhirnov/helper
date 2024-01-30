@@ -15,16 +15,19 @@ const TelegramField: React.FC<IProps> = React.memo(({ _id }) => {
   const dispatch = useAppDispatch()
   const telegram = useAppSelector(getUserTelegram)
 
-  const memoizedCB = React.useCallback((value) => {
-    const body = {
-      _id,
-      fieldName: 'telegram',
-      value,
-    }
-    dispatch(fetchUpdateUser(body))
-  }, [fetchUpdateUser])
+  const memoizedCB = React.useCallback(
+    (value) => {
+      const body = {
+        _id,
+        fieldName: 'telegram',
+        value,
+      }
+      dispatch(fetchUpdateUser(body))
+    },
+    [fetchUpdateUser],
+  )
 
-  return <EditableInput defaultValue={telegram} cb={memoizedCB} label='Telegram:'/>
+  return <EditableInput defaultValue={telegram} cb={memoizedCB} label="Telegram:" />
 })
 
 export { TelegramField }

@@ -8,7 +8,7 @@ import {
   fetchSendEmail,
   fetchUser,
 } from './asyncActions'
-import {AuthorizationStateType, ModalType, SendEmailReasonType} from '../types'
+import { AuthorizationStateType, ModalType, SendEmailReasonType } from '../types'
 import type { MessageResponseType, RootState, UserType } from '../../../shared'
 
 const initialState: AuthorizationStateType = {
@@ -22,7 +22,7 @@ const initialState: AuthorizationStateType = {
   message: '',
   alertMessage: '',
   isMobileMenu: false,
-  isLoading: false
+  isLoading: false,
 }
 
 export const authorization = createSlice({
@@ -138,31 +138,29 @@ function pendingSendEmail(state: AuthorizationStateType) {
   state.sendEmailMessage = ''
 }
 
-
-
 export const {
   setModal,
   clearSendEmail,
   goToSendEmailPage,
   setAlertAuthorizationMessage,
   setIsAuth,
-  setMobileMenu
+  setMobileMenu,
 } = authorization.actions
 
 export const getAuth = (state: RootState): boolean => state.authorization.isAuth
-export const getLoginErrorMessage = (state: RootState): string => state.authorization.loginErrorMessage
+export const getLoginErrorMessage = (state: RootState): string =>
+  state.authorization.loginErrorMessage
 export const getModal = (state: RootState): ModalType => state.authorization.isModal
 export const getRegistered = (state: RootState): boolean => state.authorization.isRegistered
-export const getSendEmailReason = (state: RootState): SendEmailReasonType => state.authorization.sendEmailReason
+export const getSendEmailReason = (state: RootState): SendEmailReasonType =>
+  state.authorization.sendEmailReason
 export const getSendEmailMessage = (state: RootState): string =>
   state.authorization.sendEmailMessage
 export const getRegistrationErrorMessage = (state: RootState): string =>
   state.authorization.registrationErrorMessage
-export const getAlertAuthorizationMessage = (state: RootState): string => state.authorization.alertMessage
+export const getAlertAuthorizationMessage = (state: RootState): string =>
+  state.authorization.alertMessage
 export const getMobileMenu = (state: RootState): boolean => state.authorization.isMobileMenu
 export const getLoading = (state: RootState): boolean => state.authorization.isLoading
-
-
-
 
 export default authorization.reducer

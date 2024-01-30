@@ -1,11 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import {fetchChangeAvatar, fetchCreatePayment, fetchNewPassword, fetchRemoveUser, fetchUpdateUser, fetchChangePassword} from './asyncActions'
-import {ProfileMenuType, ProfileStateType} from '../types'
+import {
+  fetchChangeAvatar,
+  fetchCreatePayment,
+  fetchNewPassword,
+  fetchRemoveUser,
+  fetchUpdateUser,
+  fetchChangePassword,
+} from './asyncActions'
+import { ProfileMenuType, ProfileStateType } from '../types'
 
 import type { RootState, UserType } from '../../../shared'
-import {MessageResponseType} from "../../../shared";
-
+import { MessageResponseType } from '../../../shared'
 
 const initialState: ProfileStateType = {
   user: {
@@ -31,7 +37,7 @@ const initialState: ProfileStateType = {
   changePasswordMessage: '',
   alertMessage: '',
   message: '',
-  isLoading: false
+  isLoading: false,
 }
 
 export const profile = createSlice({
@@ -101,10 +107,13 @@ export const profile = createSlice({
       })
 
       .addCase(fetchChangePassword.pending, pendingChangePassword)
-      .addCase(fetchChangePassword.fulfilled, (state, action: PayloadAction<MessageResponseType>) => {
-        state.changePasswordMessage = action.payload.message
-        state.isLoading = false
-      })
+      .addCase(
+        fetchChangePassword.fulfilled,
+        (state, action: PayloadAction<MessageResponseType>) => {
+          state.changePasswordMessage = action.payload.message
+          state.isLoading = false
+        },
+      )
       .addCase(fetchChangePassword.rejected, (state, action) => {
         state.changePasswordMessage = (action.payload as string) ?? ''
         state.isLoading = false
@@ -126,15 +135,8 @@ function pendingChangePassword(state: ProfileStateType) {
   state.isLoading = true
 }
 
-
-export const {
-  setUser,
-  setIsActivated,
-  setAlertProfileMessage,
-  setIsReload,
-  setActiveScreen
-} = profile.actions
-
+export const { setUser, setIsActivated, setAlertProfileMessage, setIsReload, setActiveScreen } =
+  profile.actions
 
 export const getUser = (state: RootState): UserType => state.profile.user
 export const getIsActivated = (state: RootState): boolean => state.profile.user.isActivated
@@ -149,8 +151,7 @@ export const getAlertProfileMessage = (state: RootState): string => state.profil
 export const getIsReload = (state: RootState): boolean => state.profile.isReload
 export const getActiveScreen = (state: RootState): ProfileMenuType => state.profile.activeScreen
 export const getChangePasswordMessage = (state: RootState): string =>
-    state.profile.changePasswordMessage
+  state.profile.changePasswordMessage
 export const getLoading = (state: RootState): boolean => state.profile.isLoading
-
 
 export default profile.reducer

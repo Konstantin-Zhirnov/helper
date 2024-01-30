@@ -1,12 +1,17 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { getPage, getPages, getReviewsPage, getReviewsPages, setPage, setReviewsPage } from '../../../features'
+import {
+  getPage,
+  getPages,
+  getReviewsPage,
+  getReviewsPages,
+  setPage,
+  setReviewsPage,
+} from '../../../features'
 import { useAppDispatch, useAppSelector } from '../../../shared'
 
-
-export const useCountPage = (inView) => {
-
+export const useCountPage = (inView: boolean) => {
   const { pathname } = useLocation()
 
   const dispatch = useAppDispatch()
@@ -14,7 +19,6 @@ export const useCountPage = (inView) => {
   const postsPages = useAppSelector(getPages)
   const reviewsPage = useAppSelector(getReviewsPage)
   const reviewsPages = useAppSelector(getReviewsPages)
-
 
   React.useEffect(() => {
     if (inView) {

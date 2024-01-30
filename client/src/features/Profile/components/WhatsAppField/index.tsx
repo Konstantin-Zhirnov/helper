@@ -15,16 +15,19 @@ const WhatsAppField: React.FC<IProps> = React.memo(({ _id }) => {
   const dispatch = useAppDispatch()
   const whatsapp = useAppSelector(getUserWhatsApp)
 
-  const memoizedCB = React.useCallback((value) => {
-    const body = {
-      _id,
-      fieldName: 'whatsapp',
-      value,
-    }
-    dispatch(fetchUpdateUser(body))
-  }, [fetchUpdateUser])
+  const memoizedCB = React.useCallback(
+    (value) => {
+      const body = {
+        _id,
+        fieldName: 'whatsapp',
+        value,
+      }
+      dispatch(fetchUpdateUser(body))
+    },
+    [fetchUpdateUser],
+  )
 
-  return <EditableInput defaultValue={whatsapp} cb={memoizedCB} label='WhatsApp:'/>
+  return <EditableInput defaultValue={whatsapp} cb={memoizedCB} label="WhatsApp:" />
 })
 
 export { WhatsAppField }

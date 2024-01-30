@@ -5,7 +5,7 @@ import { AddButton } from './ui/AddButton'
 import { Circular } from './ui/Circular'
 import { Li } from './ui/Li'
 import { Link } from './ui/Link'
-import { Loader } from './ui/Loader'
+import { Spinner } from './ui/Spinner'
 import { Logo } from './ui/Logo'
 import { Stars } from './ui/Stars'
 import { Wrapper } from './ui/Wrapper'
@@ -17,6 +17,7 @@ import { FormItem } from './ui/FormItem'
 import { FormButton } from './ui/FormButton'
 import { SubmitWithImagesButton } from './ui/SubmitWithImagesButton'
 import { Title } from './ui/Title'
+import { PolicyLink } from './ui/PolicyLink'
 
 import { useMatchMedia } from './lib/hooks/useMatchMedia'
 import { useDebounce } from './lib/hooks/useDebounce'
@@ -27,28 +28,28 @@ import { categories, profileMenu } from './constants/constants'
 
 import type { MessageResponseType, PasswordType, UserType } from './types'
 
-
 export type { AppDispatch, RootState }
 export { store, useAppDispatch, useAppSelector }
 
-export { AddButton,
-    Circular,
-    Li,
-    Link,
-    Loader,
-    Logo,
-    Stars,
-    Wrapper,
-    Modal,
-    Select,
-    Avatar,
-    CategoryItem,
-    FormItem,
-    FormButton,
-    SubmitWithImagesButton,
-    Title
+export {
+  AddButton,
+  Circular,
+  Li,
+  Link,
+  Spinner,
+  Logo,
+  Stars,
+  Wrapper,
+  Modal,
+  Select,
+  Avatar,
+  CategoryItem,
+  FormItem,
+  FormButton,
+  SubmitWithImagesButton,
+  Title,
+  PolicyLink,
 }
-
 
 export { useMatchMedia, useDebounce }
 
@@ -57,4 +58,3 @@ export { getExtension, reduceImage, daysAgo }
 export { categories, profileMenu }
 
 export type { UserType, MessageResponseType, PasswordType }
-

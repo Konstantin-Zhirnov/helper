@@ -17,7 +17,6 @@ export type PostsStateType = {
   isLoading: boolean
 }
 
-
 export type PostsQueryType = {
   location: string
   search: string

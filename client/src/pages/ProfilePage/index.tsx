@@ -1,5 +1,5 @@
 import React from 'react'
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 import { ProfileInfo, ProfileMenu } from '../../widgets'
 import {
@@ -7,12 +7,11 @@ import {
   fetchReviewsByAuthor,
   getActiveScreen,
   getAuth,
-  getUser
+  getUser,
 } from '../../features'
 import { useAppDispatch, useAppSelector, Wrapper, Title } from '../../shared'
 
 import classes from './ProfilePage.module.sass'
-
 
 const ProfilePage: React.FC = React.memo(() => {
   const dispatch = useAppDispatch()
@@ -38,24 +37,22 @@ const ProfilePage: React.FC = React.memo(() => {
     }
   }, [isAuth])
 
-
-  if (!isAuth) return (
+  if (!isAuth)
+    return (
       <Wrapper>
         <h1 className={classes.title}>You need to log in</h1>
       </Wrapper>
-  )
-
+    )
 
   return (
-      <>
-        <Title text="Settings" divider/>
-        <Wrapper classes={classes.wrapper}>
-          <ProfileMenu activeItem={activeItem}/>
+    <>
+      <Title text="Settings" divider />
+      <Wrapper classes={classes.wrapper}>
+        <ProfileMenu activeItem={activeItem} />
 
-          <ProfileInfo activeItem={activeItem}/>
-        </Wrapper>
-      </>
-
+        <ProfileInfo activeItem={activeItem} />
+      </Wrapper>
+    </>
   )
 })
 

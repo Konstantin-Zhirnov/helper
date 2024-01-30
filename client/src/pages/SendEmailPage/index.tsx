@@ -1,15 +1,19 @@
 import React from 'react'
 import cn from 'classnames'
 
-import {clearSendEmail, fetchUser, getSendEmailMessage, getSendEmailReason, SendToEmail} from '../../features'
+import {
+  clearSendEmail,
+  fetchUser,
+  getSendEmailMessage,
+  getSendEmailReason,
+  SendToEmail,
+} from '../../features'
 import { Title, useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
 import classes from './SendEmailPage.module.sass'
-import {useNavigate} from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom'
 
 const SendEmailPage: React.FC = () => {
-
   const navigate = useNavigate()
 
   const dispatch = useAppDispatch()
@@ -45,27 +49,21 @@ const SendEmailPage: React.FC = () => {
   }, [sendEmailMessage, sendEmailReason])
 
   return (
-      <>
-        <Title text="Request a link" divider/>
-        <Wrapper>
-          {
-              sendEmailReason && (
-                  <>
-                    <p className={classes.text}>{getText()}</p>
+    <>
+      <Title text="Request a link" divider />
+      <Wrapper>
+        {sendEmailReason && (
+          <>
+            <p className={classes.text}>{getText()}</p>
 
-                    <SendToEmail sendEmailReason={sendEmailReason} />
-                  </>
-              )
-          }
+            <SendToEmail sendEmailReason={sendEmailReason} />
+          </>
+        )}
 
-          <p className={cn(classes.text, { [classes.red]: getClass() })}>{sendEmailMessage}</p>
-        </Wrapper>
-      </>
+        <p className={cn(classes.text, { [classes.red]: getClass() })}>{sendEmailMessage}</p>
+      </Wrapper>
+    </>
   )
 }
 
 export default SendEmailPage
-
-
-
-

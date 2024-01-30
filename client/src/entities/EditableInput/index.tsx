@@ -1,14 +1,12 @@
 import React from 'react'
-import cn from "classnames";
+import cn from 'classnames'
 import { PhoneInput } from 'react-international-phone'
 import { FaSquareWhatsapp, FaTelegram } from 'react-icons/fa6'
 
+import { categories, Select } from '../../shared'
+
 import 'react-international-phone/style.css'
 import classes from './EditableInput.module.sass'
-import {categories, Select} from "../../shared";
-
-
-
 
 interface IProps {
   defaultValue: string
@@ -17,7 +15,6 @@ interface IProps {
 }
 
 const EditableInput: React.FC<IProps> = React.memo(({ defaultValue, cb, label }) => {
-
   const [value, setValue] = React.useState(defaultValue || 'No information available')
   const [isEdit, setIsEdit] = React.useState(false)
 
@@ -42,10 +39,18 @@ const EditableInput: React.FC<IProps> = React.memo(({ defaultValue, cb, label })
 
   const getButton = () => {
     if (isEdit) {
-      return <button className={cn(classes.btn, classes.red)} onClick={handleSave}>Save</button>
+      return (
+        <button className={cn(classes.btn, classes.red)} onClick={handleSave}>
+          Save
+        </button>
+      )
     } else {
       if (label !== 'Email:') {
-        return <button className={classes.btn} onClick={handleEdit}>Edit</button>
+        return (
+          <button className={classes.btn} onClick={handleEdit}>
+            Edit
+          </button>
+        )
       } else {
         return null
       }
@@ -53,41 +58,45 @@ const EditableInput: React.FC<IProps> = React.memo(({ defaultValue, cb, label })
   }
 
   const getInput = () => {
-    switch(label) {
-      case 'Phone:':  return (
-            <PhoneInput
-            defaultCountry='ca'
+    switch (label) {
+      case 'Phone:':
+        return (
+          <PhoneInput
+            defaultCountry="ca"
             value={value}
             onChange={(phone) => setValue(phone)}
             autoFocus
             disabled={!isEdit}
-        />
-      )
-      case 'Description:':  return (
+          />
+        )
+      case 'Description:':
+        return (
           <textarea
-              onChange={handleChange}
-              value={value}
-              autoComplete='off'
-              autoFocus
-              disabled={!isEdit}
-              className={classes.textarea}
+            onChange={handleChange}
+            value={value}
+            autoComplete="off"
+            autoFocus
+            disabled={!isEdit}
+            className={classes.textarea}
           />
-      )
-      case 'Category:':  return (
-          !isEdit
-            ? <input value={value} disabled className={classes.input}/>
-            : <Select options={categories} defaultValue={value} cb={setValue} category/>
-      )
-      default: return (
+        )
+      case 'Category:':
+        return !isEdit ? (
+          <input value={value} disabled className={classes.input} />
+        ) : (
+          <Select options={categories} defaultValue={value} cb={setValue} category />
+        )
+      default:
+        return (
           <input
-              onChange={handleChange}
-              value={value}
-              autoComplete='off'
-              autoFocus
-              disabled={(!isEdit && label !== 'Email') || label === 'Email'}
-              className={classes.input}
+            onChange={handleChange}
+            value={value}
+            autoComplete="off"
+            autoFocus
+            disabled={(!isEdit && label !== 'Email') || label === 'Email'}
+            className={classes.input}
           />
-      )
+        )
     }
   }
 
@@ -95,15 +104,15 @@ const EditableInput: React.FC<IProps> = React.memo(({ defaultValue, cb, label })
     <div className={classes.container}>
       <div className={classes.text_container}>
         <p className={classes.text}>
-          { getIcon() }
-          { label }
+          {getIcon()}
+          {label}
         </p>
-        { getButton() }
+        {getButton()}
       </div>
 
-      { getInput() }
+      {getInput()}
     </div>
-    )
+  )
 })
 
 export { EditableInput }

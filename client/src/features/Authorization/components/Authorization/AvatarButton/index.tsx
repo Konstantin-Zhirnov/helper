@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom'
 
 import classes from './AvatarButton.module.sass'
 
-
 type PropsType = {
   link: string
   src: string
@@ -14,7 +13,7 @@ type PropsType = {
 const AvatarButton: React.FC<PropsType> = React.memo(({ link, src, name, size }) => {
   return (
     <NavLink to={link}>
-      <img src={src} className={classes.avatar}  alt='user'/>
+      <img src={src} className={classes.avatar} alt="user" />
     </NavLink>
   )
 })

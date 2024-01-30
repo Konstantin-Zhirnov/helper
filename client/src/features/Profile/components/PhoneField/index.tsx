@@ -14,16 +14,19 @@ const PhoneField: React.FC<IProps> = React.memo(({ _id }) => {
   const dispatch = useAppDispatch()
   const phone = useAppSelector(getUserPhone)
 
-  const memoizedCB = React.useCallback((value) => {
-    const body = {
-      _id,
-      fieldName: 'phone',
-      value,
-    }
-    dispatch(fetchUpdateUser(body))
-  }, [fetchUpdateUser])
+  const memoizedCB = React.useCallback(
+    (value) => {
+      const body = {
+        _id,
+        fieldName: 'phone',
+        value,
+      }
+      dispatch(fetchUpdateUser(body))
+    },
+    [fetchUpdateUser],
+  )
 
-  return <EditableInput defaultValue={phone} cb={memoizedCB} label='Phone:'/>
+  return <EditableInput defaultValue={phone} cb={memoizedCB} label="Phone:" />
 })
 
 export { PhoneField }

@@ -9,6 +9,15 @@ import { Categories } from './components/Categories'
 import { Final } from './components/Final'
 import { ProfileMenu } from './components/ProfileMenu'
 
-export { Posts, Header, Hero, Footer, ProfileInfo, Reviews, Payment, Categories, Final, ProfileMenu }
-
-
+export {
+  Posts,
+  Header,
+  Hero,
+  Footer,
+  ProfileInfo,
+  Reviews,
+  Payment,
+  Categories,
+  Final,
+  ProfileMenu,
+}

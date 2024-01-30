@@ -1,12 +1,10 @@
 import React from 'react'
 
-import {Select, useAppDispatch, useAppSelector} from '../../../../shared'
+import { Select, useAppDispatch, useAppSelector } from '../../../../shared'
 
-import {getLocation, getLocations, setLocation} from "../../model/slice";
-
+import { getLocation, getLocations, setLocation } from '../../model/slice'
 
 const Location: React.FC = React.memo(() => {
-
   const dispatch = useAppDispatch()
   const locations = useAppSelector(getLocations)
   const location = useAppSelector(getLocation)
@@ -18,13 +16,7 @@ const Location: React.FC = React.memo(() => {
 
   if (!locations.length) return null
 
-  return (
-      <Select options={locations} defaultValue={location} cb={handleChange}/>
-  )
+  return <Select options={locations} defaultValue={location} cb={handleChange} />
 })
 
 export { Location }
-
-
-
-

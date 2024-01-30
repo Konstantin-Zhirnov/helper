@@ -4,17 +4,15 @@ import { MdSearch } from 'react-icons/md'
 
 import { useAppDispatch, useAppSelector, useDebounce } from '../../../../shared'
 
-import {getMainSearch, getSearch, setMainSearch, setPage, setSearch} from '../../model/slice'
+import { getMainSearch, getSearch, setMainSearch, setPage, setSearch } from '../../model/slice'
 
 import classes from './Search.module.sass'
-
 
 interface IProps {
   isMobile?: boolean
 }
 
 const Search: React.FC<IProps> = React.memo(({ isMobile }) => {
-
   const dispatch = useAppDispatch()
   const search = useAppSelector(getSearch)
   const isMainSearch = useAppSelector(getMainSearch)
@@ -41,29 +39,28 @@ const Search: React.FC<IProps> = React.memo(({ isMobile }) => {
   }, [debouncedValue, value])
 
   React.useEffect(() => {
-  if(isMainSearch) {
+    if (isMainSearch) {
       if (search !== value) {
-          setValue(search)
+        setValue(search)
       } else if (value === debouncedValue) {
         dispatch(setMainSearch(false))
       }
     }
   }, [search, value, debouncedValue])
 
-
   return (
-      <>
-        <div className={cn(classes.input_group, { [classes.mobile]: isMobile })}>
-          <MdSearch />
-          <input
-              value={value}
-              onChange={handleChange}
-              placeholder='Search...'
-              className={classes.input}
-          />
-        </div>
-        <div className={classes.divider}/>
-      </>
+    <>
+      <div className={cn(classes.input_group, { [classes.mobile]: isMobile })}>
+        <MdSearch />
+        <input
+          value={value}
+          onChange={handleChange}
+          placeholder="Search..."
+          className={classes.input}
+        />
+      </div>
+      <div className={classes.divider} />
+    </>
   )
 })
 

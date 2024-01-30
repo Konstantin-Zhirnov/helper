@@ -29,5 +29,4 @@ export type SendEmailType = {
 
 export type ChangePasswordType = Record<'password' | 'link', string>
 
-
 export type LinkType = { link: string }

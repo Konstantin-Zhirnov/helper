@@ -11,28 +11,31 @@ import {
   useAppSelector,
   categories,
   FormItem,
-  SubmitWithImagesButton
+  SubmitWithImagesButton,
 } from '../../../../shared'
 
-import {getLoading, getMessage, getModal, setAlertPostsMessage, setMessage, setModal} from '../../model/slice'
+import {
+  getPostsLoading,
+  getMessage,
+  getModal,
+  setAlertPostsMessage,
+  setMessage,
+  setModal,
+} from '../../model/slice'
 import { fetchAddPost } from '../../model/asyncActions'
 import { CreatePostType } from '../../types'
 
 import classes from './AddPost.module.sass'
-
-
-
 
 interface IProps {
   authorId: string
 }
 
 const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
-
   const dispatch = useAppDispatch()
   const isModal = useAppSelector(getModal)
   const message = useAppSelector(getMessage)
-  const isLoading = useAppSelector(getLoading)
+  const isLoading = useAppSelector(getPostsLoading)
 
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
@@ -44,15 +47,14 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
     }
   }
 
-
   const onOpen = React.useCallback(() => {
     dispatch(setModal('post'))
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'
   }, [])
 
   const onClose = () => {
     dispatch(setModal(''))
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = 'auto'
   }
 
   const schema = yup
@@ -73,7 +75,6 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
     resolver: yupResolver(schema),
   })
 
-
   const onSubmit: SubmitHandler<CreatePostType> = async (data) => {
     if (currentImages.length === images.length) {
       const formData = new FormData()
@@ -82,7 +83,7 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
       formData.append('location', data.location)
       formData.append('authorId', authorId)
       formData.append('category', category)
-      await images.forEach(image => {
+      await images.forEach((image) => {
         formData.append('images', image.image, image.name)
       })
       await dispatch(fetchAddPost(formData))
@@ -103,35 +104,37 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   return (
     <>
       <AddButton onOpen={onOpen} />
-      {
-        isModal === 'post' && (
-          <Modal onClose={onClose} title="Add a post">
-            <form onSubmit={handleSubmit(onSubmit)} id='myForm' className={classes.container}>
-              <FormItem register={register} errors={errors} name="location" label='Location:'/>
+      {isModal === 'post' && (
+        <Modal onClose={onClose} title="Add a post">
+          <form onSubmit={handleSubmit(onSubmit)} id="myForm" className={classes.container}>
+            <FormItem register={register} errors={errors} name="location" label="Location:" />
 
-              <Categories cb={handleChange} label="Categories:"/>
+            <Categories cb={handleChange} label="Categories:" />
 
-              <FormItem register={register} errors={errors} name="title" label='Title:'/>
+            <FormItem register={register} errors={errors} name="title" label="Title:" />
 
-              <FormItem register={register} errors={errors} name="description" label='Description:'/>
+            <FormItem register={register} errors={errors} name="description" label="Description:" />
 
-              <AddImages
-                currentImages={currentImages}
-                setCurrentImages={setCurrentImages}
-                images={images}
-                setImages={setImages}
-                authorId={authorId}
-                message={message}
-                isLoading={isLoading}
-                setMessage={onMessage}
-                setAlertMessage={onAlertMessage}
-              />
+            <AddImages
+              currentImages={currentImages}
+              setCurrentImages={setCurrentImages}
+              images={images}
+              setImages={setImages}
+              authorId={authorId}
+              message={message}
+              isLoading={isLoading}
+              setMessage={onMessage}
+              setAlertMessage={onAlertMessage}
+            />
 
-              <SubmitWithImagesButton disabled={isLoading} currentImagesLength={currentImages.length} imagesLength={images.length}/>
-            </form>
-          </Modal>
-        )
-      }
+            <SubmitWithImagesButton
+              disabled={isLoading}
+              currentImagesLength={currentImages.length}
+              imagesLength={images.length}
+            />
+          </form>
+        </Modal>
+      )}
     </>
   )
 })

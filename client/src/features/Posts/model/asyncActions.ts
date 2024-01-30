@@ -6,9 +6,9 @@ import { PostsQueryType, RemoveImageType, RemovePostType, UpdatePostType } from 
 
 export const fetchPosts = createAsyncThunk(
   'authorization/fetchPosts',
-  async function(query: PostsQueryType, { rejectWithValue }) {
+  async function (query: PostsQueryType, { rejectWithValue }) {
     try {
-        return await PostsAPI.getPosts(query)
+      return await PostsAPI.getPosts(query)
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.message)
@@ -21,7 +21,7 @@ export const fetchPosts = createAsyncThunk(
 
 export const fetchLocations = createAsyncThunk(
   'authorization/fetchLocations',
-  async function(_, { rejectWithValue }) {
+  async function (_, { rejectWithValue }) {
     try {
       return await PostsAPI.getCities()
     } catch (error: unknown) {
@@ -36,11 +36,11 @@ export const fetchLocations = createAsyncThunk(
 
 export const fetchAddPost = createAsyncThunk(
   'authorization/fetchAddPost',
-  async function(body: FormData, { rejectWithValue, dispatch }) {
+  async function (body: FormData, { rejectWithValue, dispatch }) {
     try {
-        const post = await PostsAPI.addPost(body)
-        dispatch(fetchLocations())
-        return post
+      const post = await PostsAPI.addPost(body)
+      dispatch(fetchLocations())
+      return post
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.message)
@@ -53,7 +53,7 @@ export const fetchAddPost = createAsyncThunk(
 
 export const fetchPostsByUser = createAsyncThunk(
   'authorization/fetchPostsByUser',
-  async function(id: string, { rejectWithValue }) {
+  async function (id: string, { rejectWithValue }) {
     try {
       return await PostsAPI.getPostsByUser(id)
     } catch (error: unknown) {
@@ -68,7 +68,7 @@ export const fetchPostsByUser = createAsyncThunk(
 
 export const fetchUpdatePost = createAsyncThunk(
   'authorization/fetchUpdatePost',
-  async function(body: UpdatePostType, { rejectWithValue }) {
+  async function (body: UpdatePostType, { rejectWithValue }) {
     try {
       return await PostsAPI.updatePost(body)
     } catch (error: unknown) {
@@ -83,7 +83,7 @@ export const fetchUpdatePost = createAsyncThunk(
 
 export const fetchAddImages = createAsyncThunk(
   'authorization/fetchAddImages',
-  async function(body: FormData, { rejectWithValue }) {
+  async function (body: FormData, { rejectWithValue }) {
     try {
       return await PostsAPI.addImages(body)
     } catch (error: unknown) {
@@ -98,7 +98,7 @@ export const fetchAddImages = createAsyncThunk(
 
 export const fetchRemoveImage = createAsyncThunk(
   'authorization/fetchRemoveImage',
-  async function(body: RemoveImageType, { rejectWithValue }) {
+  async function (body: RemoveImageType, { rejectWithValue }) {
     try {
       return await PostsAPI.removeImage(body)
     } catch (error: unknown) {
@@ -113,7 +113,7 @@ export const fetchRemoveImage = createAsyncThunk(
 
 export const fetchRemovePost = createAsyncThunk(
   'authorization/fetchRemovePost',
-  async function(body: RemovePostType, { rejectWithValue }) {
+  async function (body: RemovePostType, { rejectWithValue }) {
     try {
       return await PostsAPI.removePost(body)
     } catch (error: unknown) {
@@ -125,4 +125,3 @@ export const fetchRemovePost = createAsyncThunk(
     }
   },
 )
-

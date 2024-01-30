@@ -10,9 +10,7 @@ import {
   getUserId,
   UserInfo,
 } from '../../features'
-import {Title, useAppDispatch, useAppSelector, Wrapper} from '../../shared'
-
-
+import { Title, useAppDispatch, useAppSelector, Wrapper } from '../../shared'
 
 const ReviewsPage: React.FC = () => {
   const { id } = useParams()
@@ -32,16 +30,16 @@ const ReviewsPage: React.FC = () => {
   }, [])
 
   return (
-      <>
-        <Title text="Reviews" divider/>
-        <Wrapper>
-          <UserInfo id={id} />
+    <>
+      <Title text="Reviews" divider />
+      <Wrapper>
+        <UserInfo id={id} />
 
-          <Reviews />
+        <Reviews />
 
-          {authorId && <AddReview authorId={authorId} userId={id} />}
-        </Wrapper>
-      </>
+        {authorId && <AddReview authorId={authorId} userId={id} />}
+      </Wrapper>
+    </>
   )
 }
 

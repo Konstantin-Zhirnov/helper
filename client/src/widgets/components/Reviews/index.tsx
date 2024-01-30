@@ -1,19 +1,25 @@
 import React from 'react'
-import { useLocation } from "react-router-dom"
+import { useLocation } from 'react-router-dom'
 
-import { getReviews, getReviewsByAuthor, Review, ReviewType } from '../../../features'
-import { useAppSelector } from "../../../shared";
+import {
+  getReviews,
+  getReviewsByAuthor,
+  getReviewsEmptyMessage,
+  getReviewsLoading,
+  Review,
+  ReviewType,
+} from '../../../features'
+import { Spinner, useAppSelector } from '../../../shared'
 
 import classes from './Reviews.module.sass'
 
-
-
 const Reviews: React.FC = React.memo(() => {
   const { pathname } = useLocation()
+  const isLoading = useAppSelector(getReviewsLoading)
 
   const reviews = useAppSelector(getReviews)
   const reviewsByAuthor = useAppSelector(getReviewsByAuthor)
-
+  const reviewsEmptyMessage = useAppSelector(getReviewsEmptyMessage)
 
   const renderItem = (review: ReviewType) => (
     <Review
@@ -32,19 +38,34 @@ const Reviews: React.FC = React.memo(() => {
     />
   )
 
-  if (pathname === '/profile' && !Boolean(reviewsByAuthor.length)) {
-    return <p className={classes.text}>You haven't posted any reviews yet</p>
+  if (pathname === '/profile') {
+    if (!Boolean(reviewsByAuthor.length)) {
+      if (isLoading) {
+        return <Spinner />
+      } else if (reviewsEmptyMessage) {
+        return <p className={classes.text}>{reviewsEmptyMessage}</p>
+      }
+    } else {
+      return <ul className={classes.cards}>{reviewsByAuthor.map(renderItem)}</ul>
+    }
   }
 
-  if (pathname !== '/profile' && !Boolean(reviews.length)) {
-    return <p className={classes.text}>There are no reviews about this user yet</p>
+  if (pathname.includes('/reviews/')) {
+    if (!Boolean(reviews.length)) {
+      if (isLoading) {
+        return <Spinner />
+      } else if (reviewsEmptyMessage) {
+        return <p className={classes.text}>{reviewsEmptyMessage}</p>
+      }
+    } else {
+      return (
+        <ul className={classes.cards}>
+          {reviews.map(renderItem)}
+          {isLoading && <Spinner />}
+        </ul>
+      )
+    }
   }
-
-  return (
-    <ul className={classes.cards}>
-      {(pathname === '/profile' ? reviewsByAuthor : reviews).map(renderItem)}
-    </ul>
-  )
 })
 
 export { Reviews }

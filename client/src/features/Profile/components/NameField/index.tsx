@@ -15,16 +15,19 @@ const NameField: React.FC<IProps> = React.memo(({ _id }) => {
   const dispatch = useAppDispatch()
   const name = useAppSelector(getUserName)
 
-  const memoizedCB = React.useCallback((value) => {
-    const body = {
-      _id,
-      fieldName: 'name',
-      value,
-    }
-    dispatch(fetchUpdateUser(body))
-  }, [fetchUpdateUser])
+  const memoizedCB = React.useCallback(
+    (value) => {
+      const body = {
+        _id,
+        fieldName: 'name',
+        value,
+      }
+      dispatch(fetchUpdateUser(body))
+    },
+    [fetchUpdateUser],
+  )
 
-  return <EditableInput defaultValue={name} cb={memoizedCB} label='Name:'/>
+  return <EditableInput defaultValue={name} cb={memoizedCB} label="Name:" />
 })
 
 export { NameField }

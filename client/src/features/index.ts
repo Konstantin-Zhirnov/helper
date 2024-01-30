@@ -65,7 +65,8 @@ import {
   setAlertPostsMessage,
   setLocation,
   setPage,
-  getCategory
+  getCategory,
+  getPostsLoading,
 } from './Posts/model/slice'
 import { fetchPosts, fetchPostsByUser } from './Posts/model/asyncActions'
 import { Location } from './Posts/components/Location'
@@ -85,13 +86,18 @@ import {
   getReviewsPage,
   getReviewsPages,
   setReviewsPage,
+  getReviewsLoading,
+  getReviewsEmptyMessage,
 } from './Reviews/model/slice'
-import { fetchAllReviewsByUserId, fetchRemoveReview, fetchReviewsByAuthor } from './Reviews/model/asyncActions'
+import {
+  fetchAllReviewsByUserId,
+  fetchRemoveReview,
+  fetchReviewsByAuthor,
+} from './Reviews/model/asyncActions'
 import { UserInfo } from './Reviews/components/UserInfo'
 import { AddReview } from './Reviews/components/AddReview'
 import { Review } from './Reviews/components/Review'
 import type { ReasonReviewType, ReviewType } from './Reviews/types'
-
 
 // Authorization
 export {
@@ -136,7 +142,7 @@ export {
   TelegramField,
   RemoveAccount,
   PaymentForm,
-  ProfileMenuItem
+  ProfileMenuItem,
 }
 export type { ProfileMenuType }
 
@@ -154,7 +160,8 @@ export {
   setAlertPostsMessage,
   setPage,
   setLocation,
-  getCategory
+  getCategory,
+  getPostsLoading,
 }
 export { fetchPosts, fetchPostsByUser }
 export { Location, AddPost, Post, Search, SearchComponent, Category }
@@ -170,8 +177,8 @@ export {
   getReviewsByAuthor,
   getIsReviewsByAuthor,
   clearReviews,
+  getReviewsLoading,
+  getReviewsEmptyMessage,
 }
 export { UserInfo, AddReview, Review }
 export type { ReviewType, ReasonReviewType }
-
-

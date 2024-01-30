@@ -10,6 +10,7 @@ export type ReviewsStateType = {
   alertMessage: string
   isLoading: boolean
   isStarsErrorMessage: boolean
+  reviewsEmptyMessage: string
 }
 
 export type ReviewType = {
@@ -22,7 +23,6 @@ export type ReviewType = {
   userId: PersonType
   time: number
 }
-
 
 type PersonType = {
   _id: string

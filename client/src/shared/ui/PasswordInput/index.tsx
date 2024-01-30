@@ -18,14 +18,19 @@ const PasswordInput: React.FC<IProps> = ({ register }) => {
     <div className={classes.container}>
       <input
         type={show ? 'text' : 'password'}
-        id='password'
-        autoComplete='off'
+        id="password"
+        autoComplete="off"
         {...register('password')}
         className={classes.input}
       />
-        <button onClick={handleClick} className={classes.btn} type="button" aria-label="button show or hide">
-          {show ? <MdVisibilityOff /> : <MdVisibility />}
-        </button>
+      <button
+        onClick={handleClick}
+        className={classes.btn}
+        type="button"
+        aria-label="button show or hide"
+      >
+        {show ? <MdVisibilityOff /> : <MdVisibility />}
+      </button>
     </div>
   )
 }

@@ -25,6 +25,10 @@ export const AuthAPI = {
   },
 
   sendEmail(body: SendEmailType): Promise<MessageResponseType> {
-    return $api.post(body.reason === 'password' ? URL.sendEmailForPassword : URL.sendEmailForActivation, { email: body.email }).then(({ data }) => data)
+    return $api
+      .post(body.reason === 'password' ? URL.sendEmailForPassword : URL.sendEmailForActivation, {
+        email: body.email,
+      })
+      .then(({ data }) => data)
   },
 }

@@ -4,20 +4,17 @@ import { ErrorMessage } from '@hookform/error-message'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-
-import {FormItem, useAppDispatch} from '../../../../shared'
+import { FormItem, useAppDispatch } from '../../../../shared'
 import { fetchSendEmail } from '../../model/asyncActions'
 import { EmailType, SendEmailReasonType } from '../../types'
 
 import classes from './SendToEmail.module.sass'
-
 
 interface IProps {
   sendEmailReason: SendEmailReasonType
 }
 
 const SendToEmail: React.FC<IProps> = React.memo(({ sendEmailReason }) => {
-
   const dispatch = useAppDispatch()
 
   const [seconds, setSeconds] = React.useState(0)
@@ -63,9 +60,9 @@ const SendToEmail: React.FC<IProps> = React.memo(({ sendEmailReason }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.container}>
-       <FormItem register={register} errors={errors} name="email" label='Email:'/>
+      <FormItem register={register} errors={errors} name="email" label="Email:" />
 
-      <button type='submit' className={classes.btn} disabled={Boolean(seconds)}>
+      <button type="submit" className={classes.btn} disabled={Boolean(seconds)}>
         {seconds || 'Submit'}
       </button>
     </form>
@@ -73,7 +70,3 @@ const SendToEmail: React.FC<IProps> = React.memo(({ sendEmailReason }) => {
 })
 
 export { SendToEmail }
-
-
-
-

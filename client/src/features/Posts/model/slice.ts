@@ -14,7 +14,6 @@ import {
 
 import { LocationsType, PostsStateType, PostsType, PostType, UpdatePostType } from '../types'
 
-
 const initialState: PostsStateType = {
   posts: [],
   postsByUser: [],
@@ -31,7 +30,7 @@ const initialState: PostsStateType = {
   searchComponentLocation: '',
   searchComponentSearch: '',
   isMainSearch: false,
-  isLoading: false
+  isLoading: false,
 }
 
 export const posts = createSlice({
@@ -102,7 +101,7 @@ export const posts = createSlice({
         state.pages = action.payload.pages
         state.isLoading = false
       })
-        .addCase(fetchPosts.rejected, (state, action) => {
+      .addCase(fetchPosts.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
         state.isLoading = false
       })
@@ -137,13 +136,13 @@ export const posts = createSlice({
 
       .addCase(fetchUpdatePost.pending, pending)
       .addCase(fetchUpdatePost.fulfilled, (state, action: PayloadAction<UpdatePostType>) => {
-        state.postsByUser = state.postsByUser.map(post => {
+        state.postsByUser = state.postsByUser.map((post) => {
           if (post._id === action.payload._id) {
             return { ...post, ...action.payload.field }
           }
           return post
         })
-        state.posts = state.posts.map(post => {
+        state.posts = state.posts.map((post) => {
           if (post._id === action.payload._id) {
             return { ...post, ...action.payload.field }
           }
@@ -156,13 +155,13 @@ export const posts = createSlice({
 
       .addCase(fetchAddImages.pending, pendingWithLoading)
       .addCase(fetchAddImages.fulfilled, (state, action: PayloadAction<UpdatePostType>) => {
-        state.postsByUser = state.postsByUser.map(post => {
+        state.postsByUser = state.postsByUser.map((post) => {
           if (post._id === action.payload._id) {
             return { ...post, ...action.payload.field }
           }
           return post
         })
-        state.posts = state.posts.map(post => {
+        state.posts = state.posts.map((post) => {
           if (post._id === action.payload._id) {
             return { ...post, ...action.payload.field }
           }
@@ -177,13 +176,13 @@ export const posts = createSlice({
 
       .addCase(fetchRemoveImage.pending, pending)
       .addCase(fetchRemoveImage.fulfilled, (state, action: PayloadAction<UpdatePostType>) => {
-        state.postsByUser = state.postsByUser.map(post => {
+        state.postsByUser = state.postsByUser.map((post) => {
           if (post._id === action.payload._id) {
             return { ...post, ...action.payload.field }
           }
           return post
         })
-        state.posts = state.posts.map(post => {
+        state.posts = state.posts.map((post) => {
           if (post._id === action.payload._id) {
             return { ...post, ...action.payload.field }
           }
@@ -196,8 +195,8 @@ export const posts = createSlice({
 
       .addCase(fetchRemovePost.pending, pending)
       .addCase(fetchRemovePost.fulfilled, (state, action: PayloadAction<{ _id: string }>) => {
-        state.postsByUser = state.postsByUser.filter(post => post._id !== action.payload._id)
-        state.posts = state.posts.filter(post => post._id !== action.payload._id)
+        state.postsByUser = state.postsByUser.filter((post) => post._id !== action.payload._id)
+        state.posts = state.posts.filter((post) => post._id !== action.payload._id)
       })
       .addCase(fetchRemovePost.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -214,7 +213,6 @@ function pendingWithLoading(state: PostsStateType) {
   state.isLoading = true
 }
 
-
 export const {
   setLocation,
   setModal,
@@ -227,7 +225,7 @@ export const {
   setSearchComponentLocation,
   setSearchComponentSearch,
   setMainSearch,
-  setCategory
+  setCategory,
 } = posts.actions
 
 export const getPosts = (state: RootState): PostType[] => state.posts.posts
@@ -240,10 +238,12 @@ export const getLocations = (state: RootState): LocationsType => state.posts.loc
 export const getModal = (state: RootState): string => state.posts.isModal
 export const getMessage = (state: RootState): string => state.posts.message
 export const getAlertPostsMessage = (state: RootState): string => state.posts.alertMessage
-export const getIsPostsByUser = (state: RootState): boolean => Boolean(state.posts.postsByUser.length)
-export const getSearchComponentSearch = (state: RootState): string => state.posts.searchComponentSearch
+export const getIsPostsByUser = (state: RootState): boolean =>
+  Boolean(state.posts.postsByUser.length)
+export const getSearchComponentSearch = (state: RootState): string =>
+  state.posts.searchComponentSearch
 export const getMainSearch = (state: RootState): boolean => state.posts.isMainSearch
 export const getCategory = (state: RootState): string => state.posts.category
-export const getLoading = (state: RootState): boolean => state.posts.isLoading
+export const getPostsLoading = (state: RootState): boolean => state.posts.isLoading
 
 export default posts.reducer

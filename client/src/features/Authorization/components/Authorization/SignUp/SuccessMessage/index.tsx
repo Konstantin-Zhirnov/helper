@@ -3,8 +3,6 @@ import React from 'react'
 import classes from './SuccessMessage.module.sass'
 
 const SuccessMessage: React.FC = React.memo(() => {
-
-
   return (
     <div className={classes.container}>
       <p className={classes.text}>
