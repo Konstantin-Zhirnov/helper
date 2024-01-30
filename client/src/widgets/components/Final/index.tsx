@@ -1,13 +1,18 @@
 import React from 'react'
 import cn from 'classnames'
+import { useInView } from 'react-intersection-observer'
+import { usePostsCountPage } from '../../lib/hooks/usePostsCountPage'
 
 import { SignUp } from '../../../features'
 
 import classes from './Final.module.sass'
 
 const Final: React.FC = React.memo(() => {
+  const { ref, inView } = useInView()
+  usePostsCountPage(inView)
+
   return (
-    <div className={classes.container}>
+    <div className={classes.container} ref={ref}>
       <div className={classes.final}>
         <h2 className={classes.text}>Get discovered by</h2>
         <h2 className={cn(classes.text, classes.mb_2)}>your community</h2>

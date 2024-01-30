@@ -5,9 +5,9 @@ import { fetchUser, getAuth } from '../../../features'
 import { PolicyLink, useAppDispatch, useAppSelector, Wrapper } from '../../../shared'
 
 import { useLocalStorageLocation } from '../../lib/hooks/useLocalStorageLocation'
+import { useReviewsCountPage } from '../../lib/hooks/useReviewsCountPage'
 import { useMessage } from '../../lib/hooks/useMessage'
 import { useReload } from '../../lib/hooks/useReload'
-import { useCountPage } from '../../lib/hooks/useCountPage'
 
 import classes from './Footer.module.sass'
 
@@ -15,7 +15,7 @@ const Footer: React.FC = React.memo(() => {
   const isAuth = useAppSelector(getAuth)
 
   const { ref, inView } = useInView()
-  useCountPage(inView)
+  useReviewsCountPage(inView)
 
   useLocalStorageLocation()
   useReload()
