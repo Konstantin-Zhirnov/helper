@@ -1,4 +1,4 @@
 export declare class ChangePasswordDto {
-    readonly password: string;
-    readonly link: string;
+  readonly password: string;
+  readonly link: string;
 }

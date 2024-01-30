@@ -1,32 +1,32 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { HydratedDocument, Types } from 'mongoose'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 export type ReviewDocument = HydratedDocument<Review>;
 
 @Schema()
 export class Review {
-  _id: Types.ObjectId
+  _id: Types.ObjectId;
 
   @Prop()
-  title: string
+  title: string;
 
   @Prop()
-  description: string
+  description: string;
 
   @Prop()
-  stars: number
+  stars: number;
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
-  userId: { type: Types.ObjectId; ref: 'User' }
+  userId: { type: Types.ObjectId; ref: 'User' };
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
-  authorId: { type: Types.ObjectId; ref: 'User' }
+  authorId: { type: Types.ObjectId; ref: 'User' };
 
   @Prop()
-  time: number
+  time: number;
 
   @Prop()
-  images: string[]
+  images: string[];
 }
 
-export const ReviewSchema = SchemaFactory.createForClass(Review)
+export const ReviewSchema = SchemaFactory.createForClass(Review);

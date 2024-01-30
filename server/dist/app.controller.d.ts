@@ -1,3 +1,3 @@
 export declare class AppController {
-    getHallo(): string;
+  getHallo(): string;
 }

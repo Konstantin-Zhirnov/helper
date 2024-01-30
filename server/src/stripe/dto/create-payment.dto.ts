@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePaymentDto {
   @ApiProperty({ example: '6846x1db645xd', description: 'Unique number' })
-  readonly id: string
+  readonly id: string;
 
   @ApiProperty({ example: 3, description: 'Quantity' })
-  readonly amount: number
+  readonly amount: number;
 }

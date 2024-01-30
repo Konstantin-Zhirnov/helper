@@ -25,23 +25,48 @@
 import { HydratedDocument, Types } from 'mongoose';
 export type ReviewDocument = HydratedDocument<Review>;
 export declare class Review {
-    _id: Types.ObjectId;
-    title: string;
-    description: string;
-    stars: number;
-    userId: {
-        type: Types.ObjectId;
-        ref: 'User';
-    };
-    authorId: {
-        type: Types.ObjectId;
-        ref: 'User';
-    };
-    time: number;
-    images: string[];
+  _id: Types.ObjectId;
+  title: string;
+  description: string;
+  stars: number;
+  userId: {
+    type: Types.ObjectId;
+    ref: 'User';
+  };
+  authorId: {
+    type: Types.ObjectId;
+    ref: 'User';
+  };
+  time: number;
+  images: string[];
 }
-export declare const ReviewSchema: import("mongoose").Schema<Review, import("mongoose").Model<Review, any, any, any, import("mongoose").Document<unknown, any, Review> & Review & Required<{
-    _id: Types.ObjectId;
-}>, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Review, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<Review>> & import("mongoose").FlatRecord<Review> & Required<{
-    _id: Types.ObjectId;
-}>>;
+export declare const ReviewSchema: import('mongoose').Schema<
+  Review,
+  import('mongoose').Model<
+    Review,
+    any,
+    any,
+    any,
+    import('mongoose').Document<unknown, any, Review> &
+      Review &
+      Required<{
+        _id: Types.ObjectId;
+      }>,
+    any
+  >,
+  {},
+  {},
+  {},
+  {},
+  import('mongoose').DefaultSchemaOptions,
+  Review,
+  import('mongoose').Document<
+    unknown,
+    {},
+    import('mongoose').FlatRecord<Review>
+  > &
+    import('mongoose').FlatRecord<Review> &
+    Required<{
+      _id: Types.ObjectId;
+    }>
+>;

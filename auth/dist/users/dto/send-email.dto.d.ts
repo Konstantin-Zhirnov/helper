@@ -1,3 +1,3 @@
 export declare class SendEmailDto {
-    readonly email: string;
+  readonly email: string;
 }

@@ -10,37 +10,45 @@ import {
 } from '../types'
 
 export const PostsAPI = {
-  getPosts(query: PostsQueryType): Promise<PostsType> {
+  async getPosts(query: PostsQueryType): Promise<PostsType> {
     const { location, category, search, page } = query
     const url = `${URL.posts}?location=${location}&category=${encodeURIComponent(category)}&search=${search}&page=${page}`
-    return $api.get(url).then(({ data }) => data)
+    const { data } = await $api.get(url)
+    return data
   },
 
-  getCities(): Promise<LocationsType> {
-    return $api.get(URL.cities).then(({ data }) => data)
+  async getCities(): Promise<LocationsType> {
+    const { data } = await $api.get(URL.cities)
+    return data
   },
 
-  addPost(body: FormData): Promise<PostType> {
-    return $api.post(URL.addPost, body).then(({ data }) => data)
+  async addPost(body: FormData): Promise<PostType> {
+    const { data } = await $api.post(URL.addPost, body)
+    return data
   },
 
-  getPostsByUser(id: string): Promise<PostType[]> {
-    return $api.get(`${URL.posts}/${id}`).then(({ data }) => data)
+  async getPostsByUser(id: string): Promise<PostType[]> {
+    const { data } = await $api.get(`${URL.posts}/${id}`)
+    return data
   },
 
-  updatePost(body: UpdatePostType): Promise<UpdatePostType> {
-    return $api.put(URL.updatePost, body).then(({ data }) => data)
+  async updatePost(body: UpdatePostType): Promise<UpdatePostType> {
+    const { data } = await $api.put(URL.updatePost, body)
+    return data
   },
 
-  addImages(body: FormData): Promise<UpdatePostType> {
-    return $api.post(URL.addImages, body).then(({ data }) => data)
+  async addImages(body: FormData): Promise<UpdatePostType> {
+    const { data } = await $api.post(URL.addImages, body)
+    return data
   },
 
-  removeImage(body: RemoveImageType): Promise<UpdatePostType> {
-    return $api.post(URL.removeImage, body).then(({ data }) => data)
+  async removeImage(body: RemoveImageType): Promise<UpdatePostType> {
+    const { data } = await $api.post(URL.removeImage, body)
+    return data
   },
 
-  removePost(body: RemovePostType): Promise<{ _id: string }> {
-    return $api.post(URL.removePost, body).then(({ data }) => data)
+  async removePost(body: RemovePostType): Promise<{ _id: string }> {
+    const { data } = await $api.post(URL.removePost, body)
+    return data
   },
 }

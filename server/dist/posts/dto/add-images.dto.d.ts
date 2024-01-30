@@ -1,3 +1,3 @@
 export declare class AddImagesDto {
-    readonly _id?: string;
+  readonly _id?: string;
 }

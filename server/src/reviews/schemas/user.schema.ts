@@ -1,73 +1,82 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { HydratedDocument, Types } from 'mongoose'
-import { ApiProperty } from '@nestjs/swagger'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument, Types } from 'mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
   @ApiProperty({ example: '1', description: 'Unique identifier' })
-  _id: Types.ObjectId
+  _id: Types.ObjectId;
 
   @ApiProperty({ example: 'Konstantin', description: 'User`s name' })
   @Prop()
-  name: string
+  name: string;
 
   @ApiProperty({ example: 'user@gmail.com', description: 'User`s email' })
   @Prop({ required: true })
-  email: string
+  email: string;
 
   @ApiProperty({ example: '123456', description: 'User`s password' })
   @Prop({ required: true })
-  password: string
+  password: string;
 
   @ApiProperty({ example: '+12501111111', description: 'User`s phone number' })
   @Prop({ required: false })
-  phone: string
+  phone: string;
 
   @ApiProperty({ example: '+12501111111', description: 'User`s WhatsApp' })
   @Prop({ required: false })
-  whatsapp: string
+  whatsapp: string;
 
   @ApiProperty({ example: '@kostya_zhirnov', description: 'User`s Telegram' })
   @Prop({ required: false })
-  telegram: string
+  telegram: string;
 
   @ApiProperty({ example: '+12501111111', description: 'User`s Viber' })
   @Prop({ required: false })
-  viber: string
+  viber: string;
 
   @ApiProperty({ example: 'https://image.jpg', description: 'User`s photo' })
   @Prop({ required: false })
-  photo: string
+  photo: string;
 
-  @ApiProperty({ example: 'true', description: 'The user account is activated' })
+  @ApiProperty({
+    example: 'true',
+    description: 'The user account is activated',
+  })
   @Prop({ required: true })
-  isActivated: boolean
+  isActivated: boolean;
 
-  @ApiProperty({ example: 'dzvjndd6552sgbsz', description: 'Link to activate the user account' })
+  @ApiProperty({
+    example: 'dzvjndd6552sgbsz',
+    description: 'Link to activate the user account',
+  })
   @Prop({ required: false })
-  linkForActivated: string
+  linkForActivated: string;
 
-  @ApiProperty({ example: 'dzvjndd6552sgbsz', description: 'Link to change the user`s password' })
+  @ApiProperty({
+    example: 'dzvjndd6552sgbsz',
+    description: 'Link to change the user`s password',
+  })
   @Prop({ required: false })
-  changePasswordLink: string
+  changePasswordLink: string;
 
   @ApiProperty({ example: 4, description: 'Number of stars' })
   @Prop({ required: false })
-  stars: number
+  stars: number;
 
   @ApiProperty({ example: 4, description: 'Number of reviews' })
   @Prop({ required: false })
-  countReviews: number
+  countReviews: number;
 
   @ApiProperty({ example: 'true', description: 'Is the subscription paid for' })
   @Prop({ required: false })
-  paid: boolean
+  paid: boolean;
 
   @ApiProperty({ example: 'true', description: 'Subscription payment time' })
   @Prop({ required: false })
-  paidTime: string
+  paidTime: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User)
+export const UserSchema = SchemaFactory.createForClass(User);

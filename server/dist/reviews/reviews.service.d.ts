@@ -27,23 +27,51 @@ import { User, UserDocument } from './schemas/user.schema';
 import { Review, ReviewDocument } from './schemas/review.schema';
 import { CreateReviewDto } from './dto/create-review.dto';
 export declare class ReviewsService {
-    private userModel;
-    private reviewModel;
-    constructor(userModel: Model<UserDocument>, reviewModel: Model<ReviewDocument>);
-    getById(id: string): Promise<User>;
-    create(createReviewDto: CreateReviewDto & {
-        images: string[];
-    }, fieldName: string, chosenFields: Record<string, number>): Promise<Review>;
-    remove(removeReviewDto: any): Promise<Review>;
-    getAllPostsByAuthorId(authorId: string, fieldName: string, chosenFields: Record<string, number>): Promise<Review[]>;
-    getAllPostsByUserId(userId: string, page: number, fieldName: string, chosenFields: Record<string, number>): Promise<{
-        reviews: Omit<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Review> & Review & Required<{
-            _id: import("mongoose").Types.ObjectId;
-        }>> & import("mongoose").Document<unknown, {}, Review> & Review & Required<{
-            _id: import("mongoose").Types.ObjectId;
-        }>, never>[];
-        count: number;
-        pages: number;
-        page: number;
-    }>;
+  private userModel;
+  private reviewModel;
+  constructor(
+    userModel: Model<UserDocument>,
+    reviewModel: Model<ReviewDocument>,
+  );
+  getById(id: string): Promise<User>;
+  create(
+    createReviewDto: CreateReviewDto & {
+      images: string[];
+    },
+    fieldName: string,
+    chosenFields: Record<string, number>,
+  ): Promise<Review>;
+  remove(removeReviewDto: any): Promise<Review>;
+  getAllPostsByAuthorId(
+    authorId: string,
+    fieldName: string,
+    chosenFields: Record<string, number>,
+  ): Promise<Review[]>;
+  getAllPostsByUserId(
+    userId: string,
+    page: number,
+    fieldName: string,
+    chosenFields: Record<string, number>,
+  ): Promise<{
+    reviews: Omit<
+      import('mongoose').Document<
+        unknown,
+        {},
+        import('mongoose').Document<unknown, {}, Review> &
+          Review &
+          Required<{
+            _id: import('mongoose').Types.ObjectId;
+          }>
+      > &
+        import('mongoose').Document<unknown, {}, Review> &
+        Review &
+        Required<{
+          _id: import('mongoose').Types.ObjectId;
+        }>,
+      never
+    >[];
+    count: number;
+    pages: number;
+    page: number;
+  }>;
 }

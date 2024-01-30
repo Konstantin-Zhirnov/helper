@@ -25,19 +25,44 @@
 import { HydratedDocument, Types } from 'mongoose';
 export type PostDocument = HydratedDocument<Post>;
 export declare class Post {
-    title: string;
-    description: string;
-    location: string;
-    authorId: {
-        type: Types.ObjectId;
-        ref: 'User';
-    };
-    time: number;
-    images: string[];
-    _id: Types.ObjectId;
+  title: string;
+  description: string;
+  location: string;
+  authorId: {
+    type: Types.ObjectId;
+    ref: 'User';
+  };
+  time: number;
+  images: string[];
+  _id: Types.ObjectId;
 }
-export declare const PostSchema: import("mongoose").Schema<Post, import("mongoose").Model<Post, any, any, any, import("mongoose").Document<unknown, any, Post> & Post & Required<{
-    _id: Types.ObjectId;
-}>, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Post, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<Post>> & import("mongoose").FlatRecord<Post> & Required<{
-    _id: Types.ObjectId;
-}>>;
+export declare const PostSchema: import('mongoose').Schema<
+  Post,
+  import('mongoose').Model<
+    Post,
+    any,
+    any,
+    any,
+    import('mongoose').Document<unknown, any, Post> &
+      Post &
+      Required<{
+        _id: Types.ObjectId;
+      }>,
+    any
+  >,
+  {},
+  {},
+  {},
+  {},
+  import('mongoose').DefaultSchemaOptions,
+  Post,
+  import('mongoose').Document<
+    unknown,
+    {},
+    import('mongoose').FlatRecord<Post>
+  > &
+    import('mongoose').FlatRecord<Post> &
+    Required<{
+      _id: Types.ObjectId;
+    }>
+>;
