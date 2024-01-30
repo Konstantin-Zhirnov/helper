@@ -112,9 +112,12 @@ export const reviews = createSlice({
 
       .addCase(fetchRemoveReview.pending, pending)
       .addCase(fetchRemoveReview.fulfilled, (state, action: PayloadAction<{ _id: string }>) => {
-        state.reviewsByAuthor = state.reviewsByAuthor.filter(
+        const tempReviewsByAuthor = state.reviewsByAuthor.filter(
           (review) => review._id !== action.payload._id,
         )
+        if (!tempReviewsByAuthor.length)
+          state.reviewsEmptyMessage = 'You haven`t posted any reviews yet'
+        state.reviewsByAuthor = tempReviewsByAuthor
         state.reviews = state.reviews.filter((review) => review._id !== action.payload._id)
       })
       .addCase(fetchRemoveReview.rejected, (state, action) => {
