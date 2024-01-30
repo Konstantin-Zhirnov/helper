@@ -89,12 +89,12 @@ export class PostsController {
           }
           const uploadPath = `./public/${folder}/posts`
           if (!existsSync(uploadPath)) {
-            mkdirSync(uploadPath)
+            mkdirSync(uploadPath);
           }
           cb(null, uploadPath)
         }
       },
-      filename: (req, file, callback) => {
+      filename: (_req, file, callback) => {
         const name = `${uuid.v4()}.${getExtension(file.originalname)}`
         callback(null, name)
       },

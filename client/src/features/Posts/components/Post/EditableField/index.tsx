@@ -16,7 +16,7 @@ const EditableField: React.FC<IProps> = React.memo(({ _id, defaultValue, field, 
   const dispatch = useAppDispatch()
 
   const memoizedCB = React.useCallback(
-    (value) => {
+    (value: any) => {
       const body = {
         _id,
         field: { [`${field}`]: value },

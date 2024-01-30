@@ -27,7 +27,7 @@ const EditableInput: React.FC<IProps> = React.memo(({ defaultValue, cb, label })
   }
 
   const handleSave = () => {
-    cb(value)
+    cb(value.trim())
     setIsEdit(false)
   }
 

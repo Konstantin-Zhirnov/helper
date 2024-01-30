@@ -73,8 +73,8 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
     if (!isLoading) {
       if (currentImages.length === images.length) {
         const formData = new FormData()
-        formData.append('title', data.title)
-        formData.append('description', data.description)
+        formData.append('title', data.title.trim())
+        formData.append('description', data.description.trim())
         formData.append('stars', stars.toString())
         formData.append('authorId', authorId)
         formData.append('userId', userId)

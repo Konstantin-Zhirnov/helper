@@ -52,8 +52,8 @@ const LoginForm: React.FC = () => {
     if (!isLoading) {
       await dispatch(
         fetchLogin({
-          email: data.email.toLowerCase(),
-          password: data.password,
+          email: data.email.trim().toLowerCase(),
+          password: data.password.trim(),
         }),
       )
       reset()

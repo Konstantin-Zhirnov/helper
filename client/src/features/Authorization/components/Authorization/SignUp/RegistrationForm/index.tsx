@@ -40,8 +40,8 @@ const RegistrationForm: React.FC = () => {
       await dispatch(
         fetchRegistration({
           _id: '',
-          name: data.name,
-          email: data.email.toLowerCase(),
+          name: data.name.trim(),
+          email: data.email.trim().toLowerCase(),
           password: data.password,
           phone: '',
           photo: '',

@@ -40,7 +40,7 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
   const [category, setCategory] = React.useState(categories[0])
-
+  console.log('category', category)
   const handleChange = (value: string) => {
     if (value !== category) {
       setCategory(value)
@@ -78,9 +78,9 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   const onSubmit: SubmitHandler<CreatePostType> = async (data) => {
     if (currentImages.length === images.length) {
       const formData = new FormData()
-      formData.append('title', data.title)
-      formData.append('description', data.description)
-      formData.append('location', data.location)
+      formData.append('title', data.title.trim())
+      formData.append('description', data.description.trim())
+      formData.append('location', data.location.trim())
       formData.append('authorId', authorId)
       formData.append('category', category)
       await images.forEach((image) => {
@@ -93,11 +93,11 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
     }
   }
 
-  const onAlertMessage = (text) => {
+  const onAlertMessage = (text: string) => {
     dispatch(setAlertPostsMessage(text))
   }
 
-  const onMessage = (text) => {
+  const onMessage = (text: string) => {
     dispatch(setMessage(text))
   }
 
