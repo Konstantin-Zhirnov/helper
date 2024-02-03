@@ -28,11 +28,11 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
     setOpen((prevState) => !prevState)
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
   }
 
-  const handleOptionClick = (value) => () => {
+  const handleOptionClick = (value: string) => () => {
     if (value.toLowerCase() !== selected.toLowerCase()) {
       setSelected(value)
       setInputValue('')
@@ -59,13 +59,7 @@ const Select: React.FC<IProps> = React.memo(({ options, defaultValue, cb, ml0, m
         <p
           className={cn({ [classes.profile]: pathname === '/profile', [classes.mobile]: isMobile })}
         >
-          {selected
-            ? selected.length > 12
-              ? !category
-                ? selected.substring(0, 12) + '...'
-                : selected
-              : selected
-            : ''}
+          {selected ? selected : ''}
         </p>
         <BiChevronDown
           size={isMobile ? 24 : 20}
