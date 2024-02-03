@@ -1,0 +1,26 @@
+@import "../../constants/vars"
+
+
+.li
+  border-radius: 12px
+  background: $white
+  transition: all 400ms
+  border-bottom: 1px solid $border-color
+  &:hover
+    background: $primary-color
+  &.hidden
+    display: none
+  &.selected
+    background: $primary-color
+    box-shadow: 0 30px 90px 0 rgba(31, 36, 48, 0.1)
+
+  .btn
+    position: relative
+    padding: 0.8rem 1.2rem
+    border: none
+    background: transparent
+    width: 100%
+    cursor: pointer
+    &.mobile
+      font-size: 1.1rem
+      padding: 0.4rem 0.8rem

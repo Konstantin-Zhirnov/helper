@@ -18,6 +18,7 @@ import { FormButton } from './ui/FormButton'
 import { SubmitWithImagesButton } from './ui/SubmitWithImagesButton'
 import { Title } from './ui/Title'
 import { PolicyLink } from './ui/PolicyLink'
+import { LocationItem } from './ui/LocationItem'
 
 import { useMatchMedia } from './lib/hooks/useMatchMedia'
 import { useDebounce } from './lib/hooks/useDebounce'
@@ -49,6 +50,7 @@ export {
   SubmitWithImagesButton,
   Title,
   PolicyLink,
+  LocationItem,
 }
 
 export { useMatchMedia, useDebounce }

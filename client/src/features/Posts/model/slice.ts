@@ -242,6 +242,8 @@ export const getIsPostsByUser = (state: RootState): boolean =>
   Boolean(state.posts.postsByUser.length)
 export const getSearchComponentSearch = (state: RootState): string =>
   state.posts.searchComponentSearch
+export const getSearchComponentLocation = (state: RootState): string =>
+  state.posts.searchComponentLocation
 export const getMainSearch = (state: RootState): boolean => state.posts.isMainSearch
 export const getCategory = (state: RootState): string => state.posts.category
 export const getPostsLoading = (state: RootState): boolean => state.posts.isLoading
