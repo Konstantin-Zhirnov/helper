@@ -1,7 +1,9 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
+import cn from 'classnames'
 import { AiOutlineSearch } from 'react-icons/ai'
 
-import { LocationItem, useAppDispatch, useAppSelector } from '../../../../shared'
+import { LocationItem, useAppDispatch, useAppSelector, useMatchMedia } from '../../../../shared'
 
 import {
   getLocation,
@@ -12,7 +14,6 @@ import {
 } from '../../model/slice'
 
 import classes from './Locations.module.sass'
-import ReactDOM from 'react-dom'
 
 const modalRootElement = document.querySelector('#modal')
 
@@ -21,6 +22,8 @@ interface IProps {
 }
 
 const Locations: React.FC<IProps> = React.memo(({ search }) => {
+  const { isMobile } = useMatchMedia()
+
   const dispatch = useAppDispatch()
   const locations = useAppSelector(getLocations)
   const location = useAppSelector(getLocation)
@@ -48,14 +51,14 @@ const Locations: React.FC<IProps> = React.memo(({ search }) => {
 
   return ReactDOM.createPortal(
     <div className={classes.container}>
-      <div className={classes.search_container}>
+      <div className={cn(classes.search_container, { [classes.mobile]: isMobile })}>
         <AiOutlineSearch size={16} className={classes.search_icon} />
         <input
           type="text"
           value={inputValue}
           onChange={handleChange}
           placeholder="Enter location"
-          className={classes.input}
+          className={cn(classes.input, { [classes.mobile]: isMobile })}
         />
       </div>
       <ul className={classes.ul}>
