@@ -67,9 +67,11 @@ import {
   setPage,
   getCategory,
   getPostsLoading,
+  getPostsModal,
 } from './Posts/model/slice'
 import { fetchPosts, fetchPostsByUser } from './Posts/model/asyncActions'
 import { Location } from './Posts/components/Location'
+import { Locations } from './Posts/components/Locations'
 import { AddPost } from './Posts/components/AddPost'
 import { Post } from './Posts/components/Post'
 import { Search } from './Posts/components/Search'
@@ -162,9 +164,10 @@ export {
   setLocation,
   getCategory,
   getPostsLoading,
+  getPostsModal,
 }
 export { fetchPosts, fetchPostsByUser }
-export { Location, AddPost, Post, Search, SearchComponent, Category }
+export { Location, Locations, AddPost, Post, Search, SearchComponent, Category }
 export type { PostType, ReasonType }
 
 // Reviews

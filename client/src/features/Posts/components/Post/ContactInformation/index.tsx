@@ -4,7 +4,7 @@ import { FaSquareWhatsapp, FaTelegram } from 'react-icons/fa6'
 
 import { Modal, useAppDispatch, useAppSelector } from '../../../../../shared'
 
-import { getModal, setModal } from '../../../model/slice'
+import { getPostsModal, setModal } from '../../../model/slice'
 
 import classes from './ContactInformation.module.sass'
 
@@ -26,7 +26,7 @@ const ContactInformation: React.FC<IProps> = ({ _id, email, phone, whatsapp, tel
   }
 
   const dispatch = useAppDispatch()
-  const isModal = useAppSelector(getModal)
+  const isModal = useAppSelector(getPostsModal)
 
   const onOpen = React.useCallback(() => {
     dispatch(setModal(`contact-${_id}`))

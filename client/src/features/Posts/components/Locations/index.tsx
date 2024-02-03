@@ -1,16 +1,15 @@
 import React from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 
-import { LocationItem, useAppDispatch, useAppSelector } from '../../../../../shared'
+import { LocationItem, useAppDispatch, useAppSelector } from '../../../../shared'
 
 import {
   getLocation,
   getLocations,
-  getModal,
   setLocation,
   setModal,
   setSearchComponentLocation,
-} from '../../../model/slice'
+} from '../../model/slice'
 
 import classes from './Locations.module.sass'
 import ReactDOM from 'react-dom'
@@ -25,7 +24,6 @@ const Locations: React.FC<IProps> = React.memo(({ search }) => {
   const dispatch = useAppDispatch()
   const locations = useAppSelector(getLocations)
   const location = useAppSelector(getLocation)
-  const isModal = useAppSelector(getModal)
 
   const [inputValue, setInputValue] = React.useState('')
 
@@ -47,8 +45,6 @@ const Locations: React.FC<IProps> = React.memo(({ search }) => {
     },
     [search],
   )
-
-  if (isModal !== 'locations') return null
 
   return ReactDOM.createPortal(
     <div className={classes.container}>

@@ -17,7 +17,7 @@ import {
 import {
   getPostsLoading,
   getMessage,
-  getModal,
+  getPostsModal,
   setAlertPostsMessage,
   setMessage,
   setModal,
@@ -33,7 +33,7 @@ interface IProps {
 
 const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   const dispatch = useAppDispatch()
-  const isModal = useAppSelector(getModal)
+  const isModal = useAppSelector(getPostsModal)
   const message = useAppSelector(getMessage)
   const isLoading = useAppSelector(getPostsLoading)
 

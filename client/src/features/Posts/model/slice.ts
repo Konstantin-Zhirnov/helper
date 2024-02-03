@@ -235,7 +235,7 @@ export const getPages = (state: RootState): number => state.posts.pages
 export const getSearch = (state: RootState): string => state.posts.search
 export const getLocation = (state: RootState): string => state.posts.location
 export const getLocations = (state: RootState): LocationsType => state.posts.locations
-export const getModal = (state: RootState): string => state.posts.isModal
+export const getPostsModal = (state: RootState): string => state.posts.isModal
 export const getMessage = (state: RootState): string => state.posts.message
 export const getAlertPostsMessage = (state: RootState): string => state.posts.alertMessage
 export const getIsPostsByUser = (state: RootState): boolean =>
