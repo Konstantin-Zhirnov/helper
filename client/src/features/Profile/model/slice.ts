@@ -91,7 +91,7 @@ export const profile = createSlice({
       })
 
       .addCase(fetchRemoveUser.pending, pendingNewPassword)
-      .addCase(fetchRemoveUser.fulfilled, () => {
+      .addCase(fetchRemoveUser.fulfilled, (state) => {
         window.location.href = '/'
       })
       .addCase(fetchRemoveUser.rejected, (state, action) => {

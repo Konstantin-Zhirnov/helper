@@ -30,11 +30,11 @@ const Images: React.FC<IProps> = React.memo(({ imagesSrcArray, _id, pathname, au
   const [images, setImages] = React.useState([])
   const [showAll, setShowAll] = React.useState(false)
 
-  const onAlertMessage = (text) => {
+  const onAlertMessage = (text: string) => {
     dispatch(setAlertPostsMessage(text))
   }
 
-  const onMessage = (text) => {
+  const onMessage = (text: string) => {
     dispatch(setMessage(text))
   }
 

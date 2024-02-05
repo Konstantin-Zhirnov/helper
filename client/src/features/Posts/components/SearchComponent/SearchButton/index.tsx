@@ -4,7 +4,7 @@ import { ImSpinner9 } from 'react-icons/im'
 
 import { useAppDispatch, useAppSelector } from '../../../../../shared'
 
-import { getPostsLoading, setDataForSearch } from '../../../model/slice'
+import { getSearchButtonLoading, setDataForSearch } from '../../../model/slice'
 
 import classes from './SearchButton.module.sass'
 
@@ -14,29 +14,22 @@ interface IProps {
 
 const SearchButton: React.FC<IProps> = React.memo(({ isMobile }) => {
   const dispatch = useAppDispatch()
-  const isLoading = useAppSelector(getPostsLoading)
-
-  const [loader, setLoader] = React.useState(false)
-
+  const searchButtonLoading = useAppSelector(getSearchButtonLoading)
   const handleClick = () => {
-    if (!isLoading) {
+    if (!searchButtonLoading) {
       dispatch(setDataForSearch())
-      setLoader(true)
     }
   }
-
-  React.useEffect(() => {
-    if (loader && !isLoading) {
-      setLoader(false)
-    }
-  }, [isLoading])
 
   return (
     <button
       onClick={handleClick}
-      className={cn(classes.btn, { [classes.mobile]: isMobile, [classes.disabled]: isLoading })}
+      className={cn(classes.btn, {
+        [classes.mobile]: isMobile,
+        [classes.disabled]: searchButtonLoading,
+      })}
     >
-      {loader ? <ImSpinner9 /> : 'Search'}
+      {searchButtonLoading ? <ImSpinner9 /> : 'Search'}
     </button>
   )
 })

@@ -31,6 +31,7 @@ const initialState: PostsStateType = {
   searchComponentSearch: '',
   isMainSearch: false,
   isLoading: false,
+  searchButtonLoading: false,
 }
 
 export const posts = createSlice({
@@ -74,15 +75,22 @@ export const posts = createSlice({
       state.searchComponentSearch = action.payload
     },
     setDataForSearch: (state) => {
+      if (
+        state.search !== state.searchComponentSearch ||
+        (state.searchComponentLocation && state.location !== state.searchComponentLocation)
+      ) {
+        state.searchButtonLoading = true
+      }
       if (state.search !== state.searchComponentSearch) {
         state.search = state.searchComponentSearch
+        state.page = 1
+        state.isMainSearch = true
       }
       if (state.searchComponentLocation && state.location !== state.searchComponentLocation) {
         state.location = state.searchComponentLocation
         localStorage.setItem('location', state.searchComponentLocation)
+        state.page = 1
       }
-      state.page = 1
-      state.isMainSearch = true
     },
     setMainSearch: (state, action: PayloadAction<boolean>) => {
       state.isMainSearch = action.payload
@@ -100,10 +108,12 @@ export const posts = createSlice({
         state.count = action.payload.count
         state.pages = action.payload.pages
         state.isLoading = false
+        state.searchButtonLoading = false
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
         state.isLoading = false
+        state.searchButtonLoading = false
       })
 
       .addCase(fetchLocations.pending, pending)
@@ -135,60 +145,20 @@ export const posts = createSlice({
       })
 
       .addCase(fetchUpdatePost.pending, pending)
-      .addCase(fetchUpdatePost.fulfilled, (state, action: PayloadAction<UpdatePostType>) => {
-        state.postsByUser = state.postsByUser.map((post) => {
-          if (post._id === action.payload._id) {
-            return { ...post, ...action.payload.field }
-          }
-          return post
-        })
-        state.posts = state.posts.map((post) => {
-          if (post._id === action.payload._id) {
-            return { ...post, ...action.payload.field }
-          }
-          return post
-        })
-      })
+      .addCase(fetchUpdatePost.fulfilled, postFulfilled)
       .addCase(fetchUpdatePost.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
       })
 
       .addCase(fetchAddImages.pending, pendingWithLoading)
-      .addCase(fetchAddImages.fulfilled, (state, action: PayloadAction<UpdatePostType>) => {
-        state.postsByUser = state.postsByUser.map((post) => {
-          if (post._id === action.payload._id) {
-            return { ...post, ...action.payload.field }
-          }
-          return post
-        })
-        state.posts = state.posts.map((post) => {
-          if (post._id === action.payload._id) {
-            return { ...post, ...action.payload.field }
-          }
-          return post
-        })
-        state.isLoading = false
-      })
+      .addCase(fetchAddImages.fulfilled, postFulfilled)
       .addCase(fetchAddImages.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
         state.isLoading = false
       })
 
       .addCase(fetchRemoveImage.pending, pending)
-      .addCase(fetchRemoveImage.fulfilled, (state, action: PayloadAction<UpdatePostType>) => {
-        state.postsByUser = state.postsByUser.map((post) => {
-          if (post._id === action.payload._id) {
-            return { ...post, ...action.payload.field }
-          }
-          return post
-        })
-        state.posts = state.posts.map((post) => {
-          if (post._id === action.payload._id) {
-            return { ...post, ...action.payload.field }
-          }
-          return post
-        })
-      })
+      .addCase(fetchRemoveImage.fulfilled, postFulfilled)
       .addCase(fetchRemoveImage.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
       })
@@ -197,6 +167,7 @@ export const posts = createSlice({
       .addCase(fetchRemovePost.fulfilled, (state, action: PayloadAction<{ _id: string }>) => {
         state.postsByUser = state.postsByUser.filter((post) => post._id !== action.payload._id)
         state.posts = state.posts.filter((post) => post._id !== action.payload._id)
+        state.alertMessage = 'Your post has been successfully deleted!'
       })
       .addCase(fetchRemovePost.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -211,6 +182,22 @@ function pending(state: PostsStateType) {
 function pendingWithLoading(state: PostsStateType) {
   state.message = ''
   state.isLoading = true
+}
+
+function postFulfilled(state: PostsStateType, action: PayloadAction<UpdatePostType>) {
+  state.postsByUser = state.postsByUser.map((post) => {
+    if (post._id === action.payload._id) {
+      return { ...post, ...action.payload.field }
+    }
+    return post
+  })
+  state.posts = state.posts.map((post) => {
+    if (post._id === action.payload._id) {
+      return { ...post, ...action.payload.field }
+    }
+    return post
+  })
+  state.isLoading = false
 }
 
 export const {
@@ -247,5 +234,6 @@ export const getSearchComponentLocation = (state: RootState): string =>
 export const getMainSearch = (state: RootState): boolean => state.posts.isMainSearch
 export const getCategory = (state: RootState): string => state.posts.category
 export const getPostsLoading = (state: RootState): boolean => state.posts.isLoading
+export const getSearchButtonLoading = (state: RootState): boolean => state.posts.searchButtonLoading
 
 export default posts.reducer

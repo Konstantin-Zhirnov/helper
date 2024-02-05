@@ -15,6 +15,7 @@ export type PostsStateType = {
   searchComponentSearch: string
   isMainSearch: boolean
   isLoading: boolean
+  searchButtonLoading: boolean
 }
 
 export type PostsQueryType = {

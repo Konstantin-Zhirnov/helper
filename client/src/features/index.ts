@@ -90,6 +90,8 @@ import {
   setReviewsPage,
   getReviewsLoading,
   getReviewsEmptyMessage,
+  getAlertReviewsMessage,
+  setAlertReviewsMessage,
 } from './Reviews/model/slice'
 import {
   fetchAllReviewsByUserId,
@@ -182,6 +184,8 @@ export {
   clearReviews,
   getReviewsLoading,
   getReviewsEmptyMessage,
+  getAlertReviewsMessage,
+  setAlertReviewsMessage,
 }
 export { UserInfo, AddReview, Review }
 export type { ReviewType, ReasonReviewType }

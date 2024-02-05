@@ -119,6 +119,7 @@ export const reviews = createSlice({
           state.reviewsEmptyMessage = 'You haven`t posted any reviews yet'
         state.reviewsByAuthor = tempReviewsByAuthor
         state.reviews = state.reviews.filter((review) => review._id !== action.payload._id)
+        state.alertMessage = 'Your review has been successfully deleted!'
       })
       .addCase(fetchRemoveReview.rejected, (state, action) => {
         state.message = (action.payload as string) ?? ''
@@ -157,5 +158,6 @@ export const getReviewsLoading = (state: RootState): boolean => state.reviews.is
 export const getStarsErrorMessage = (state: RootState): boolean => state.reviews.isStarsErrorMessage
 export const getReviewsEmptyMessage = (state: RootState): string =>
   state.reviews.reviewsEmptyMessage
+export const getAlertReviewsMessage = (state: RootState): string => state.posts.alertMessage
 
 export default reviews.reducer

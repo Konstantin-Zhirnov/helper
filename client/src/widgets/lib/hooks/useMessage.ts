@@ -5,8 +5,10 @@ import 'react-toastify/dist/ReactToastify.css'
 import {
   getAlertAuthorizationMessage,
   getAlertPostsMessage,
+  getAlertReviewsMessage,
   setAlertAuthorizationMessage,
   setAlertPostsMessage,
+  setAlertReviewsMessage,
 } from '../../../features'
 import { useAppDispatch, useAppSelector } from '../../../shared'
 
@@ -15,14 +17,16 @@ export const useMessage = () => {
 
   const authorizationMessage = useAppSelector(getAlertAuthorizationMessage)
   const postsMessage = useAppSelector(getAlertPostsMessage)
+  const reviewsMessage = useAppSelector(getAlertReviewsMessage)
 
   const clear = () => {
     dispatch(setAlertAuthorizationMessage(''))
     dispatch(setAlertPostsMessage(''))
+    dispatch(setAlertReviewsMessage(''))
   }
 
   React.useEffect(() => {
-    const message = authorizationMessage || postsMessage
+    const message = authorizationMessage || postsMessage || reviewsMessage
     if (message) {
       toast(message, {
         position: 'top-right',
@@ -37,5 +41,5 @@ export const useMessage = () => {
       })
       clear()
     }
-  }, [authorizationMessage, postsMessage])
+  }, [authorizationMessage, postsMessage, reviewsMessage])
 }

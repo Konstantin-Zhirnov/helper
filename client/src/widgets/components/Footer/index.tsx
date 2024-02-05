@@ -35,13 +35,13 @@ const Footer: React.FC = React.memo(() => {
         <div className={classes.contact}>
           <p>
             Development by{' '}
-            <a href="src/widgets/components/Footer/index" target="_blank">
+            <a href="https://kostya-zhirnov.vercel.app/" target="_blank">
               Kostya Zhirnov
             </a>
           </p>
           <p>
             Design by{' '}
-            <a href="src/widgets/components/Footer/index" target="_blank">
+            <a href="https://vovavindar.com/" target="_blank">
               Vova Vindar
             </a>
           </p>

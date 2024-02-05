@@ -6,7 +6,7 @@ import classes from './Categories.module.sass'
 
 interface IProps {
   label: string
-  cb: (value) => void
+  cb: (value: string) => void
 }
 
 const Categories: React.FC<IProps> = React.memo(({ label, cb }) => {
