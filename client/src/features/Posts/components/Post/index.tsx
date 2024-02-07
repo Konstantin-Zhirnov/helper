@@ -120,7 +120,7 @@ const Post: React.FC<IProps> = React.memo(
               label="Description:"
             />
           ) : (
-            <p className={classes.text}>{description}</p>
+            <pre className={classes.text}>{description}</pre>
           )}
         </div>
 
