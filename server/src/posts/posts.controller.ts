@@ -33,6 +33,7 @@ const chosenFields: Record<string, number> = {
   photo: 1,
   whatsapp: 1,
   telegram: 1,
+  messenger: 1,
   viber: 1,
   stars: 1,
   countReviews: 1,

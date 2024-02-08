@@ -84,14 +84,14 @@ const ContactInformation: React.FC<IProps> = ({
               </div>
             )}
 
-            {/*{messenger && (*/}
-            <div className={classes.contactField}>
-              <Messenger className={classes.messenger} />
-              <a href={`https://m.me/${messenger}`} target="_blank" rel="noopener noreferrer">
-                {messenger}
-              </a>
-            </div>
-            {/*)}*/}
+            {messenger && (
+              <div className={classes.contactField}>
+                <Messenger className={classes.messenger} />
+                <a href={`https://m.me/${messenger}`} target="_blank" rel="noopener noreferrer">
+                  {messenger}
+                </a>
+              </div>
+            )}
           </div>
         </Modal>
       )}
