@@ -129,6 +129,12 @@ export const posts = createSlice({
         if (action.payload.location === state.location) {
           state.posts.unshift(action.payload)
         }
+        if (!state.locations.includes(action.payload.location)) {
+          const temp = state.locations
+          temp.push(action.payload.location)
+          temp.sort()
+          state.locations = temp
+        }
         state.isModal = ''
         document.body.style.overflow = 'auto'
       })

@@ -40,7 +40,7 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
   const [currentImages, setCurrentImages] = React.useState([])
   const [images, setImages] = React.useState([])
   const [category, setCategory] = React.useState(categories[0])
-  console.log('category', category)
+
   const handleChange = (value: string) => {
     if (value !== category) {
       setCategory(value)

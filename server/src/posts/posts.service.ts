@@ -127,7 +127,7 @@ export class PostsService {
         locationsSet.add(location.location);
       }
     });
-    return [...locationsSet];
+    return [...locationsSet].sort();
   }
 
   async getAllPostsByAuthorId(

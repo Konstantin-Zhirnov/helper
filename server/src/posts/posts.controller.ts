@@ -143,10 +143,10 @@ export class PostsController {
     return updatePostDto;
   }
 
-  @ApiOperation({ summary: 'Get all cities' })
+  @ApiOperation({ summary: 'Get all locations' })
   @ApiResponse({ status: 200, type: [String] })
-  @Get('cities')
-  async getCities(): Promise<unknown[]> {
+  @Get('locations')
+  async getLocations(): Promise<unknown[]> {
     return await this.postsService.getLocations();
   }
 

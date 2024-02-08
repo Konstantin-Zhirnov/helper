@@ -36,11 +36,9 @@ export const fetchLocations = createAsyncThunk(
 
 export const fetchAddPost = createAsyncThunk(
   'authorization/fetchAddPost',
-  async function (body: FormData, { rejectWithValue, dispatch }) {
+  async function (body: FormData, { rejectWithValue }) {
     try {
-      const post = await PostsAPI.addPost(body)
-      dispatch(fetchLocations())
-      return post
+      return await PostsAPI.addPost(body)
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.message)
