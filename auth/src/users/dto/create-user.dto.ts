@@ -22,6 +22,9 @@ export class CreateUserDto {
   @ApiProperty({ example: '@kostya_zhirnov', description: 'User`s Telegram' })
   readonly telegram: string;
 
+  @ApiProperty({ example: '111111111', description: 'Facebook id' })
+  readonly messenger: string;
+
   @ApiProperty({ example: '+12501111111', description: 'User`s Viber' })
   readonly viber: string;
 

@@ -48,6 +48,7 @@ const RegistrationForm: React.FC = () => {
           whatsapp: '',
           telegram: '',
           viber: '',
+          messenger: '',
           isActivated: false,
           linkForActivated: '',
           changePasswordLink: '',

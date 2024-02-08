@@ -6,6 +6,8 @@ import { Modal, useAppDispatch, useAppSelector } from '../../../../../shared'
 
 import { getPostsModal, setModal } from '../../../model/slice'
 
+import { ReactComponent as Messenger } from './messenger.svg'
+
 import classes from './ContactInformation.module.sass'
 
 interface IProps {
@@ -14,9 +16,17 @@ interface IProps {
   phone: string
   whatsapp: string
   telegram: string
+  messenger: string
 }
 
-const ContactInformation: React.FC<IProps> = ({ _id, email, phone, whatsapp, telegram }) => {
+const ContactInformation: React.FC<IProps> = ({
+  _id,
+  email,
+  phone,
+  whatsapp,
+  telegram,
+  messenger,
+}) => {
   const removeFirstChar = (str, char) => {
     const firstChar = str.at(0)
     if (firstChar === char) {
@@ -73,6 +83,15 @@ const ContactInformation: React.FC<IProps> = ({ _id, email, phone, whatsapp, tel
                 <a href={`https://telegram.im/@${removeFirstChar(telegram, '@')}`}>{telegram}</a>
               </div>
             )}
+
+            {/*{messenger && (*/}
+            <div className={classes.contactField}>
+              <Messenger className={classes.messenger} />
+              <a href={`https://m.me/${messenger}`} target="_blank" rel="noopener noreferrer">
+                {messenger}
+              </a>
+            </div>
+            {/*)}*/}
           </div>
         </Modal>
       )}

@@ -30,6 +30,10 @@ export class User {
   @Prop({ required: false })
   telegram: string;
 
+  @ApiProperty({ example: '1111111111', description: 'Facebook id' })
+  @Prop({ required: false })
+  messenger: string;
+
   @ApiProperty({ example: '+12501111111', description: 'User`s Viber' })
   @Prop({ required: false })
   viber: string;

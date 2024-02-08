@@ -5,6 +5,8 @@ import { FaSquareWhatsapp, FaTelegram } from 'react-icons/fa6'
 
 import { categories, Select } from '../../shared'
 
+import { ReactComponent as Messenger } from './messenger.svg'
+
 import 'react-international-phone/style.css'
 import classes from './EditableInput.module.sass'
 
@@ -18,7 +20,7 @@ const EditableInput: React.FC<IProps> = React.memo(({ defaultValue, cb, label })
   const [value, setValue] = React.useState(defaultValue || 'No information available')
   const [isEdit, setIsEdit] = React.useState(false)
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setValue(e.target.value)
   }
 
@@ -32,8 +34,9 @@ const EditableInput: React.FC<IProps> = React.memo(({ defaultValue, cb, label })
   }
 
   const getIcon = () => {
-    if (label === 'WhatsApp') return <FaSquareWhatsapp className={classes.whatsapp} />
-    if (label === 'Telegram') return <FaTelegram className={classes.telegram} />
+    if (label === 'WhatsApp:') return <FaSquareWhatsapp className={classes.whatsapp} />
+    if (label === 'Telegram:') return <FaTelegram className={classes.telegram} />
+    if (label === 'Messenger:') return <Messenger className={classes.messenger} />
     return ''
   }
 

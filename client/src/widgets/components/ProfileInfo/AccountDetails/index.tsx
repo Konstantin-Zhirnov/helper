@@ -3,6 +3,7 @@ import React from 'react'
 import { EditableInput } from '../../../../entities'
 import {
   getUserId,
+  MessengerField,
   NameField,
   PhoneField,
   ProfileAvatar,
@@ -47,6 +48,10 @@ const AccountDetails: React.FC<IProps> = React.memo(({ canRemove }) => {
 
         <div className={classes.card}>
           <TelegramField _id={_id} />
+        </div>
+
+        <div className={classes.card}>
+          <MessengerField _id={_id} />
         </div>
       </div>
 

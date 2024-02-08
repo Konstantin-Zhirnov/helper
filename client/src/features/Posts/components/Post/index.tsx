@@ -24,6 +24,7 @@ interface IProps {
   phone: string
   whatsapp: string
   telegram: string
+  messenger: string
   stars: number
   countReviews: number
   images: string[]
@@ -43,6 +44,7 @@ const Post: React.FC<IProps> = React.memo(
     phone,
     whatsapp,
     telegram,
+    messenger,
     stars,
     countReviews,
     images,
@@ -148,6 +150,7 @@ const Post: React.FC<IProps> = React.memo(
             phone={phone}
             whatsapp={whatsapp}
             telegram={telegram}
+            messenger={messenger}
           />
         </div>
 

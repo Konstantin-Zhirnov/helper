@@ -33,6 +33,7 @@ type AuthorIdType = {
   whatsapp: string
   telegram: string
   viber: string
+  messenger: string
   photo: string
   stars: number
   countReviews: number

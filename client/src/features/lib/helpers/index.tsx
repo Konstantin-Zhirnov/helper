@@ -18,6 +18,7 @@ export const renderPostItem = (post: PostType) => (
     phone={post.authorId.phone}
     whatsapp={post.authorId.whatsapp}
     telegram={post.authorId.telegram}
+    messenger={post.authorId.messenger}
     stars={post.authorId.stars}
     countReviews={post.authorId.countReviews}
     images={post.images}

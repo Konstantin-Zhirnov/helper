@@ -46,6 +46,7 @@ import { NameField } from './Profile/components/NameField'
 import { PhoneField } from './Profile/components/PhoneField'
 import { WhatsAppField } from './Profile/components/WhatsAppField'
 import { TelegramField } from './Profile/components/TelegramField'
+import { MessengerField } from './Profile/components/MessengerField'
 import { RemoveAccount } from './Profile/components/RemoveAccount'
 import { PaymentForm } from './Profile/components/PaymentForm'
 import { ProfileMenuItem } from './Profile/components/ProfileMenuItem'
@@ -144,6 +145,7 @@ export {
   PhoneField,
   WhatsAppField,
   TelegramField,
+  MessengerField,
   RemoveAccount,
   PaymentForm,
   ProfileMenuItem,

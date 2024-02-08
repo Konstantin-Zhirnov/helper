@@ -44,6 +44,7 @@ const getUserWithoutPassword = (user: User) => {
     phone: user.phone,
     whatsapp: user.whatsapp,
     telegram: user.telegram,
+    messenger: user.messenger,
     viber: user.viber,
     photo: user.photo,
     isActivated: user.isActivated,
@@ -100,6 +101,7 @@ export class UsersController {
       phone: createUserDto.phone,
       whatsapp: createUserDto.whatsapp,
       telegram: createUserDto.telegram,
+      messenger: createUserDto.messenger,
       viber: createUserDto.viber,
       photo: createUserDto.photo,
       isActivated: false,
@@ -194,7 +196,7 @@ export class UsersController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: (req: any, file: any, cb: any) => {
+        destination: (_req: any, file: any, cb: any) => {
           const fileName = file.originalname;
           const folder = fileName.substring(0, fileName.lastIndexOf('.'));
           const uploadPath = `./public/${folder}`;
@@ -203,7 +205,7 @@ export class UsersController {
           }
           cb(null, uploadPath);
         },
-        filename: (req, file, callback) => {
+        filename: (_req, file, callback) => {
           callback(null, file.originalname);
         },
       }),

@@ -24,6 +24,7 @@ const initialState: ProfileStateType = {
     whatsapp: '',
     telegram: '',
     viber: '',
+    messenger: '',
     isActivated: false,
     linkForActivated: '',
     changePasswordLink: '',
@@ -147,6 +148,7 @@ export const getUserEmail = (state: RootState): string => state.profile.user.ema
 export const getUserId = (state: RootState): string => state.profile.user._id
 export const getUserWhatsApp = (state: RootState): string => state.profile.user.whatsapp
 export const getUserTelegram = (state: RootState): string => state.profile.user.telegram
+export const getUserMessenger = (state: RootState): string => state.profile.user.messenger
 export const getAlertProfileMessage = (state: RootState): string => state.profile.alertMessage
 export const getIsReload = (state: RootState): boolean => state.profile.isReload
 export const getActiveScreen = (state: RootState): ProfileMenuType => state.profile.activeScreen

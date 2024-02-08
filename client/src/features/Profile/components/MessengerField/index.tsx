@@ -5,21 +5,21 @@ import { EditableInput } from '../../../../entities'
 import { useAppDispatch, useAppSelector } from '../../../../shared'
 
 import { fetchUpdateUser } from '../../model/asyncActions'
-import { getUserTelegram } from '../../model/slice'
+import { getUserMessenger } from '../../model/slice'
 
 interface IProps {
   _id: string
 }
 
-const TelegramField: React.FC<IProps> = React.memo(({ _id }) => {
+const MessengerField: React.FC<IProps> = React.memo(({ _id }) => {
   const dispatch = useAppDispatch()
-  const telegram = useAppSelector(getUserTelegram)
+  const messenger = useAppSelector(getUserMessenger)
 
   const memoizedCB = React.useCallback(
     (value: string) => {
       const body = {
         _id,
-        fieldName: 'telegram',
+        fieldName: 'messenger',
         value,
       }
       dispatch(fetchUpdateUser(body))
@@ -27,7 +27,7 @@ const TelegramField: React.FC<IProps> = React.memo(({ _id }) => {
     [fetchUpdateUser],
   )
 
-  return <EditableInput defaultValue={telegram} cb={memoizedCB} label="Telegram:" />
+  return <EditableInput defaultValue={messenger} cb={memoizedCB} label="Messenger:" />
 })
 
-export { TelegramField }
+export { MessengerField }

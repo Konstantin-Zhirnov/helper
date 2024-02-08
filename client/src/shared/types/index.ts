@@ -10,6 +10,7 @@ export type UserType = {
   whatsapp: string
   telegram: string
   viber: string
+  messenger: string
   isActivated: boolean
   linkForActivated: string
   changePasswordLink: string
