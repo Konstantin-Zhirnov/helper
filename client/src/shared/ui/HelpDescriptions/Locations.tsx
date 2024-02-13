@@ -16,9 +16,13 @@ const Locations: React.FC = () => {
       <div className={classes.images}>
         <Img src="/images/31.webp" alt="image sign up" />
       </div>
-      <p>2. Next, you need to select the desired location from the list provided.</p>
+      <p className={classes.text}>
+        2. Next, you need to select the desired location from the list provided.
+      </p>
       <Img src="/images/32.webp" alt="image sign up" />
-      <p>3. You can also filter the presented locations using the search filter.</p>
+      <p className={classes.text}>
+        3. You can also filter the presented locations using the search filter.
+      </p>
       <Img src="/images/33.webp" alt="image sign up" />
     </>
   )
