@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch } from '../../../../../shared'
+import { MobileLink, useAppDispatch } from '../../../../../shared'
 
 import { fetchLogout } from '../../../model/asyncActions'
 import { setMobileMenu } from '../../../model/slice'
@@ -30,6 +30,7 @@ const UserMobile: React.FC = React.memo(() => {
       <button onClick={handleLogoutClick} className={classes.btn}>
         Log Out
       </button>
+      <MobileLink to="/help" text="How to use it" cb={() => dispatch(setMobileMenu(false))} />
     </>
   )
 })

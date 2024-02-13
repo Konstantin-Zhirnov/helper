@@ -8,7 +8,7 @@ import * as yup from 'yup'
 import {
   FormButton,
   FormItem,
-  PolicyLink,
+  SmallLink,
   useAppDispatch,
   useAppSelector,
 } from '../../../../../../shared'
@@ -92,7 +92,7 @@ const LoginForm: React.FC = () => {
       >
         Forgot password?
       </NavLink>
-      <PolicyLink />
+      <SmallLink to="/policy" text="Privacy Policy" />
 
       <p
         className={cn(classes.serverError, {

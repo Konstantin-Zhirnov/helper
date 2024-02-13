@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import cn from 'classnames'
 
-import { PolicyLink, UserType } from '../../../../../../shared'
+import { SmallLink, UserType } from '../../../../../../shared'
 import { FormButton, FormItem, useAppDispatch, useAppSelector } from '../../../../../../shared'
 
 import { fetchRegistration } from '../../../../model/asyncActions'
@@ -70,7 +70,7 @@ const RegistrationForm: React.FC = () => {
 
       <FormItem register={register} errors={errors} name="password" label="Password:" />
 
-      <PolicyLink />
+      <SmallLink to="/policy" text="Privacy Policy" />
 
       <p
         className={cn(classes.serverError, {

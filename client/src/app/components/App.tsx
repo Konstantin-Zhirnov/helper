@@ -16,6 +16,7 @@ const ProfilePage = lazy(() => import('../../pages/ProfilePage'))
 const ReviewsPage = lazy(() => import('../../pages/ReviewsPage'))
 const PaymentPage = lazy(() => import('../../pages/PaymentPage'))
 const PolicyPage = lazy(() => import('../../pages/PolicyPage'))
+const HelpPage = lazy(() => import('../../pages/HelpPage'))
 
 const App = () => {
   const router = createBrowserRouter(
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/reviews/:id" element={<ReviewsPage />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/policy" element={<PolicyPage />} />
+        <Route path="/help" element={<HelpPage />} />
       </Route>,
     ),
   )

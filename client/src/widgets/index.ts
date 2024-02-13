@@ -8,6 +8,7 @@ import { Payment } from './components/Payment'
 import { Categories } from './components/Categories'
 import { Final } from './components/Final'
 import { ProfileMenu } from './components/ProfileMenu'
+import { HelpTitles } from './components/HelpTitles'
 
 export {
   Posts,
@@ -20,4 +21,5 @@ export {
   Categories,
   Final,
   ProfileMenu,
+  HelpTitles,
 }

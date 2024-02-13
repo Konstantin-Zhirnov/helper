@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Avatar, useAppSelector } from '../../../../shared'
+import { Avatar, MobileLink, useAppDispatch, useAppSelector } from '../../../../shared'
 
-import { getAuth } from '../../model/slice'
+import { getAuth, setMobileMenu } from '../../model/slice'
 
 import { Login } from './Login'
 import { SignUp } from './SignUp'
@@ -19,6 +19,7 @@ interface IProps {
 }
 
 const Authorization: React.FC<IProps> = React.memo(({ photo, name, isReload, isMobile }) => {
+  const dispatch = useAppDispatch()
   const isAuth = useAppSelector(getAuth)
 
   const getDesktopVersion = () => {
@@ -40,6 +41,7 @@ const Authorization: React.FC<IProps> = React.memo(({ photo, name, isReload, isM
       <div className={classes.container}>
         <Login isMobile={isMobile} />
         <SignUp isMobile={isMobile} />
+        <MobileLink to="/help" text="How to use it" cb={() => dispatch(setMobileMenu(false))} />
       </div>
     ) : (
       <div className={classes.container}>

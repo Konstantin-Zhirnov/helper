@@ -2,7 +2,7 @@ import React from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { fetchUser, getAuth } from '../../../features'
-import { PolicyLink, useAppDispatch, useAppSelector, Wrapper } from '../../../shared'
+import { SmallLink, useAppDispatch, useAppSelector, Wrapper } from '../../../shared'
 
 import { useLocalStorageLocation } from '../../lib/hooks/useLocalStorageLocation'
 import { useReviewsCountPage } from '../../lib/hooks/useReviewsCountPage'
@@ -45,9 +45,19 @@ const Footer: React.FC = React.memo(() => {
               Vova Vindar
             </a>
           </p>
-          {isAuth && <PolicyLink />}
+          {isAuth && (
+            <div className={classes.links}>
+              <SmallLink to="/help" text="How to use it" />
+              <SmallLink to="/policy" text="Privacy Policy" />
+            </div>
+          )}
         </div>
-        {!isAuth && <PolicyLink />}
+        {!isAuth && (
+          <div className={classes.links}>
+            <SmallLink to="/help" text="How to use it" />
+            <SmallLink to="/policy" text="Privacy Policy" />
+          </div>
+        )}
       </Wrapper>
     </footer>
   )
