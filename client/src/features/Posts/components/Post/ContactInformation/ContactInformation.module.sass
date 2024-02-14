@@ -27,6 +27,7 @@
   flex-direction: column
   padding: 1.5rem 1.4rem 1rem
   border-radius: 0 0 22px 22px
+  overflow: hidden
 
   .contactField
     width: 100%
@@ -46,18 +47,24 @@
     .phone, .email
       fill: $icon-color
       font-size: 27px
+      min-width: 27px
 
     .telegram
       fill: #328fec
+      min-width: 28px
 
     .whatsapp
       fill: #25d366
+      min-width: 28px
 
     .messenger
       width: 30px
       height: 30px
+      min-width: 30px
 
 
-@media only screen and (max-width: 500px)
-  .contacts .contactField
-    width: 100%
+@media only screen and (max-width: 340px)
+  .container
+    padding: 1.5rem 1rem 1rem
+    .contactField
+      gap: 0.6rem
