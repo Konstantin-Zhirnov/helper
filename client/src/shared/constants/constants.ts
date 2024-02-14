@@ -8,6 +8,7 @@ export const categories: string[] = [
   'Pet Care',
   'Personal Assistance',
   'Educational Services',
+  'Design Services',
 ]
 
 export const profileMenu = ['Profile', 'Password', 'Posts', 'Reviews'] as const
