@@ -28,8 +28,6 @@ const PostsPage: React.FC = React.memo(() => {
         <Posts />
 
         <Final />
-
-        {isAuth && <AddPost authorId={authorId} />}
       </Wrapper>
     </>
   )

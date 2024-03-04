@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Avatar, MobileLink, useAppDispatch, useAppSelector } from '../../../../shared'
+import { Avatar, MobileLink, useAppDispatch } from '../../../../shared'
 
-import { getAuth, setMobileMenu } from '../../model/slice'
+import { setMobileMenu } from '../../model/slice'
 
 import { Login } from './Login'
 import { SignUp } from './SignUp'
@@ -16,46 +16,45 @@ interface IProps {
   name: string
   isReload: boolean
   isMobile?: boolean
+  isAuth: boolean
 }
 
-const Authorization: React.FC<IProps> = React.memo(({ photo, name, isReload, isMobile }) => {
-  const dispatch = useAppDispatch()
-  const isAuth = useAppSelector(getAuth)
+const Authorization: React.FC<IProps> = React.memo(
+  ({ photo, name, isReload, isMobile, isAuth }) => {
+    const dispatch = useAppDispatch()
 
-  const getDesktopVersion = () => {
-    return !isAuth ? (
-      <>
-        <Login />
-        <SignUp />
-      </>
-    ) : (
-      <>
-        <Avatar photo={photo} isReload={isReload} size="sm" />
-        <User name={name} />
-      </>
-    )
-  }
+    const getDesktopVersion = () => {
+      return !isAuth ? (
+        <>
+          <Login />
+          <SignUp />
+        </>
+      ) : (
+        <User photo={photo} isReload={isReload} />
+      )
+    }
 
-  const getMobileVersion = () => {
-    return !isAuth ? (
-      <div className={classes.container}>
-        <Login isMobile={isMobile} />
-        <SignUp isMobile={isMobile} />
-        <MobileLink to="/help" text="How to use it" cb={() => dispatch(setMobileMenu(false))} />
-      </div>
-    ) : (
-      <div className={classes.container}>
-        <div className={classes.avatar}>
-          <Avatar photo={photo} isReload={isReload} size="sm" />
-          <p>{name}</p>
+    const getMobileVersion = () => {
+      return !isAuth ? (
+        <div className={classes.container}>
+          <Login isMobile={isMobile} />
+          <SignUp isMobile={isMobile} />
+          <MobileLink to="/help" text="How to use it" cb={() => dispatch(setMobileMenu(false))} />
         </div>
+      ) : (
+        <div className={classes.container}>
+          <div className={classes.avatar}>
+            <Avatar photo={photo} isReload={isReload} size="sm" />
+            <p>{name}</p>
+          </div>
 
-        <UserMobile />
-      </div>
-    )
-  }
+          <UserMobile />
+        </div>
+      )
+    }
 
-  return isMobile ? getMobileVersion() : getDesktopVersion()
-})
+    return isMobile ? getMobileVersion() : getDesktopVersion()
+  },
+)
 
 export { Authorization }

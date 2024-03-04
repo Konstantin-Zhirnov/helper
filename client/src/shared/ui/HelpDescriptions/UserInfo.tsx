@@ -12,6 +12,7 @@ const UserInfo: React.FC = () => {
         1. In order to edit or add information about yourself, you need to go to the "Settings"
         section
       </p>
+      <Img src="/images/7.webp" alt="Adding and editing information" />
       <Img src="/images/9.webp" alt="Adding and editing information" />
       <div className={classes.images}>
         <Img src="/images/2.webp" alt="Adding and editing information" />

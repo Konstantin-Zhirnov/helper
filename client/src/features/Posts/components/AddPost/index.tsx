@@ -5,7 +5,7 @@ import * as yup from 'yup'
 
 import { AddImages, Categories } from '../../../../entities'
 import {
-  AddButton,
+  Button,
   Modal,
   useAppDispatch,
   useAppSelector,
@@ -29,9 +29,10 @@ import classes from './AddPost.module.sass'
 
 interface IProps {
   authorId: string
+  styles: any
 }
 
-const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
+const AddPost: React.FC<IProps> = React.memo(({ authorId, styles }) => {
   const dispatch = useAppDispatch()
   const isModal = useAppSelector(getPostsModal)
   const message = useAppSelector(getMessage)
@@ -103,7 +104,7 @@ const AddPost: React.FC<IProps> = React.memo(({ authorId }) => {
 
   return (
     <>
-      <AddButton onOpen={onOpen} />
+      <Button text="Add Post" onOpen={onOpen} styles={styles} />
       {isModal === 'post' && (
         <Modal onClose={onClose} title="Add a post">
           <form onSubmit={handleSubmit(onSubmit)} id="myForm" className={classes.container}>

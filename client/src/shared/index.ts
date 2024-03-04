@@ -1,7 +1,7 @@
 import type { AppDispatch, RootState } from './config/redux/store'
 import { store, useAppDispatch, useAppSelector } from './config/redux/store'
 
-import { AddButton } from './ui/AddButton'
+import { Button } from './ui/Button'
 import { Circular } from './ui/Circular'
 import { Li } from './ui/Li'
 import { Link } from './ui/Link'
@@ -37,7 +37,7 @@ export type { AppDispatch, RootState }
 export { store, useAppDispatch, useAppSelector }
 
 export {
-  AddButton,
+  Button,
   Circular,
   Li,
   Link,

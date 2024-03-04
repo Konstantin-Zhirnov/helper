@@ -12,6 +12,7 @@ const RememberPassword: React.FC = () => {
         1. If you remember your password and just want to change it, then you can easily do it in
         the "Settings" section.
       </p>
+      <Img src="/images/7.webp" alt="Adding and editing information" />
       <Img src="/images/9.webp" alt="image sign up" />
       <div className={classes.images}>
         <Img src="/images/2.webp" alt="image sign up" />

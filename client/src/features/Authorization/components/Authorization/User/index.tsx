@@ -3,16 +3,17 @@ import cn from 'classnames'
 import { useNavigate } from 'react-router-dom'
 import { BiChevronDown } from 'react-icons/bi'
 
-import { useAppDispatch } from '../../../../../shared'
+import { Avatar, useAppDispatch } from '../../../../../shared'
 import { fetchLogout } from '../../../model/asyncActions'
 
 import classes from './User.module.sass'
 
 interface IProps {
-  name: string
+  photo: string
+  isReload: boolean
 }
 
-const User: React.FC<IProps> = React.memo(({ name }) => {
+const User: React.FC<IProps> = React.memo(({ photo, isReload }) => {
   const dispatch = useAppDispatch()
 
   const navigate = useNavigate()
@@ -36,8 +37,7 @@ const User: React.FC<IProps> = React.memo(({ name }) => {
   return (
     <div className={classes.container}>
       <div onClick={handleClick} className={classes.view}>
-        <p>{name}</p>
-        <BiChevronDown size={20} className={cn(classes.arrow_icon, { [classes.rotate]: open })} />
+        <Avatar photo={photo} isReload={isReload} size="sm" />
       </div>
 
       <div className={cn(classes.btn_container, { [classes.open]: open })}>

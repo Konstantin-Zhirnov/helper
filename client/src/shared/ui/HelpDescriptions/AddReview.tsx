@@ -16,7 +16,7 @@ const AddReview: React.FC = () => {
       </div>
       <p className={classes.text}>
         2. A page opens on which all user reviews are published. If you are logged in, you can add
-        your reviews by clicking on the plus sign button in the lower right corner.
+        your reviews by clicking on the button.
       </p>
       <Img src="/images/23.webp" alt="image sign up" />
       <p className={classes.text}>

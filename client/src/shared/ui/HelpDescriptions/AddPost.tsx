@@ -10,8 +10,7 @@ const AddPost: React.FC = () => {
       <p className={classes.title}>Adding a post</p>
       <p className={classes.text}>After your successful authorization, you can add a post.</p>
       <p className={classes.text}>
-        1. In order to add a post, you need to be on the page with posts and click on the round
-        button with the plus symbol in the lower right corner.
+        1. In order to add a post, you need to be on the page with posts and click on the button.
       </p>
       <Img src="/images/19.webp" alt="image sign up" />
       <p className={classes.text}>

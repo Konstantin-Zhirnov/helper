@@ -3,12 +3,11 @@
 .container
   position: relative
   align-self: flex-end
-  margin: 2px 1rem
   min-width: 90px
 
   .view
     display: flex
-    align-items: center
+    justify-content: center
     cursor: pointer
     font-size: 0.84rem
     color: $primary-dark-color
@@ -20,11 +19,6 @@
       text-overflow: ellipsis
       overflow: hidden
 
-    .arrow_icon
-      fill: $primary-dark-color
-      &.rotate
-        transform: rotate(180deg)
-
   .btn_container
     background: $white
     margin: 0
@@ -33,7 +27,7 @@
     max-height: 0
     list-style: none
     position: absolute
-    top: 20px
+    top: 34px
     right: 0
     border-radius: 4px
 

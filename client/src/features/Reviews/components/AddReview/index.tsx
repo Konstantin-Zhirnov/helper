@@ -5,7 +5,7 @@ import * as yup from 'yup'
 
 import { AddImages } from '../../../../entities'
 import {
-  AddButton,
+  Button,
   FormItem,
   Modal,
   SubmitWithImagesButton,
@@ -32,9 +32,10 @@ import classes from './AddReview.module.sass'
 interface IProps {
   authorId: string
   userId: string
+  styles?: any
 }
 
-const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
+const AddReview: React.FC<IProps> = React.memo(({ authorId, userId, styles }) => {
   const dispatch = useAppDispatch()
   const isModal = useAppSelector(getModal)
   const message = useAppSelector(getMessage)
@@ -104,7 +105,7 @@ const AddReview: React.FC<IProps> = React.memo(({ authorId, userId }) => {
 
   return (
     <>
-      <AddButton onOpen={onOpen} />
+      <Button text="Add Review" onOpen={onOpen} styles={styles} />
       {isModal === 'review' && (
         <Modal onClose={onClose} title="Add a review">
           <form onSubmit={handleSubmit(onSubmit)} id="myForm" className={classes.container}>

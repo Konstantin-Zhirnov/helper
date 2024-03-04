@@ -14,6 +14,7 @@ const EditPost: React.FC = () => {
       <p className={classes.text}>
         1. In order to edit or delete a post, you need to go to the "Settings" section
       </p>
+      <Img src="/images/7.webp" alt="image sign up" />
       <Img src="/images/9.webp" alt="image sign up" />
       <div className={classes.images}>
         <Img src="/images/2.webp" alt="image sign up" />

@@ -33,8 +33,8 @@ const Registration: React.FC = () => {
         <Img src="/images/6.webp" alt="Registration" />
       </div>
       <p className={classes.text}>
-        5. After successful registration, you will see your name in the upper right corner or in the
-        menu for mobile devices.
+        5. After successful registration, you will see the user icon in the upper right corner or in
+        the menu for mobile devices.
       </p>
       <Img src="/images/7.webp" alt="Registration" />
       <div className={classes.images}>

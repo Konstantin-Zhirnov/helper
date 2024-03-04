@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 
 import {
   Authorization,
+  getAuth,
   getIsReload,
   getMobileMenu,
   getUserName,
@@ -14,6 +15,8 @@ import {
   setMobileMenu,
 } from '../../../features'
 import { Logo, useAppDispatch, useAppSelector, useMatchMedia, Wrapper } from '../../../shared'
+
+import { AddButtons } from './AddButtons'
 
 import classes from './Header.module.sass'
 
@@ -26,6 +29,7 @@ const Header: React.FC = React.memo(() => {
   const name = useAppSelector(getUserName)
   const isReload = useAppSelector(getIsReload)
   const isMobileMenu = useAppSelector(getMobileMenu)
+  const isAuth = useAppSelector(getAuth)
 
   React.useEffect(() => {
     if (!isMobile && isMobileMenu) {
@@ -37,26 +41,36 @@ const Header: React.FC = React.memo(() => {
     <header className={cn(classes.header, { [classes.mobile]: isMobileMenu })}>
       <Wrapper>
         <div className={classes.container}>
-          <Logo isMobile={isMobile} pathname={pathname} />
+          <Logo isMobile={isMobile} pathname={pathname} isAuth={isAuth} />
 
           {!isMobile ? (
             <>
               {pathname === '/' && (
                 <>
                   <Location />
+
                   <Search />
                 </>
               )}
-
-              <Authorization photo={photo} name={name} isReload={isReload} />
+              <AddButtons styles={classes.buttons} />
+              <Authorization photo={photo} name={name} isReload={isReload} isAuth={isAuth} />
             </>
           ) : (
-            <MobileMenuButton />
+            <>
+              <AddButtons styles={classes.buttons_mobile} />
+              <MobileMenuButton />
+            </>
           )}
         </div>
 
         {isMobileMenu && (
-          <Authorization photo={photo} name={name} isReload={isReload} isMobile={isMobile} />
+          <Authorization
+            photo={photo}
+            name={name}
+            isReload={isReload}
+            isMobile={isMobile}
+            isAuth={isAuth}
+          />
         )}
       </Wrapper>
     </header>

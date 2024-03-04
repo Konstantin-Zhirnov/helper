@@ -7,13 +7,17 @@ import classes from './Logo.module.sass'
 interface IProps {
   isMobile: boolean
   pathname: string
+  isAuth: boolean
 }
 
-const Logo: React.FC<IProps> = React.memo(({ isMobile, pathname }) => {
+const Logo: React.FC<IProps> = React.memo(({ isMobile, pathname, isAuth }) => {
   return (
     <NavLink
       to="/"
-      className={cn(classes.link, { [classes.mobile]: isMobile || pathname !== '/' })}
+      className={cn(classes.link, {
+        [classes.mr_auto]: (isMobile && !isAuth) || pathname !== '/',
+        [classes.auth]: isMobile && isAuth && (pathname === '/' || pathname.includes('/reviews/')),
+      })}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
