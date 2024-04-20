@@ -34,13 +34,11 @@ const PasswordPage: React.FC = () => {
       <Wrapper>
         <div className={classes.password}>
           <PasswordChanging link={link} />
-          {changePasswordMessage && (
-            <p className={cn(classes.text, { [classes.red]: getClass() })}>
-              {changePasswordMessage}
-            </p>
-          )}
         </div>
       </Wrapper>
+      {changePasswordMessage && (
+        <p className={cn(classes.text, { [classes.red]: getClass() })}>{changePasswordMessage}</p>
+      )}
     </>
   )
 }
