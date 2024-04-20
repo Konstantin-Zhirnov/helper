@@ -35,7 +35,7 @@ const SendEmailPage: React.FC = () => {
   }
 
   React.useEffect(() => {
-    let timer
+    let timer: NodeJS.Timeout
     if (!sendEmailMessage && !sendEmailReason) {
       timer = setTimeout(() => {
         dispatch(fetchUser())
@@ -54,7 +54,9 @@ const SendEmailPage: React.FC = () => {
       <Wrapper>
         {sendEmailReason && (
           <>
-            <p className={classes.text}>{getText()}</p>
+            <p
+              className={classes.text}
+            >{`${getText()} If you haven\`t received an email within 30 seconds, then check the Spam folder.`}</p>
 
             <SendToEmail sendEmailReason={sendEmailReason} />
           </>
