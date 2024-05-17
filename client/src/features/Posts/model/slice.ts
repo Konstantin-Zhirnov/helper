@@ -134,9 +134,9 @@ export const posts = createSlice({
           temp.push(action.payload.location)
           temp.sort()
           state.locations = temp
-          state.location = action.payload.location
-          localStorage.setItem('location', action.payload.location)
         }
+        state.location = action.payload.location
+        localStorage.setItem('location', action.payload.location)
         state.isModal = ''
         document.body.style.overflow = 'auto'
       })

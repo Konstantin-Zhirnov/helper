@@ -15,8 +15,6 @@ const AddButtons: React.FC<IProps> = React.memo(({ styles }) => {
   const authorId = useAppSelector(getUserId)
   const { id } = useParams()
 
-  console.log('id', id)
-
   if (!isAuth) return null
 
   if (pathname === '/') return <AddPost authorId={authorId} styles={styles} />
