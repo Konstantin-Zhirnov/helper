@@ -6,10 +6,12 @@ import { User, UserSchema } from './schemas/user.schema';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { MailModule } from '../mail/mail.module';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
   imports: [
     MailModule,
+    EmailModule,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({
       secret: 'secret',
