@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as uuid from 'uuid';
 
 import { MailService } from '../mail/mail.service';
+import { EmailService } from 'src/email/email.service';
 import { User } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { NewPasswordDto } from './dto/new-password.dto';
@@ -17,6 +18,7 @@ export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private mailService: MailService,
+    private emailService: EmailService,
   ) {}
 
   async getAll(): Promise<User[]> {
@@ -31,6 +33,11 @@ export class UsersService {
     const userWithActivationLink = { ...userDto, linkForActivated: uuid.v4() };
     const newUser = new this.userModel(userWithActivationLink);
     await this.mailService.sendUserConfirmation(
+      userWithActivationLink.name,
+      userWithActivationLink.email,
+      userWithActivationLink.linkForActivated,
+    );
+    await this.emailService.sendUserConfirmationNew(
       userWithActivationLink.name,
       userWithActivationLink.email,
       userWithActivationLink.linkForActivated,

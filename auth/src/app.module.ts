@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MailModule } from './mail/mail.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { MailModule } from './mail/mail.module';
       useFactory: () => ({ uri: process.env.MONGO_CONNECTION_STRING }),
     }),
     MailModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
