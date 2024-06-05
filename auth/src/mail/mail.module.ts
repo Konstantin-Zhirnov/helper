@@ -11,7 +11,8 @@ import { join } from 'path';
         return {
           transport: {
             host: process.env.MAIL_HOST,
-            secure: false,
+            port: 465,
+            secure: true,
             tls: { rejectUnauthorized: false },
             auth: {
               user: process.env.MAIL_USER,
